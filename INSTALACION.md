@@ -60,3 +60,35 @@ Ejecuta `npm run lote` y los vídeos aparecerán en `out/bienvenida.mp4`, `out/o
 Para usar otra lista: `node scripts/render-lote.mjs mi-lista.json`.
 
 El diseño del vídeo está en `src/HelloWorld.tsx`, y la duración, el tamaño y los FPS se configuran en `src/Root.tsx`.
+
+## Vídeo de Fisiología: Aparato locomotor
+
+El vídeo completo (~43 min, en 7 capítulos) está en `src/fisio/`.
+
+**Verlo al instante (sin renderizar):**
+
+```bash
+git pull
+npm install
+npm run dev
+```
+
+Se abre Remotion Studio en el navegador. En la barra lateral elige **AparatoLocomotor** (vídeo completo) o un capítulo dentro de la carpeta **Capitulos** y pulsa ▶.
+
+**Crear el archivo MP4 en tu ordenador:**
+
+```bash
+npx remotion render AparatoLocomotor out/aparato-locomotor.mp4 --gl=angle
+```
+
+Para ir más rápido puedes renderizar por capítulos (por ejemplo `npx remotion render Cap1-Musculo out/cap1.mp4 --gl=angle`) o a menor resolución añadiendo `--scale=0.5`.
+
+| Capítulo | Contenido |
+| --- | --- |
+| Cap0-Introduccion | Sistema locomotor |
+| Cap1-Musculo | Del músculo al sarcómero, miosina, actina, tríada, deslizamiento, acoplamiento excitación-contracción, puentes cruzados |
+| Cap2-Fibras | Tipos I, IIA, IIX, híbridas, transición e influencias |
+| Cap3-Hueso | Células óseas, matriz, remodelado, hueso compacto/esponjoso, tipos de hueso |
+| Cap4-Articulaciones | Fibrosas, cartilaginosas, sinoviales, tipos y movimientos |
+| Cap5-Tendones-Ligamentos | Tendones, ligamentos, entesis, curva fuerza-elongación, histéresis |
+| Cap6-Sistema-Nervioso | Cerebro, vía motora, unidad motora, placa motora, propiocepción |
