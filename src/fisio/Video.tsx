@@ -8,6 +8,7 @@ import { CAP2 } from "./capitulos/cap2";
 import { CAP3 } from "./capitulos/cap3";
 import { CAP4 } from "./capitulos/cap4";
 import { CAP5 } from "./capitulos/cap5";
+import { CAP6 } from "./capitulos/cap6";
 
 export type Capitulo = { id: string; titulo: string; planos: PlanoDef[] };
 
@@ -18,6 +19,7 @@ export const CAPITULOS: Capitulo[] = [
   { id: "Cap3-Hueso", titulo: "1.3 Sistema óseo", planos: CAP3 },
   { id: "Cap4-Articulaciones", titulo: "Articulaciones", planos: CAP4 },
   { id: "Cap5-Tendones-Ligamentos", titulo: "Tendones y ligamentos", planos: CAP5 },
+  { id: "Cap6-Sistema-Nervioso", titulo: "1.4 Sistema nervioso", planos: CAP6 },
 ];
 
 export const durCapitulo = (c: Capitulo) => durPlanos(c.planos);

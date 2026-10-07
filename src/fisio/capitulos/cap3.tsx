@@ -37,7 +37,6 @@ const Superficie: React.FC<{
     g.rotateX(-Math.PI / 2);
     return g;
   }, []);
-  const k = `${hoyo.toFixed(3)}-${relleno.toFixed(3)}-${mineral.toFixed(3)}-${capa.toFixed(3)}-${limpia.toFixed(3)}`;
   useMemo(() => {
     const pos = geo.attributes.position as THREE.BufferAttribute;
     const cols = new Float32Array(pos.count * 3);
@@ -59,7 +58,7 @@ const Superficie: React.FC<{
     geo.setAttribute("color", new THREE.BufferAttribute(cols, 3));
     pos.needsUpdate = true;
     geo.computeVertexNormals();
-  }, [geo, k, hoyo, relleno, mineral, capa, limpia]);
+  }, [geo, hoyo, relleno, mineral, capa, limpia]);
   return (
     <group>
       <mesh geometry={geo}>

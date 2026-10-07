@@ -466,7 +466,7 @@ export const Triada: React.FC<{
   reticuloOp?: number;
   mito?: number;
   depositos?: number;
-}> = ({ b, pulso = 0, caDentro = 0, caFuera = 0, reticuloOp = 0.6, mito = 1, depositos = 0 }) => {
+}> = ({ pulso = 0, caDentro = 0, caFuera = 0, reticuloOp = 0.6, mito = 1, depositos = 0 }) => {
   const xs = triadas();
   const R = 0.56;
   return (
@@ -700,7 +700,7 @@ const puntoCurva = (pts: V3[], t: number): V3 => {
   return mix3(pts[i], pts[i + 1], f - i);
 };
 
-const PlacaMotoraEscena: React.FC<{ textos: string[] }> = ({ textos }) => {
+export const PlacaMotoraEscena: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
