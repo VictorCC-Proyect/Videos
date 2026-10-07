@@ -1,0 +1,4 @@
+[
+  { "archivo": "bienvenida", "composicion": "HelloWorld", "props": { "titleText": "Bienvenidos a mi canal", "titleColor": "#000000" } },
+  { "archivo": "oferta", "composicion": "HelloWorld", "props": { "titleText": "Oferta de la semana", "titleColor": "#d12f2f" } }
+]
