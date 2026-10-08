@@ -8,6 +8,7 @@
   "dependencies": {
     "@react-three/fiber": "9.8.1",
     "@remotion/cli": "4.0.534",
+    "@remotion/player": "4.0.534",
     "@remotion/three": "4.0.534",
     "@remotion/zod-types": "4.0.534",
     "react": "19.2.3",
@@ -31,6 +32,7 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "render": "remotion render HelloWorld out/video.mp4",
-    "lote": "node scripts/render-lote.mjs"
+    "lote": "node scripts/render-lote.mjs",
+    "player:build": "esbuild player/main.tsx --bundle --minify --format=iife --jsx=automatic --target=es2019 --define:process.env.NODE_ENV=\\\"production\\\" --outfile=out/player/app.js"
   }
 }
