@@ -40,7 +40,7 @@ const App: React.FC = () => {
             allowFullscreen
             clickToPlay
             doubleClickToFullscreen
-            showVolumeControls={false}
+            showVolumeControls
             acknowledgeRemotionLicense
             style={{ width: "100%" }}
           />
@@ -56,7 +56,7 @@ const App: React.FC = () => {
             allowFullscreen
             clickToPlay
             doubleClickToFullscreen
-            showVolumeControls={false}
+            showVolumeControls
             acknowledgeRemotionLicense
             style={{ width: "100%" }}
           />

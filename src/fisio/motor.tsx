@@ -3,14 +3,33 @@
 // y animaciones se sincronizan con la narracion usando esta unidad.
 import React from "react";
 import { Easing, interpolate, useCurrentFrame } from "remotion";
+import narracion from "./narracion.json";
 
 export const FPS = 30;
 // Velocidad de lectura (caracteres por segundo) para calcular cuanto dura cada texto.
 const CPS = 14;
 export const FADE = 12;
 
-export const durTexto = (t: string) =>
-  Math.round(FPS * Math.max(4.5, 2 + t.replace(/\*\*/g, "").length / CPS));
+/** Duracion (s) de la narracion de cada texto, indexada por hashTexto. */
+const NARRACION: Record<string, number> = narracion;
+
+/** FNV-1a de 32 bits; debe coincidir con scripts/narracion.py. */
+export const hashTexto = (t: string) => {
+  let h = 0x811c9dc5;
+  for (const ch of t) {
+    h ^= ch.codePointAt(0) ?? 0;
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+};
+
+export const tieneNarracion = (t: string) => NARRACION[hashTexto(t)] !== undefined;
+
+export const durTexto = (t: string) => {
+  const voz = NARRACION[hashTexto(t)];
+  if (voz !== undefined) return Math.round(FPS * Math.max(3.5, voz + 0.9));
+  return Math.round(FPS * Math.max(4.5, 2 + t.replace(/\*\*/g, "").length / CPS));
+};
 
 export const durTextos = (textos: string[]) =>
   textos.reduce((a, t) => a + durTexto(t), 0) + FADE;

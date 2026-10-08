@@ -4,8 +4,11 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import {
   AbsoluteFill,
+  Audio,
   interpolate,
+  Sequence,
   Series,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -16,7 +19,9 @@ import {
   durTexto,
   entre,
   FADE,
+  hashTexto,
   PlanoDef,
+  tieneNarracion,
   V3,
   visible,
 } from "./motor";
@@ -432,6 +437,35 @@ export const TituloGrande: React.FC<{
 
 // ---- Composicion de planos ----------------------------------------------
 
+// En el reproductor web los audios se publican junto a la pagina (window.NARRACION_BASE);
+// en Remotion Studio y al renderizar salen de public/narracion.
+const srcNarracion = (h: string) => {
+  const base =
+    typeof window === "undefined"
+      ? undefined
+      : (window as unknown as { NARRACION_BASE?: string }).NARRACION_BASE;
+  return base ? `${base}${h}.mp3` : staticFile(`narracion/${h}.mp3`);
+};
+
+const Narracion: React.FC<{ textos: string[] }> = ({ textos }) => {
+  let inicio = 0;
+  return (
+    <>
+      {textos.map((t, i) => {
+        const d = durTexto(t);
+        const desde = inicio;
+        inicio += d;
+        if (!tieneNarracion(t)) return null;
+        return (
+          <Sequence key={i} from={desde + 4} durationInFrames={d - 4} layout="none" name={`voz ${i + 1}`}>
+            <Audio src={srcNarracion(hashTexto(t))} />
+          </Sequence>
+        );
+      })}
+    </>
+  );
+};
+
 export const PlanoView: React.FC<{ plano: PlanoDef }> = ({ plano }) => {
   const frame = useCurrentFrame();
   const dur = durPlano(plano);
@@ -447,6 +481,7 @@ export const PlanoView: React.FC<{ plano: PlanoDef }> = ({ plano }) => {
         <Seccion t={plano.seccion} />
         <Subtitulo textos={plano.textos} />
       </AbsoluteFill>
+      <Narracion textos={plano.textos} />
     </AbsoluteFill>
   );
 };
