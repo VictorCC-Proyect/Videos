@@ -18,7 +18,7 @@ import wave
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-CAPS = sorted((RAIZ / "src/fisio/capitulos").glob("cap*.tsx"))
+CAPS = sorted((RAIZ / "src/fisio/capitulos").glob("cap*.tsx")) + sorted((RAIZ / "src/fisio/energia").glob("e*.tsx"))
 SALIDA = RAIZ / "public/narracion"
 INDICE = RAIZ / "src/fisio/narracion.json"
 

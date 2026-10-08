@@ -3,9 +3,11 @@ import { HelloWorld } from "./HelloWorld";
 import { FPS } from "./fisio/motor";
 import {
   CAPITULOS,
+  CAPITULOS_ENERGIA,
   CapituloView,
   durCapitulo,
   VideoCompleto,
+  VideoEnergia,
 } from "./fisio/Video";
 
 // Cada <Composition> aparece en la barra lateral de Remotion Studio.
@@ -23,6 +25,28 @@ export const RemotionRoot: React.FC = () => {
       />
       <Folder name="Capitulos">
         {CAPITULOS.map((c) => (
+          <Composition
+            key={c.id}
+            id={c.id}
+            component={CapituloView}
+            durationInFrames={durCapitulo(c)}
+            fps={FPS}
+            width={1920}
+            height={1080}
+            defaultProps={{ capId: c.id }}
+          />
+        ))}
+      </Folder>
+      <Composition
+        id="SistemasEnergeticos"
+        component={VideoEnergia}
+        durationInFrames={CAPITULOS_ENERGIA.reduce((a, c) => a + durCapitulo(c), 0)}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Folder name="Capitulos-Energia">
+        {CAPITULOS_ENERGIA.map((c) => (
           <Composition
             key={c.id}
             id={c.id}
