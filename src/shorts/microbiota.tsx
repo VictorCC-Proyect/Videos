@@ -168,7 +168,7 @@ const Colonocitos: React.FC<{ textos: string[] }> = ({ textos }) => {
     b,
   );
   const brillo = entre(b, 0.15, 0.6);
-  const desde: V3[] = Array.from({ length: 8 }).map((_, i) => [-1.2 + i * 0.35, 1.3, 0.2 + (i % 3) * 0.3]);
+  const desde: V3[] = Array.from({ length: 8 }).map((_, i) => [-1.2 + i * 0.35, 1.0, 0.2 + (i % 3) * 0.3]);
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} fondo={FONDO} niebla={[5, 13]}>
@@ -388,7 +388,7 @@ const Debil: React.FC<{ textos: string[] }> = ({ textos }) => {
 // 7 · Lo que ayuda: fibra y fermentados ---------------------------------------------------
 const Ayuda: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
-  const baja = entre(b, 0.0, 0.3);
+  const baja = entre(b, 0.0, 0.2);
   const suelta = entre(b, 0.36, 0.5);
   const crece = entre(b, 0.4, 0.85);
   const cura = entre(b, 0.5, 0.9);
@@ -419,11 +419,11 @@ const Ayuda: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [-1.05, y, 0.3], t: "Frutas", a: 0.08, z: 0.4, o: [30, -130], color: K.rojo },
-          { p: [-0.4, y, 0.1], t: "Verduras", a: 0.12, z: 0.4, o: [-20, 120], color: "#5cc34f" },
-          { p: [0.35, y, 0.2], t: "Leguminosas", a: 0.16, z: 0.4, o: [-20, -170], color: "#d97a2b" },
-          { p: [1.0, y + 0.1, 0.2], t: "Granos enteros", a: 0.2, z: 0.4, o: [-30, 170], color: "#e2b65a" },
-          { p: [0.0, y - 0.45, 0.8], t: "Yogur", a: 0.24, z: 0.4, o: [-40, 130], color: "#5aa9ff" },
+          { p: [-1.05, y, 0.3], t: "Frutas", a: 0.18, z: 0.4, o: [30, -130], color: K.rojo },
+          { p: [-0.4, y, 0.1], t: "Verduras", a: 0.2, z: 0.4, o: [-20, 120], color: "#5cc34f" },
+          { p: [0.35, y, 0.2], t: "Leguminosas", a: 0.22, z: 0.4, o: [-20, -170], color: "#d97a2b" },
+          { p: [1.0, y + 0.1, 0.2], t: "Granos enteros", a: 0.24, z: 0.4, o: [-30, 170], color: "#e2b65a" },
+          { p: [0.0, y - 0.45, 0.8], t: "Yogur", a: 0.26, z: 0.4, o: [-40, 130], color: "#5aa9ff" },
           { p: [-0.6, 0.6, 0.4], t: "Butirato", a: 0.7, z: 1, o: [-50, 150], color: BUT },
         ]}
       />
