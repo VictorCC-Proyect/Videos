@@ -379,7 +379,8 @@ export const ShortVista: React.FC<{ short: ShortDef }> = ({ short }) => (
 /** Cierre comun de todos los shorts: personaje 3D + nombre del canal. */
 export const Cierre: React.FC<{ b: number }> = ({ b }) => (
   <>
-    <Titular b={b} a={0.02} z={1.2} y={280} tam={170} t={<>{canal.nombre.slice(0, 5)}<span style={{ color: K.lima }}>{canal.nombre.slice(5)}</span></>} />
+    <Titular b={b} a={0.02} z={1.2} y={250} tam={160} t={canal.nombre.split(".")[0]} />
+    <Titular b={b} a={0.06} z={1.2} y={420} tam={104} color={K.lima} t={"." + (canal.nombre.split(".")[1] ?? "")} />
     <div style={{ position: "absolute", top: 1030, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: entre(b, 0.15, 0.3) }}>
       <div
         style={{

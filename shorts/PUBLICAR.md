@@ -1,7 +1,7 @@
 # Shorts de nutrición: cómo editarlos y publicarlos
 
-Canal: **NutriFit** (`@nutrifit`). Si ese usuario está ocupado en alguna red, prueba `@nutrifit.mx`,
-`@nutrifit_oficial` o `@soynutrifit`; cambia el usuario en `shorts/canal.json` y vuelve a generar (ver abajo).
+Canal: **NutriFit.ConCiencia** (`@nutrifit.conciencia`). Si ese usuario está ocupado en alguna red, prueba
+`@nutrifitconciencia` o `@nutrifit_conciencia`; cambia el usuario en `shorts/canal.json` y vuelve a generar (ver abajo).
 
 Formato: vertical (9:16), 60–75 s, animación 3D, voz sintética (Piper, español de México), subtítulos grandes.
 

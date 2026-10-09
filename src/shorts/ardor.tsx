@@ -27,16 +27,17 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
     ],
     b,
   );
-  const raya = entre(b, 0.5, 0.58);
+  const raya = entre(b, 0.28, 0.36);
   return (
     <AbsoluteFill>
       <Escena3D cam={cam}>
         <Atleta ej="sentadilla" k={k} brilla={0.5 + 0.5 * Math.sin(b * 30) ** 2} colorBrillo={K.naranja} />
         <Piso color={K.naranja} />
       </Escena3D>
-      <Titular b={b} a={0.02} z={1} y={290} tam={118} t="Ácido láctico" color={K.tinta} />
-      <div style={{ position: "absolute", left: 120, right: 120, top: 345, height: 18, borderRadius: 9, background: K.rojo, transformOrigin: "0 50%", transform: `scaleX(${raya})`, boxShadow: `0 0 30px ${K.rojo}` }} />
-      <Sello b={b} a={0.6} z={1} t="MITO" y={450} />
+      <Titular b={b} a={0.02} z={1} y={290} tam={130} t="Lactato" color={K.tinta} />
+      <div style={{ position: "absolute", left: 250, right: 250, top: 350, height: 18, borderRadius: 9, background: K.rojo, transformOrigin: "0 50%", transform: `scaleX(${raya})`, boxShadow: `0 0 30px ${K.rojo}` }} />
+      <Sello b={b} a={0.32} z={0.62} t="NO" y={450} />
+      <Dato b={b} a={0.66} z={1} t="H⁺ PROTONES" sub="los verdaderos culpables" color={K.rojo} y={450} tam={110} />
     </AbsoluteFill>
   );
 };
@@ -134,7 +135,7 @@ const Acido: React.FC<{ textos: string[] }> = ({ textos }) => {
         <InteriorFibra b={b} pcr={0} atp={6} hplus={50 * acum} brillo={0.2 + acum * 0.6} />
       </Escena3D>
       <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(255,40,40,${0.35 * acum}) 100%)` }} />
-      <Chip b={b} a={0.12} z={0.6} t="H⁺ (iones de hidrógeno)" x={540} y={1100} color={K.rojo} />
+      <Chip b={b} a={0.12} z={0.6} t="H⁺ = PROTONES" x={540} y={1100} color={K.rojo} />
       <Dato b={b} a={0.4} z={1} t={`pH ${ph}`} sub="más ácido" color={K.rojo} y={260} tam={140} />
     </AbsoluteFill>
   );
@@ -372,12 +373,12 @@ const Final: React.FC<{ textos: string[] }> = ({ textos }) => {
 };
 
 const T = [
-  "Ese ardor en las últimas repeticiones... **no** es culpa del ácido láctico, como te contaron.",
+  "Ese ardor en las últimas repeticiones **no** es culpa del lactato. Los verdaderos culpables son los **protones**.",
   "Cuando entrenas intenso, tu músculo pide **ATP** más rápido de lo que el **oxígeno** alcanza a producirlo.",
   "Entonces acelera la **glucólisis**: rompe glucosa a toda velocidad para sacar energía.",
-  "Al gastar tanto ATP se liberan **iones de hidrógeno**, y el músculo se vuelve más ácido: el **pH baja**.",
+  "Al gastar tanto ATP se liberan **protones**, es decir, iones de hidrógeno, y el músculo se vuelve más ácido: el **pH baja**.",
   "Esa acidez, junto con el fosfato y otros metabolitos, activa tus **receptores de dolor**. Eso es el **ardor**.",
-  "¿Y el lactato? En realidad te **ayuda**: se lleva hidrógenos y sirve como **combustible**.",
+  "¿Y el lactato? En realidad te **ayuda**: al formarse atrapa protones y además sirve como **combustible**.",
   "Tu hígado incluso lo vuelve a convertir en glucosa: es el **ciclo de Cori**.",
   "Al parar, el ardor se va en **minutos**. Las agujetas del día siguiente son otra cosa: **microdaño muscular**.",
   "Y si entrenas a alta intensidad, mejoran tus **amortiguadores** y toleras mejor el ardor.",
@@ -388,6 +389,6 @@ const ESCENAS = [Gancho, Demanda, Glucolisis, Acido, Receptor, Lactato, Cori, Ag
 
 export const ARDOR: ShortDef = {
   id: "Short-Ardor",
-  titulo: "¿Por qué te arde el músculo?",
+  titulo: "¿Por qué te arde el músculo? Los protones, no el lactato",
   planos: ESCENAS.map((Escena, i) => ({ id: `ardor-${i}`, seccion: "", textos: [T[i]], Escena })) as PlanoDef[],
 };

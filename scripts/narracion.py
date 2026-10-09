@@ -51,6 +51,8 @@ REEMPLAZOS = [
     (r"\bPCr\b", "fosfocreatina"),
     (r"\bpH\b", "pe hache"),
     (r"(\d+(?:\.\d+)?)\s*g/kg", r"\1 gramos por kilo"),
+    (r"(\d+)\s*mg\b", r"\1 miligramos"),
+    (r"\bGLUT4\b", "glut cuatro"),
     (r"(\d+)\s*g\b", r"\1 gramos"),
     (r"(\d+)\s*kg\b", r"\1 kilos"),
     (r"\s*\(Ca²⁺\)", ""),
