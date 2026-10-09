@@ -220,7 +220,7 @@ export const Epitelio: React.FC<{ abiertas?: number; brillo?: number; moco?: num
       {moco > 0.02 ? (
         <mesh position={[0, 0.1 + (moco * 0.75) / 2, 0]}>
           <boxGeometry args={[9, moco * 0.75, 2.7]} />
-          <meshPhysicalMaterial color={MOCO} emissive={MOCO} emissiveIntensity={0.12} transparent opacity={0.22} roughness={0.2} depthWrite={false} />
+          <meshPhysicalMaterial color="#a8dcff" emissive={MOCO} emissiveIntensity={0.7} transparent opacity={0.32} roughness={0.2} depthWrite={false} />
         </mesh>
       ) : null}
     </group>
