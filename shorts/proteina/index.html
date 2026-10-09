@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>¿Cuánta proteína necesitas?</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("fonts/Inter.woff2") format("woff2"); font-weight: 100 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #061317; }
+      :root {
+        --fondo: #061317; --fondo2: #0c2a2f; --tinta: #f4f7f2; --suave: #9fb8b4;
+        --lima: #c6f432; --naranja: #ff8a3d; --cian: #43e0ff; --rosa: #ff5c8a; --rojo: #ff4d4d; --morado: #a78bfa;
+      }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Inter", sans-serif; color: var(--tinta); background: var(--fondo); }
+      .clip { position: absolute; inset: 0; }
+      #fondo { background: radial-gradient(120% 80% at 50% 30%, var(--fondo2) 0%, var(--fondo) 70%); overflow: hidden; }
+      #fondo .mancha { position: absolute; width: 900px; height: 900px; border-radius: 50%; filter: blur(140px); opacity: 0.32; }
+      #m1 { left: -300px; top: 120px; background: var(--cian); }
+      #m2 { right: -360px; top: 820px; background: var(--lima); opacity: 0.22; }
+      #fondo .puntos { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.07) 2px, transparent 2.5px); background-size: 46px 46px; }
+      .escena { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 300px 70px 760px; gap: 34px; text-align: center; }
+      .titular { font-family: "Anton", sans-serif; font-size: 132px; line-height: 0.98; letter-spacing: 0.5px; text-transform: uppercase; }
+      .medio { font-family: "Anton", sans-serif; font-size: 92px; line-height: 1; text-transform: uppercase; }
+      .chico { font-size: 44px; font-weight: 700; color: var(--suave); line-height: 1.25; }
+      .fila { display: flex; gap: 26px; align-items: center; justify-content: center; flex-wrap: wrap; }
+      .chip { font-weight: 800; font-size: 40px; padding: 16px 30px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 3px solid rgba(255,255,255,0.18); }
+      .tarjeta { background: rgba(9,30,34,0.82); border: 3px solid rgba(255,255,255,0.12); border-radius: 36px; padding: 36px 44px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+      .circ { width: 220px; height: 220px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 70px; color: #071316; }
+      .lima { color: var(--lima); } .naranja { color: var(--naranja); } .cian { color: var(--cian); } .rosa { color: var(--rosa); } .rojo { color: var(--rojo); }
+      #subs { pointer-events: none; }
+      .sub { position: absolute; left: 60px; right: 60px; top: 1190px; text-align: center; font-weight: 900; font-size: 76px; line-height: 1.08; letter-spacing: -0.5px; text-transform: uppercase; color: #fff; opacity: 0; -webkit-text-stroke: 14px #04090b; paint-order: stroke fill; text-shadow: 0 10px 30px rgba(0,0,0,0.55); }
+      .sub em { font-style: normal; color: var(--lima); }
+      #marca { display: flex; justify-content: center; align-items: flex-start; padding-top: 205px; pointer-events: none; }
+      #marca span { font-weight: 800; font-size: 34px; letter-spacing: 1px; color: rgba(244,247,242,0.78); background: rgba(4,12,14,0.45); border: 2px solid rgba(198,244,50,0.45); padding: 10px 26px; border-radius: 999px; }
+      #barra { top: auto; height: 10px; bottom: 0; background: rgba(255,255,255,0.08); }
+      #barra i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--cian), var(--lima)); transform-origin: 0 50%; }
+
+  #p0-q { font-family: "Anton", sans-serif; font-size: 360px; line-height: 0.9; color: var(--lima); text-shadow: 0 0 80px rgba(198,244,50,0.45); }
+  .dosis { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .dosis .num { font-family: "Anton", sans-serif; font-size: 210px; line-height: 0.95; }
+  .dosis .uni { font-weight: 900; font-size: 50px; color: var(--suave); }
+  .regla { position: relative; width: 880px; height: 150px; margin-top: 30px; }
+  .regla .pista { position: absolute; left: 0; right: 0; top: 40px; height: 30px; border-radius: 15px; background: rgba(255,255,255,0.12); }
+  .rango { position: absolute; top: 34px; height: 42px; border-radius: 21px; transform-origin: 0 50%; }
+  .marca { position: absolute; top: 90px; width: 120px; margin-left: -60px; text-align: center; font-weight: 900; font-size: 34px; color: var(--suave); }
+  .marca::before { content: ""; position: absolute; left: 58px; top: -26px; width: 4px; height: 20px; background: rgba(255,255,255,0.4); }
+  .calc { display: flex; flex-direction: column; gap: 26px; align-items: center; }
+  .calc .linea { font-family: "Anton", sans-serif; font-size: 104px; line-height: 1; display: flex; gap: 26px; align-items: baseline; }
+  .calc .linea span { color: var(--suave); font-size: 70px; }
+  .platos { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+  .plato { width: 330px; height: 330px; border-radius: 50%; background: radial-gradient(circle, #f4f7f2 0 54%, #cfe0db 56% 64%, rgba(255,255,255,0.08) 66%); color: #071316; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .plato b { font-family: "Anton", sans-serif; font-size: 66px; line-height: 1; }
+  .plato small { font-weight: 900; font-size: 26px; color: #35514d; }
+  .alimentos { display: flex; flex-direction: column; gap: 26px; width: 900px; }
+  .alimento { display: flex; align-items: center; justify-content: space-between; padding: 26px 40px; }
+  .alimento .que { font-weight: 900; font-size: 46px; text-align: left; }
+  .alimento .que small { display: block; font-size: 30px; color: var(--suave); font-weight: 700; }
+  .alimento .g { font-family: "Anton", sans-serif; font-size: 96px; color: var(--lima); }
+  #p6-flecha { position: absolute; top: -70px; width: 0; height: 0; margin-left: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; border-top: 44px solid var(--lima); }
+  .rinones { width: 420px; height: 300px; }
+  .boton { font-weight: 900; font-size: 56px; color: #071316; background: var(--lima); padding: 28px 70px; border-radius: 999px; box-shadow: 0 0 60px rgba(198,244,50,0.6); }
+  .aviso { font-size: 30px; font-weight: 600; color: var(--suave); max-width: 760px; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="61.254" data-width="1080" data-height="1920">
+      <div id="fondo" class="clip" data-start="0" data-duration="61.254" data-track-index="0">
+        <div class="mancha" id="m1"></div>
+        <div class="mancha" id="m2"></div>
+        <div class="puntos"></div>
+      </div>
+<section class="clip escena" id="p0" data-start="0" data-duration="5.691" data-track-index="1">
+  <div class="chip lima" id="p0-chip">PROTEÍNA AL DÍA</div>
+  <div id="p0-q">¿? g</div>
+</section>
+
+<section class="clip escena" id="p1" data-start="5.391" data-duration="7.119" data-track-index="1">
+  <div class="chip">SEDENTARIO</div>
+  <div class="dosis"><div class="num cian" id="p1-n">0.8</div><div class="uni">g por kg de peso</div></div>
+</section>
+
+<section class="clip escena" id="p2" data-start="12.21" data-duration="6.725" data-track-index="1">
+  <div class="chip">ENTRENAS FUERZA</div>
+  <div class="dosis"><div class="num lima" id="p2-n">1.6–2.2</div><div class="uni">g por kg de peso</div></div>
+  <div class="regla">
+    <div class="pista"></div>
+    <div class="rango" id="p2-r0" style="left: 0; width: 26.7%; background: var(--cian)"></div>
+    <div class="rango" id="p2-r1" style="left: 53.3%; width: 20%; background: var(--lima)"></div>
+    <div class="marca" style="left: 0">0</div>
+    <div class="marca" style="left: 26.7%">0.8</div>
+    <div class="marca" style="left: 53.3%">1.6</div>
+    <div class="marca" style="left: 73.3%">2.2</div>
+    <div class="marca" style="left: 100%">3</div>
+  </div>
+</section>
+
+<section class="clip escena" id="p3" data-start="18.635" data-duration="8.118" data-track-index="1">
+  <div class="chip">SI PESAS 70 KG</div>
+  <div class="calc">
+    <div class="linea" id="p3-a">70 <span>×</span> 1.6 <span>=</span> <b class="cian">112 g</b></div>
+    <div class="linea" id="p3-b">70 <span>×</span> 2.2 <span>=</span> <b class="lima">154 g</b></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p4" data-start="26.453" data-duration="5.854" data-track-index="1">
+  <div class="platos">
+    <div class="plato"><small>DESAYUNO</small><b>20–40 g</b></div>
+    <div class="plato"><small>COMIDA</small><b>20–40 g</b></div>
+    <div class="plato"><small>CENA</small><b>20–40 g</b></div>
+    <div class="plato"><small>COLACIÓN</small><b>20–40 g</b></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p5" data-start="32.007" data-duration="11.566" data-track-index="1">
+  <div class="alimentos">
+    <div class="tarjeta alimento"><div class="que">Pechuga de pollo<small>150 g cocida</small></div><div class="g">~<span id="p5-g0">45</span> g</div></div>
+    <div class="tarjeta alimento"><div class="que">Huevos<small>2 piezas</small></div><div class="g">~<span id="p5-g1">12</span> g</div></div>
+    <div class="tarjeta alimento"><div class="que">Frijoles<small>1 taza cocidos</small></div><div class="g">~<span id="p5-g2">15</span> g</div></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p6" data-start="43.273" data-duration="5.761" data-track-index="1">
+  <div class="chip naranja">PERDER GRASA, NO MÚSCULO</div>
+  <div class="regla" style="margin-top: 110px">
+    <div class="pista"></div>
+    <div class="rango" style="left: 53.3%; width: 20%; background: var(--lima)"></div>
+    <div id="p6-flecha" style="left: 70%"></div>
+    <div class="marca" style="left: 53.3%">1.6</div>
+    <div class="marca" style="left: 73.3%">2.2</div>
+  </div>
+  <div class="medio lima">Parte alta</div>
+</section>
+
+<section class="clip escena" id="p7" data-start="48.734" data-duration="8.547" data-track-index="1">
+  <svg class="rinones" id="p7-r" viewBox="0 0 140 100">
+    <path d="M40 10 C14 10 6 34 8 54 C10 80 30 94 46 88 C58 84 54 66 48 58 C44 50 52 44 54 36 C58 20 54 10 40 10 Z" fill="#c0505a" />
+    <path d="M100 10 C126 10 134 34 132 54 C130 80 110 94 94 88 C82 84 86 66 92 58 C96 50 88 44 86 36 C82 20 86 10 100 10 Z" fill="#c0505a" />
+  </svg>
+  <div class="medio" style="font-size: 80px">Sanos: <span class="lima">sin evidencia</span></div>
+  <div class="chip" id="p7-c">¿Enfermedad renal? → tu médico</div>
+</section>
+
+<section class="clip escena" id="p8" data-start="56.981" data-duration="4.273" data-track-index="1">
+  <div class="titular" id="p8-n" style="font-size: 120px">Come con <span class="lima">ciencia</span></div>
+  <div class="boton" id="p8-b">SÍGUEME</div>
+  <div class="aviso">Contenido educativo. No sustituye la consulta con un profesional de la salud.</div>
+</section>
+      <div id="subs" class="clip" data-start="0" data-duration="61.254" data-track-index="5">
+        <div class="sub" id="sub0">¿Cuánta <em>proteína</em></div>
+        <div class="sub" id="sub1">necesitas al día?</div>
+        <div class="sub" id="sub2">Depende de <em>ti,</em></div>
+        <div class="sub" id="sub3">no de un</div>
+        <div class="sub" id="sub4">número mágico.</div>
+        <div class="sub" id="sub5">Si eres sedentario,</div>
+        <div class="sub" id="sub6">el mínimo recomendado</div>
+        <div class="sub" id="sub7">es <em>0.8</em> <em>g</em></div>
+        <div class="sub" id="sub8"><em>por</em> <em>kilo</em> de</div>
+        <div class="sub" id="sub9">peso corporal.</div>
+        <div class="sub" id="sub10">Si entrenas fuerza</div>
+        <div class="sub" id="sub11">o quieres ganar</div>
+        <div class="sub" id="sub12">músculo:</div>
+        <div class="sub" id="sub13">de <em>1.6</em> <em>a</em></div>
+        <div class="sub" id="sub14"><em>2.2</em> <em>g</em> <em>por</em></div>
+        <div class="sub" id="sub15"><em>kilo.</em></div>
+        <div class="sub" id="sub16">Ejemplo:</div>
+        <div class="sub" id="sub17">si pesas 70</div>
+        <div class="sub" id="sub18">kilos,</div>
+        <div class="sub" id="sub19">son entre <em>112</em></div>
+        <div class="sub" id="sub20"><em>y</em> <em>154</em> <em>g</em></div>
+        <div class="sub" id="sub21">de proteína al</div>
+        <div class="sub" id="sub22">día.</div>
+        <div class="sub" id="sub23">Repártela en <em>3</em></div>
+        <div class="sub" id="sub24"><em>o</em> <em>4</em> <em>comidas,</em></div>
+        <div class="sub" id="sub25">con unos <em>20</em></div>
+        <div class="sub" id="sub26"><em>a</em> <em>40</em> <em>g</em></div>
+        <div class="sub" id="sub27">en cada una.</div>
+        <div class="sub" id="sub28">Como referencia:</div>
+        <div class="sub" id="sub29">150 g de</div>
+        <div class="sub" id="sub30">pechuga de pollo</div>
+        <div class="sub" id="sub31">cocida aportan</div>
+        <div class="sub" id="sub32">unos <em>45</em> <em>g;</em></div>
+        <div class="sub" id="sub33">dos huevos,</div>
+        <div class="sub" id="sub34">unos <em>12;</em></div>
+        <div class="sub" id="sub35">y una taza</div>
+        <div class="sub" id="sub36">de frijoles,</div>
+        <div class="sub" id="sub37">unos <em>15.</em></div>
+        <div class="sub" id="sub38">Si quieres perder</div>
+        <div class="sub" id="sub39">grasa sin perder</div>
+        <div class="sub" id="sub40">músculo,</div>
+        <div class="sub" id="sub41">apunta a la</div>
+        <div class="sub" id="sub42"><em>parte</em> <em>alta</em> del</div>
+        <div class="sub" id="sub43">rango.</div>
+        <div class="sub" id="sub44">¿Mucha proteína</div>
+        <div class="sub" id="sub45">daña el riñón?</div>
+        <div class="sub" id="sub46">En personas sanas</div>
+        <div class="sub" id="sub47"><em>no</em> <em>hay</em> <em>evidencia.</em></div>
+        <div class="sub" id="sub48">Si ya tienes</div>
+        <div class="sub" id="sub49">enfermedad renal,</div>
+        <div class="sub" id="sub50">consulta a tu</div>
+        <div class="sub" id="sub51">médico.</div>
+        <div class="sub" id="sub52">Sígueme para más</div>
+        <div class="sub" id="sub53"><em>nutrición</em> <em>explicada</em></div>
+        <div class="sub" id="sub54"><em>con</em> <em>ciencia.</em></div>
+      </div>
+      <div id="marca" class="clip" data-start="0" data-duration="61.254" data-track-index="6"><span>@comeconciencia</span></div>
+      <div id="barra" class="clip" data-start="0" data-duration="61.254" data-track-index="7"><i id="barra-i"></i></div>
+      <audio id="voz0" src="audio/b00.mp3" data-start="0.15" data-duration="4.841" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz1" src="audio/b01.mp3" data-start="5.541" data-duration="6.269" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz2" src="audio/b02.mp3" data-start="12.36" data-duration="5.875" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz3" src="audio/b03.mp3" data-start="18.785" data-duration="7.268" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz4" src="audio/b04.mp3" data-start="26.603" data-duration="5.004" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz5" src="audio/b05.mp3" data-start="32.157" data-duration="10.716" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz6" src="audio/b06.mp3" data-start="43.423" data-duration="4.911" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz7" src="audio/b07.mp3" data-start="48.884" data-duration="7.697" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz8" src="audio/b08.mp3" data-start="57.131" data-duration="3.123" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const B = [0,5.391,12.21,18.635,26.453,32.007,43.273,48.734,56.981];
+      const D = [5.391,6.819,6.425,7.818,5.554,11.266,5.461,8.247,3.673];
+      const T = 61.254;
+      const CANAL = {"nombre":"Come Con Ciencia","handle":"@comeconciencia"};
+      const tl = gsap.timeline({ paused: true });
+      // Fondo vivo y barra de progreso
+      tl.fromTo("#m1", { x: 0, y: 0 }, { x: 260, y: 380, duration: T, ease: "sine.inOut" }, 0);
+      tl.fromTo("#m2", { x: 0, y: 0 }, { x: -300, y: -420, duration: T, ease: "sine.inOut" }, 0);
+      tl.fromTo("#barra-i", { scaleX: 0 }, { scaleX: 1, duration: T, ease: "none" }, 0);
+      // Entrada y salida de cada escena (fundido cruzado)
+      [[0,5.691,false],[5.391,12.51,false],[12.21,18.935,false],[18.635,26.753,false],[26.453,32.307,false],[32.007,43.573,false],[43.273,49.034,false],[48.734,57.281,false],[56.981,61.254,true]].forEach(([a, b, ultima], k) => {
+        const el = document.querySelectorAll(".escena")[k];
+        if (!el) return;
+        tl.fromTo(el, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, a);
+        if (!ultima) tl.to(el, { opacity: 0, scale: 0.96, duration: 0.3, ease: "power2.in" }, b - 0.3);
+      });
+      // Subtitulos
+      [[0.15,1.045],[1.045,2.36],[2.36,3.36],[3.36,3.833],[3.833,5.241],[5.541,7.232],[7.232,8.781],[8.781,9.415],[9.415,10.26],[10.26,12.06],[12.36,13.755],[13.755,14.93],[14.93,15.885],[15.885,16.546],[16.546,17.28],[17.28,18.485],[18.785,19.897],[19.897,20.923],[20.923,21.863],[21.863,23.06],[23.06,23.744],[23.744,25.027],[25.027,26.303],[26.603,27.66],[27.66,28.858],[28.858,29.704],[29.704,30.197],[30.197,31.857],[32.157,33.657],[33.657,34.3],[34.3,35.515],[35.515,36.586],[36.586,37.658],[37.658,38.801],[38.801,39.73],[39.73,40.515],[40.515,41.73],[41.73,43.123],[43.423,44.416],[44.416,45.354],[45.354,46.072],[46.072,46.734],[46.734,47.561],[47.561,48.584],[48.884,49.733],[49.733,50.901],[50.901,51.857],[51.857,53.184],[53.184,53.874],[53.874,55.042],[55.042,55.785],[55.785,56.831],[57.131,58.062],[58.062,59.158],[59.158,60.504]].forEach(([a, b], k) => {
+        const el = "#sub" + k;
+        tl.fromTo(el, { opacity: 0, scale: 0.82, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.18, ease: "back.out(2.5)" }, a);
+        tl.set(el, { opacity: 0 }, b);
+      });
+
+  // 0 · Gancho
+  tl.from("#p0-chip", { y: -40, opacity: 0, duration: 0.4 }, B[0] + 0.05);
+  tl.from("#p0-q", { scale: 0.3, opacity: 0, duration: 0.5, ease: "back.out(2.2)" }, B[0] + 0.1);
+  tl.to("#p0-q", { rotation: 6, duration: 0.3, yoyo: true, repeat: 9, ease: "sine.inOut" }, B[0] + 0.6);
+
+  // 1 · 0.8 g/kg
+  tl.from("#p1 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[1] + 0.2);
+  tl.fromTo("#p1-n", { textContent: 0 }, { textContent: 0.8, snap: { textContent: 0.1 }, duration: 1.0, ease: "power2.out" }, B[1] + 2.0);
+
+  // 2 · 1.6-2.2 g/kg
+  tl.from("#p2 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[2] + 0.2);
+  tl.from("#p2-n", { scale: 0.5, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[2] + 2.4);
+  tl.from("#p2-r0", { scaleX: 0, duration: 0.5 }, B[2] + 0.6);
+  tl.from("#p2-r1", { scaleX: 0, duration: 0.8, ease: "power2.out" }, B[2] + 2.6);
+
+  // 3 · Ejemplo 70 kg
+  tl.from("#p3 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[3] + 0.2);
+  tl.from("#p3-a", { x: -200, opacity: 0, duration: 0.5, ease: "power3.out" }, B[3] + 2.6);
+  tl.from("#p3-b", { x: 200, opacity: 0, duration: 0.5, ease: "power3.out" }, B[3] + 3.6);
+
+  // 4 · Reparto en comidas
+  tl.from("#p4 .plato", { scale: 0, rotation: -90, stagger: 0.3, duration: 0.5, ease: "back.out(1.8)" }, B[4] + 0.3);
+
+  // 5 · Alimentos
+  [0, 1, 2].forEach((i) => {
+    const t = B[5] + [0.6, 4.2, 6.4][i];
+    tl.from(`#p5 .alimento:nth-child(${i + 1})`, { x: i % 2 ? 300 : -300, opacity: 0, duration: 0.5, ease: "power3.out" }, t);
+    const fin = [45, 12, 15][i];
+    tl.fromTo(`#p5-g${i}`, { textContent: 0 }, { textContent: fin, snap: { textContent: 1 }, duration: 1.2, ease: "power2.out" }, t + 0.3);
+  });
+
+  // 6 · Parte alta del rango
+  tl.from("#p6 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[6] + 0.2);
+  tl.fromTo("#p6-flecha", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "bounce.out" }, B[6] + 2.6);
+  tl.to("#p6-flecha", { y: -14, duration: 0.35, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[6] + 3.2);
+
+  // 7 · Rinon
+  tl.from("#p7-r", { scale: 0.4, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[7] + 0.2);
+  tl.from("#p7 .medio", { y: 50, opacity: 0, duration: 0.45 }, B[7] + 2.0);
+  tl.from("#p7-c", { y: 50, opacity: 0, duration: 0.45 }, B[7] + 4.4);
+
+  // 8 · Cierre
+  tl.from("#p8-n", { y: 80, opacity: 0, duration: 0.6, ease: "power3.out" }, B[8] + 0.1);
+  tl.from("#p8-b", { scale: 0, duration: 0.5, ease: "back.out(2.5)" }, B[8] + 0.7);
+  tl.to("#p8-b", { scale: 1.08, duration: 0.45, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[8] + 1.3);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

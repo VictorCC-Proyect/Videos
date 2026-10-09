@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>¿Por qué te arde el músculo?</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-weight: 400; }
+      @font-face { font-family: "Inter"; src: url("fonts/Inter.woff2") format("woff2"); font-weight: 100 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #061317; }
+      :root {
+        --fondo: #061317; --fondo2: #0c2a2f; --tinta: #f4f7f2; --suave: #9fb8b4;
+        --lima: #c6f432; --naranja: #ff8a3d; --cian: #43e0ff; --rosa: #ff5c8a; --rojo: #ff4d4d; --morado: #a78bfa;
+      }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Inter", sans-serif; color: var(--tinta); background: var(--fondo); }
+      .clip { position: absolute; inset: 0; }
+      #fondo { background: radial-gradient(120% 80% at 50% 30%, var(--fondo2) 0%, var(--fondo) 70%); overflow: hidden; }
+      #fondo .mancha { position: absolute; width: 900px; height: 900px; border-radius: 50%; filter: blur(140px); opacity: 0.32; }
+      #m1 { left: -300px; top: 120px; background: var(--cian); }
+      #m2 { right: -360px; top: 820px; background: var(--lima); opacity: 0.22; }
+      #fondo .puntos { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.07) 2px, transparent 2.5px); background-size: 46px 46px; }
+      .escena { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 300px 70px 760px; gap: 34px; text-align: center; }
+      .titular { font-family: "Anton", sans-serif; font-size: 132px; line-height: 0.98; letter-spacing: 0.5px; text-transform: uppercase; }
+      .medio { font-family: "Anton", sans-serif; font-size: 92px; line-height: 1; text-transform: uppercase; }
+      .chico { font-size: 44px; font-weight: 700; color: var(--suave); line-height: 1.25; }
+      .fila { display: flex; gap: 26px; align-items: center; justify-content: center; flex-wrap: wrap; }
+      .chip { font-weight: 800; font-size: 40px; padding: 16px 30px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 3px solid rgba(255,255,255,0.18); }
+      .tarjeta { background: rgba(9,30,34,0.82); border: 3px solid rgba(255,255,255,0.12); border-radius: 36px; padding: 36px 44px; box-shadow: 0 30px 80px rgba(0,0,0,0.45); }
+      .circ { width: 220px; height: 220px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 70px; color: #071316; }
+      .lima { color: var(--lima); } .naranja { color: var(--naranja); } .cian { color: var(--cian); } .rosa { color: var(--rosa); } .rojo { color: var(--rojo); }
+      #subs { pointer-events: none; }
+      .sub { position: absolute; left: 60px; right: 60px; top: 1190px; text-align: center; font-weight: 900; font-size: 76px; line-height: 1.08; letter-spacing: -0.5px; text-transform: uppercase; color: #fff; opacity: 0; -webkit-text-stroke: 14px #04090b; paint-order: stroke fill; text-shadow: 0 10px 30px rgba(0,0,0,0.55); }
+      .sub em { font-style: normal; color: var(--lima); }
+      #marca { display: flex; justify-content: center; align-items: flex-start; padding-top: 205px; pointer-events: none; }
+      #marca span { font-weight: 800; font-size: 34px; letter-spacing: 1px; color: rgba(244,247,242,0.78); background: rgba(4,12,14,0.45); border: 2px solid rgba(198,244,50,0.45); padding: 10px 26px; border-radius: 999px; }
+      #barra { top: auto; height: 10px; bottom: 0; background: rgba(255,255,255,0.08); }
+      #barra i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--cian), var(--lima)); transform-origin: 0 50%; }
+
+  .tachado { position: relative; }
+  #a0-raya { position: absolute; left: -30px; right: -30px; top: 50%; height: 18px; margin-top: -9px; background: var(--rojo); border-radius: 9px; transform-origin: 0 50%; box-shadow: 0 0 30px rgba(255,77,77,0.8); }
+  #a0-mito { font-family: "Anton", sans-serif; font-size: 170px; line-height: 1; color: var(--rojo); border: 14px solid var(--rojo); border-radius: 30px; padding: 4px 50px; }
+  .llama { width: 260px; height: 320px; }
+  .medidor { width: 860px; display: flex; flex-direction: column; gap: 46px; }
+  .medidor .fila { justify-content: flex-start; flex-wrap: nowrap; gap: 24px; }
+  .medidor label { width: 300px; text-align: right; font-weight: 900; font-size: 38px; white-space: nowrap; }
+  .pista { flex: 1; height: 80px; border-radius: 40px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .pista i { display: block; height: 100%; width: 100%; border-radius: 40px; transform-origin: 0 50%; }
+  #a1-atp { background: linear-gradient(90deg, #ff6a2a, var(--naranja)); }
+  #a1-o2 { background: linear-gradient(90deg, #1fa7d6, var(--cian)); }
+  .hexa { width: 300px; height: 300px; }
+  #a2-mitades { position: relative; width: 640px; height: 220px; }
+  .mitad { position: absolute; top: 20px; width: 180px; height: 180px; border-radius: 34px; background: var(--naranja); color: #071316; font-family: "Anton", sans-serif; font-size: 40px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  #a2-m1 { left: 120px; } #a2-m2 { right: 120px; }
+  #a3-zona { position: relative; width: 860px; height: 420px; border-radius: 40px; background: linear-gradient(180deg, rgba(217,80,91,0.35), rgba(159,31,44,0.25)); border: 3px solid rgba(255,120,120,0.35); overflow: hidden; }
+  .h { position: absolute; width: 74px; height: 74px; border-radius: 50%; background: var(--rojo); color: #fff; font-weight: 900; font-size: 30px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 24px rgba(255,77,77,0.8); }
+  .ph { font-family: "Anton", sans-serif; font-size: 170px; line-height: 1; }
+  .ph span { color: var(--rojo); }
+  .receptor { position: relative; width: 420px; height: 420px; }
+  #a4-anillo { position: absolute; inset: 0; border-radius: 50%; border: 12px solid rgba(255,255,255,0.25); }
+  #a4-nucleo { position: absolute; inset: 90px; border-radius: 50%; background: #3a4a50; }
+  .ion { position: absolute; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px; color: #fff; }
+  #a4-t { font-family: "Anton", sans-serif; font-size: 160px; line-height: 1; background: linear-gradient(0deg, var(--rojo), var(--naranja) 60%, #ffd23f); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .heroe { position: relative; width: 760px; height: 420px; }
+  #a5-lac { position: absolute; left: 250px; top: 80px; width: 260px; height: 260px; border-radius: 50%; background: var(--lima); color: #071316; font-family: "Anton", sans-serif; font-size: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 80px rgba(198,244,50,0.5); }
+  .ciclo { position: relative; width: 820px; height: 560px; }
+  .nodo { position: absolute; top: 170px; width: 250px; height: 250px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 50px; color: #071316; }
+  #a6-mus { left: 0; background: #e0505a; color: #fff; }
+  #a6-hig { right: 0; background: #b5653a; color: #fff; }
+  .viaje { position: absolute; left: 140px; width: 540px; text-align: center; font-weight: 900; font-size: 36px; }
+  #a6-v1 { top: 30px; color: var(--lima); } #a6-v2 { top: 500px; color: var(--cian); }
+  .punto { position: absolute; width: 46px; height: 46px; border-radius: 50%; }
+  #a6-p1 { background: var(--lima); left: 220px; top: 150px; box-shadow: 0 0 24px var(--lima); }
+  #a6-p2 { background: var(--cian); left: 554px; top: 394px; box-shadow: 0 0 24px var(--cian); }
+  .duo { display: flex; gap: 30px; width: 940px; }
+  .duo .tarjeta { flex: 1; display: flex; flex-direction: column; gap: 18px; align-items: center; }
+  .duo .medio { font-size: 74px; }
+  .duo .chico { font-size: 38px; color: var(--tinta); }
+  .escudo2 { width: 330px; height: 380px; }
+  .boton { font-weight: 900; font-size: 56px; color: #071316; background: var(--lima); padding: 28px 70px; border-radius: 999px; box-shadow: 0 0 60px rgba(198,244,50,0.6); }
+  .aviso { font-size: 30px; font-weight: 600; color: var(--suave); max-width: 760px; }
+
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="64.3" data-width="1080" data-height="1920">
+      <div id="fondo" class="clip" data-start="0" data-duration="64.3" data-track-index="0">
+        <div class="mancha" id="m1"></div>
+        <div class="mancha" id="m2"></div>
+        <div class="puntos"></div>
+      </div>
+<section class="clip escena" id="a0" data-start="0" data-duration="6.423" data-track-index="1">
+  <svg class="llama" id="a0-llama" viewBox="0 0 100 124">
+    <defs>
+      <linearGradient id="a0-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff4d4d" /><stop offset="0.6" stop-color="#ff8a3d" /><stop offset="1" stop-color="#ffd23f" /></linearGradient>
+    </defs>
+    <path d="M50 4 C58 30 86 44 86 78 C86 104 68 120 50 120 C32 120 14 104 14 80 C14 60 26 50 32 36 C36 52 42 58 48 60 C44 40 44 22 50 4 Z" fill="url(#a0-g)" />
+  </svg>
+  <div class="tachado"><div class="medio">Ácido láctico</div><div id="a0-raya"></div></div>
+  <div id="a0-mito">MITO</div>
+</section>
+
+<section class="clip escena" id="a1" data-start="6.123" data-duration="7.073" data-track-index="1">
+  <div class="medio">Entrenas intenso</div>
+  <div class="medidor">
+    <div class="fila"><label class="naranja">ATP que pides</label><div class="pista"><i id="a1-atp"></i></div></div>
+    <div class="fila"><label class="cian">Oxígeno</label><div class="pista"><i id="a1-o2"></i></div></div>
+  </div>
+  <div class="chip rojo" id="a1-gap">No alcanza</div>
+</section>
+
+<section class="clip escena" id="a2" data-start="12.896" data-duration="6.376" data-track-index="1">
+  <svg class="hexa" id="a2-hex" viewBox="0 0 100 100">
+    <polygon points="50,6 88,28 88,72 50,94 12,72 12,28" fill="rgba(255,138,61,0.2)" stroke="#ff8a3d" stroke-width="5" />
+    <text x="50" y="58" text-anchor="middle" font-family="Anton" font-size="18" fill="#f4f7f2">GLUCOSA</text>
+  </svg>
+  <div id="a2-mitades">
+    <div class="mitad" id="a2-m1">PIRUVATO</div>
+    <div class="mitad" id="a2-m2">PIRUVATO</div>
+  </div>
+  <div class="medio naranja" id="a2-t">Glucólisis a tope</div>
+</section>
+
+<section class="clip escena" id="a3" data-start="18.972" data-duration="8.594" data-track-index="1">
+  <div id="a3-zona">
+    <div class="h" style="left: 60px; top: 60px">H+</div><div class="h" style="left: 200px; top: 230px">H+</div>
+    <div class="h" style="left: 330px; top: 90px">H+</div><div class="h" style="left: 470px; top: 280px">H+</div>
+    <div class="h" style="left: 560px; top: 60px">H+</div><div class="h" style="left: 700px; top: 200px">H+</div>
+    <div class="h" style="left: 110px; top: 320px">H+</div><div class="h" style="left: 400px; top: 190px">H+</div>
+    <div class="h" style="left: 640px; top: 320px">H+</div><div class="h" style="left: 250px; top: 40px">H+</div>
+    <div class="h" style="left: 760px; top: 40px">H+</div><div class="h" style="left: 30px; top: 190px">H+</div>
+  </div>
+  <div class="ph">pH <span id="a3-ph">7.1</span></div>
+</section>
+
+<section class="clip escena" id="a4" data-start="27.266" data-duration="8.048" data-track-index="1">
+  <div class="receptor">
+    <div id="a4-anillo"></div>
+    <div id="a4-nucleo"></div>
+    <div class="ion" style="left: -40px; top: 40px; background: var(--rojo)">H+</div>
+    <div class="ion" style="right: -40px; top: 70px; background: var(--rosa)">Pi</div>
+    <div class="ion" style="left: 10px; bottom: -20px; background: var(--rojo)">H+</div>
+    <div class="ion" style="right: 0; bottom: -30px; background: var(--morado)">+</div>
+  </div>
+  <div class="chip">Receptores de dolor</div>
+  <div id="a4-t">ARDOR</div>
+</section>
+
+<section class="clip escena" id="a5" data-start="35.014" data-duration="6.516" data-track-index="1">
+  <div class="heroe">
+    <div id="a5-lac">LACTATO</div>
+    <div class="h" id="a5-h1" style="left: 20px; top: 40px">H+</div>
+    <div class="h" id="a5-h2" style="left: 660px; top: 60px">H+</div>
+    <div class="h" id="a5-h3" style="left: 80px; top: 320px">H+</div>
+    <div class="h" id="a5-h4" style="left: 620px; top: 310px">H+</div>
+  </div>
+  <div class="fila"><div class="chip lima">✓ Se lleva H+</div><div class="chip lima">✓ Combustible</div></div>
+</section>
+
+<section class="clip escena" id="a6" data-start="41.23" data-duration="5.517" data-track-index="1">
+  <div class="ciclo">
+    <svg style="position: absolute; inset: 0" viewBox="0 0 820 560">
+      <path d="M200 190 C300 90 520 90 620 190" fill="none" stroke="#c6f432" stroke-width="8" stroke-linecap="round" />
+      <path d="M620 400 C520 500 300 500 200 400" fill="none" stroke="#43e0ff" stroke-width="8" stroke-linecap="round" />
+      <polygon points="620,190 590,182 608,160" fill="#c6f432" />
+      <polygon points="200,400 230,408 212,430" fill="#43e0ff" />
+    </svg>
+    <div class="nodo" id="a6-mus">MÚSCULO</div>
+    <div class="nodo" id="a6-hig">HÍGADO</div>
+    <div class="viaje" id="a6-v1">lactato →</div>
+    <div class="viaje" id="a6-v2">← glucosa</div>
+    <div class="punto" id="a6-p1"></div>
+    <div class="punto" id="a6-p2"></div>
+  </div>
+  <div class="medio lima">Ciclo de Cori</div>
+</section>
+
+<section class="clip escena" id="a7" data-start="46.447" data-duration="7.874" data-track-index="1">
+  <div class="duo">
+    <div class="tarjeta" id="a7-a"><div class="chico">ARDOR</div><div class="medio naranja">Minutos</div><div class="chico" style="color: var(--suave)">se va al parar</div></div>
+    <div class="tarjeta" id="a7-b"><div class="chico">AGUJETAS</div><div class="medio cian">24–72 h</div><div class="chico" style="color: var(--suave)">microdaño muscular</div></div>
+  </div>
+</section>
+
+<section class="clip escena" id="a8" data-start="54.021" data-duration="6.318" data-track-index="1">
+  <svg class="escudo2" id="a8-e" viewBox="0 0 120 140">
+    <path d="M60 6 L110 24 V66 C110 100 88 124 60 134 C32 124 10 100 10 66 V24 Z" fill="rgba(67,224,255,0.15)" stroke="#43e0ff" stroke-width="6" />
+    <text x="60" y="80" text-anchor="middle" font-family="Anton" font-size="30" fill="#43e0ff">H+</text>
+  </svg>
+  <div class="medio cian">Amortiguadores ↑</div>
+  <div class="fila" id="a8-chips"><div class="chip">Bicarbonato</div><div class="chip">Carnosina</div></div>
+</section>
+
+<section class="clip escena" id="a9" data-start="60.039" data-duration="4.261" data-track-index="1">
+  <div class="titular" id="a9-n" style="font-size: 120px">Come con <span class="lima">ciencia</span></div>
+  <div class="boton" id="a9-b">SÍGUEME</div>
+  <div class="aviso">Contenido educativo. No sustituye la consulta con un profesional de la salud.</div>
+</section>
+      <div id="subs" class="clip" data-start="0" data-duration="64.3" data-track-index="5">
+        <div class="sub" id="sub0">Ese ardor en</div>
+        <div class="sub" id="sub1">las últimas repeticiones...</div>
+        <div class="sub" id="sub2"><em>no</em> es culpa</div>
+        <div class="sub" id="sub3">del ácido láctico,</div>
+        <div class="sub" id="sub4">como te contaron.</div>
+        <div class="sub" id="sub5">Cuando entrenas</div>
+        <div class="sub" id="sub6">intenso,</div>
+        <div class="sub" id="sub7">tu músculo pide</div>
+        <div class="sub" id="sub8"><em>ATP</em> más rápido</div>
+        <div class="sub" id="sub9">de lo que</div>
+        <div class="sub" id="sub10">el <em>oxígeno</em> alcanza</div>
+        <div class="sub" id="sub11">a producirlo.</div>
+        <div class="sub" id="sub12">Entonces acelera</div>
+        <div class="sub" id="sub13">la <em>glucólisis:</em></div>
+        <div class="sub" id="sub14">rompe glucosa a</div>
+        <div class="sub" id="sub15">toda velocidad</div>
+        <div class="sub" id="sub16">para sacar energía.</div>
+        <div class="sub" id="sub17">Al gastar tanto</div>
+        <div class="sub" id="sub18">ATP se liberan</div>
+        <div class="sub" id="sub19"><em>iones</em> <em>de</em> <em>hidrógeno,</em></div>
+        <div class="sub" id="sub20">y el músculo</div>
+        <div class="sub" id="sub21">se vuelve más</div>
+        <div class="sub" id="sub22">ácido:</div>
+        <div class="sub" id="sub23">el <em>pH</em> <em>baja.</em></div>
+        <div class="sub" id="sub24">Esa acidez,</div>
+        <div class="sub" id="sub25">junto con el</div>
+        <div class="sub" id="sub26">fosfato y otros</div>
+        <div class="sub" id="sub27">metabolitos,</div>
+        <div class="sub" id="sub28">activa tus <em>receptores</em></div>
+        <div class="sub" id="sub29"><em>de</em> <em>dolor.</em></div>
+        <div class="sub" id="sub30">Eso es el</div>
+        <div class="sub" id="sub31"><em>ardor.</em></div>
+        <div class="sub" id="sub32">¿Y el lactato?</div>
+        <div class="sub" id="sub33">En realidad te</div>
+        <div class="sub" id="sub34"><em>ayuda:</em></div>
+        <div class="sub" id="sub35">se lleva hidrógenos</div>
+        <div class="sub" id="sub36">y sirve como</div>
+        <div class="sub" id="sub37"><em>combustible.</em></div>
+        <div class="sub" id="sub38">Tu hígado incluso</div>
+        <div class="sub" id="sub39">lo vuelve a</div>
+        <div class="sub" id="sub40">convertir en glucosa:</div>
+        <div class="sub" id="sub41">es el <em>ciclo</em></div>
+        <div class="sub" id="sub42"><em>de</em> <em>Cori.</em></div>
+        <div class="sub" id="sub43">Al parar,</div>
+        <div class="sub" id="sub44">el ardor se</div>
+        <div class="sub" id="sub45">va en <em>minutos.</em></div>
+        <div class="sub" id="sub46">Las agujetas del</div>
+        <div class="sub" id="sub47">día siguiente son</div>
+        <div class="sub" id="sub48">otra cosa:</div>
+        <div class="sub" id="sub49"><em>microdaño</em> <em>muscular.</em></div>
+        <div class="sub" id="sub50">Y si entrenas</div>
+        <div class="sub" id="sub51">a alta intensidad,</div>
+        <div class="sub" id="sub52">mejoran tus <em>amortiguadores</em></div>
+        <div class="sub" id="sub53">y toleras mejor</div>
+        <div class="sub" id="sub54">el ardor.</div>
+        <div class="sub" id="sub55">Sígueme para más</div>
+        <div class="sub" id="sub56"><em>nutrición</em> <em>explicada</em></div>
+        <div class="sub" id="sub57"><em>con</em> <em>ciencia.</em></div>
+      </div>
+      <div id="marca" class="clip" data-start="0" data-duration="64.3" data-track-index="6"><span>@comeconciencia</span></div>
+      <div id="barra" class="clip" data-start="0" data-duration="64.3" data-track-index="7"><i id="barra-i"></i></div>
+      <audio id="voz0" src="audio/b00.mp3" data-start="0.15" data-duration="5.573" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz1" src="audio/b01.mp3" data-start="6.273" data-duration="6.223" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz2" src="audio/b02.mp3" data-start="13.046" data-duration="5.526" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz3" src="audio/b03.mp3" data-start="19.122" data-duration="7.744" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz4" src="audio/b04.mp3" data-start="27.416" data-duration="7.198" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz5" src="audio/b05.mp3" data-start="35.164" data-duration="5.666" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz6" src="audio/b06.mp3" data-start="41.38" data-duration="4.667" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz7" src="audio/b07.mp3" data-start="46.597" data-duration="7.024" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz8" src="audio/b08.mp3" data-start="54.171" data-duration="5.468" data-track-index="9" data-volume="1"></audio>
+      <audio id="voz9" src="audio/b09.mp3" data-start="60.189" data-duration="3.111" data-track-index="9" data-volume="1"></audio>
+    </div>
+    <script>
+      const B = [0,6.123,12.896,18.972,27.266,35.014,41.23,46.447,54.021,60.039];
+      const D = [6.123,6.773,6.076,8.294,7.748,6.216,5.217,7.574,6.018,3.661];
+      const T = 64.3;
+      const CANAL = {"nombre":"Come Con Ciencia","handle":"@comeconciencia"};
+      const tl = gsap.timeline({ paused: true });
+      // Fondo vivo y barra de progreso
+      tl.fromTo("#m1", { x: 0, y: 0 }, { x: 260, y: 380, duration: T, ease: "sine.inOut" }, 0);
+      tl.fromTo("#m2", { x: 0, y: 0 }, { x: -300, y: -420, duration: T, ease: "sine.inOut" }, 0);
+      tl.fromTo("#barra-i", { scaleX: 0 }, { scaleX: 1, duration: T, ease: "none" }, 0);
+      // Entrada y salida de cada escena (fundido cruzado)
+      [[0,6.423,false],[6.123,13.196,false],[12.896,19.272,false],[18.972,27.566,false],[27.266,35.314,false],[35.014,41.53,false],[41.23,46.747,false],[46.447,54.321,false],[54.021,60.339,false],[60.039,64.3,true]].forEach(([a, b, ultima], k) => {
+        const el = document.querySelectorAll(".escena")[k];
+        if (!el) return;
+        tl.fromTo(el, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, a);
+        if (!ultima) tl.to(el, { opacity: 0, scale: 0.96, duration: 0.3, ease: "power2.in" }, b - 0.3);
+      });
+      // Subtitulos
+      [[0.15,0.821],[0.821,2.627],[2.627,3.246],[3.246,4.433],[4.433,5.973],[6.273,7.178],[7.178,7.914],[7.914,8.819],[8.819,9.667],[9.667,10.233],[10.233,11.308],[11.308,12.746],[13.046,14.045],[14.045,15.162],[15.162,16.103],[16.103,16.985],[16.985,18.822],[19.122,20.228],[20.228,21.265],[21.265,22.925],[22.925,23.824],[23.824,24.792],[24.792,25.552],[25.552,27.116],[27.416,28.337],[28.337,29.086],[29.086,30.007],[30.007,30.986],[30.986,32.253],[32.253,33.232],[33.232,33.808],[33.808,34.864],[35.164,36.398],[36.398,37.24],[37.24,37.857],[37.857,38.979],[38.979,39.708],[39.708,41.08],[41.38,42.38],[42.38,43.047],[43.047,44.491],[44.491,45.158],[45.158,46.297],[46.597,47.384],[47.384,48.058],[48.058,49.294],[49.294,50.249],[50.249,51.261],[51.261,52.104],[52.104,53.871],[54.171,54.96],[54.96,56.257],[56.257,57.779],[57.779,58.681],[58.681,59.889],[60.189,61.117],[61.117,62.208],[62.208,63.55]].forEach(([a, b], k) => {
+        const el = "#sub" + k;
+        tl.fromTo(el, { opacity: 0, scale: 0.82, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.18, ease: "back.out(2.5)" }, a);
+        tl.set(el, { opacity: 0 }, b);
+      });
+
+  // 0 · Gancho: ardor, no es el acido lactico
+  tl.from("#a0-llama", { scale: 0.3, opacity: 0, duration: 0.5, ease: "back.out(2)", transformOrigin: "50% 100%" }, B[0] + 0.05);
+  tl.to("#a0-llama", { scaleY: 1.08, scaleX: 0.95, duration: 0.35, yoyo: true, repeat: 13, ease: "sine.inOut", transformOrigin: "50% 100%" }, B[0] + 0.55);
+  tl.from("#a0 .tachado", { y: 40, opacity: 0, duration: 0.4 }, B[0] + 0.6);
+  tl.from("#a0-raya", { scaleX: 0, duration: 0.35, ease: "power2.out" }, B[0] + 2.2);
+  tl.fromTo("#a0-mito", { scale: 2.6, rotation: -24, opacity: 0 }, { scale: 1, rotation: -8, opacity: 1, duration: 0.3, ease: "power4.in" }, B[0] + 2.6);
+
+  // 1 · Demanda de ATP vs oxigeno
+  tl.fromTo("#a1-atp", { scaleX: 0.05 }, { scaleX: 1, duration: 1.6, ease: "power2.out" }, B[1] + 0.6);
+  tl.fromTo("#a1-o2", { scaleX: 0.05 }, { scaleX: 0.45, duration: 2.4, ease: "power1.out" }, B[1] + 0.9);
+  tl.from("#a1-gap", { scale: 0, duration: 0.4, ease: "back.out(2.5)" }, B[1] + 3.6);
+
+  // 2 · Glucolisis: glucosa -> 2 piruvato
+  tl.from("#a2-hex", { scale: 0, rotation: -120, duration: 0.6, ease: "back.out(1.6)" }, B[2] + 0.2);
+  tl.to("#a2-hex", { rotation: 360, duration: 2.5, ease: "power2.in" }, B[2] + 0.8);
+  tl.from("#a2-m1", { x: 200, scale: 0, duration: 0.5, ease: "back.out(2)" }, B[2] + 2.2);
+  tl.from("#a2-m2", { x: -200, scale: 0, duration: 0.5, ease: "back.out(2)" }, B[2] + 2.2);
+  tl.from("#a2-t", { y: 50, opacity: 0, duration: 0.45 }, B[2] + 2.8);
+
+  // 3 · H+ se acumulan, el pH baja
+  tl.from("#a3-zona .h", { scale: 0, opacity: 0, stagger: 0.28, duration: 0.3, ease: "back.out(3)" }, B[3] + 0.8);
+  tl.to("#a3-zona .h", { y: "+=14", duration: 0.5, yoyo: true, repeat: 9, ease: "sine.inOut", stagger: 0.07 }, B[3] + 1.0);
+  const ph = { v: 7.1 };
+  tl.fromTo(ph, { v: 7.1 }, { v: 6.5, duration: 3.4, ease: "power1.in", onUpdate: () => (document.getElementById("a3-ph").textContent = ph.v.toFixed(1)) }, B[3] + 3.0);
+
+  // 4 · Receptores de dolor -> ardor
+  tl.from("#a4 .ion", { x: (i) => (i % 2 ? 260 : -260), opacity: 0, stagger: 0.2, duration: 0.6, ease: "power3.out" }, B[4] + 0.6);
+  tl.to("#a4-nucleo", { backgroundColor: "#ff4d4d", boxShadow: "0 0 120px rgba(255,77,77,0.9)", duration: 0.5 }, B[4] + 2.6);
+  tl.to("#a4-anillo", { borderColor: "#ff8a3d", scale: 1.1, duration: 0.25, yoyo: true, repeat: 7 }, B[4] + 2.6);
+  tl.from("#a4-t", { scale: 0.4, opacity: 0, duration: 0.4, ease: "back.out(3)" }, B[4] + 5.2);
+  tl.to("#a4-t", { x: 10, duration: 0.05, repeat: 9, yoyo: true, ease: "none" }, B[4] + 5.6);
+
+  // 5 · El lactato ayuda
+  tl.from("#a5-lac", { scale: 0, duration: 0.6, ease: "back.out(2)" }, B[5] + 0.6);
+  tl.to("#a5-h1", { x: 323, y: 133, scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.in" }, B[5] + 2.0);
+  tl.to("#a5-h2", { x: -317, y: 113, scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.in" }, B[5] + 2.3);
+  tl.to("#a5-h3", { x: 263, y: -147, scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.in" }, B[5] + 2.6);
+  tl.to("#a5-h4", { x: -277, y: -137, scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.in" }, B[5] + 2.9);
+  tl.to("#a5-lac", { scale: 1.12, duration: 0.15, yoyo: true, repeat: 7, ease: "sine.inOut" }, B[5] + 2.6);
+  tl.from("#a5 .chip", { y: 50, opacity: 0, stagger: 0.5, duration: 0.4 }, B[5] + 3.2);
+
+  // 6 · Ciclo de Cori
+  tl.from("#a6-mus, #a6-hig", { scale: 0, stagger: 0.3, duration: 0.5, ease: "back.out(2)" }, B[6] + 0.3);
+  tl.fromTo("#a6-p1", { x: 0 }, { x: 334, duration: 1.4, ease: "none", repeat: 2 }, B[6] + 0.8);
+  tl.fromTo("#a6-p1", { y: 0 }, { y: -58, duration: 0.7, ease: "sine.out", yoyo: true, repeat: 5 }, B[6] + 0.8);
+  tl.fromTo("#a6-p2", { x: 0 }, { x: -334, duration: 1.4, ease: "none", repeat: 2 }, B[6] + 1.1);
+  tl.fromTo("#a6-p2", { y: 0 }, { y: 58, duration: 0.7, ease: "sine.out", yoyo: true, repeat: 5 }, B[6] + 1.1);
+
+  // 7 · Ardor vs agujetas
+  tl.from("#a7-a", { x: -300, opacity: 0, duration: 0.5, ease: "power3.out" }, B[7] + 0.3);
+  tl.from("#a7-b", { x: 300, opacity: 0, duration: 0.5, ease: "power3.out" }, B[7] + 2.6);
+
+  // 8 · Amortiguadores
+  tl.from("#a8-e", { scale: 0.3, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[8] + 0.3);
+  tl.to("#a8-e", { scale: 1.06, duration: 0.4, yoyo: true, repeat: 5, ease: "sine.inOut" }, B[8] + 1.0);
+  tl.from("#a8-chips .chip", { y: 50, opacity: 0, stagger: 0.3, duration: 0.4 }, B[8] + 2.0);
+
+  // 9 · Cierre
+  tl.from("#a9-n", { y: 80, opacity: 0, duration: 0.6, ease: "power3.out" }, B[9] + 0.1);
+  tl.from("#a9-b", { scale: 0, duration: 0.5, ease: "back.out(2.5)" }, B[9] + 0.7);
+  tl.to("#a9-b", { scale: 1.08, duration: 0.45, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[9] + 1.3);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

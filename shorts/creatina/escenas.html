@@ -1,0 +1,223 @@
+<style>
+  .sello { display: flex; flex-direction: column; align-items: center; gap: 40px; }
+  #c0-sello { width: 420px; font-family: "Anton", sans-serif; font-size: 190px; line-height: 1; color: var(--rojo); border: 14px solid var(--rojo); border-radius: 30px; padding: 6px 0; background: rgba(6,19,23,0.55); }
+  .pastilla { font-weight: 900; font-size: 40px; padding: 20px 34px; border-radius: 999px; color: #071316; }
+  #c1-cr { width: 300px; height: 300px; font-size: 64px; background: var(--lima); box-shadow: 0 0 80px rgba(198,244,50,0.55); }
+  .bateria { position: relative; width: 300px; height: 520px; border: 14px solid var(--tinta); border-radius: 46px; padding: 18px; }
+  .bateria::before { content: ""; position: absolute; left: 50%; top: -44px; width: 120px; height: 30px; margin-left: -60px; background: var(--tinta); border-radius: 12px 12px 0 0; }
+  .carga { position: absolute; left: 18px; right: 18px; bottom: 18px; height: calc(100% - 36px); border-radius: 26px; background: linear-gradient(0deg, var(--lima), #8fe33a); transform-origin: 50% 100%; }
+  .bateria b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 96px; color: #071316; }
+  .reaccion { position: relative; width: 940px; height: 520px; }
+  .mol { position: absolute; width: 230px; height: 230px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 72px; color: #071316; }
+  #c3-pcr { left: 40px; top: 150px; background: var(--lima); }
+  #c3-adp { right: 40px; top: 150px; background: #f6c27a; }
+  #c3-p { position: absolute; left: 230px; top: 140px; width: 96px; height: 96px; border-radius: 50%; background: var(--rosa); color: #fff; font-family: "Anton", sans-serif; font-size: 54px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(255,92,138,0.8); }
+  #c3-atp { position: absolute; right: 40px; top: 150px; width: 230px; height: 230px; border-radius: 50%; background: var(--naranja); display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 72px; color: #071316; box-shadow: 0 0 90px rgba(255,138,61,0.9); }
+  #c3-cr { position: absolute; left: 40px; top: 150px; width: 230px; height: 230px; border-radius: 50%; background: rgba(198,244,50,0.35); display: flex; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 72px; color: var(--tinta); }
+  #c3-flecha { position: absolute; left: 330px; right: 330px; top: 410px; height: 8px; background: rgba(255,255,255,0.35); border-radius: 4px; transform-origin: 0 50%; }
+  #c4-num { font-family: "Anton", sans-serif; font-size: 300px; line-height: 0.9; color: var(--naranja); }
+  .barras { display: flex; gap: 90px; align-items: flex-end; height: 560px; }
+  .barra { width: 220px; border-radius: 26px 26px 10px 10px; transform-origin: 50% 100%; position: relative; }
+  .barra span { position: absolute; bottom: -78px; left: 0; right: 0; font-weight: 900; font-size: 40px; color: var(--suave); }
+  #c5-a { height: 360px; background: rgba(255,255,255,0.25); }
+  #c5-b { height: 500px; background: linear-gradient(0deg, var(--lima), var(--cian)); }
+  #c5-tag { position: absolute; top: -110px; left: -160px; right: -160px; white-space: nowrap; font-family: "Anton", sans-serif; font-size: 72px; color: var(--lima); }
+  .reps { display: flex; gap: 22px; }
+  .rep { width: 78px; height: 150px; border-radius: 20px; background: rgba(255,255,255,0.18); }
+  .rep.extra { background: var(--lima); box-shadow: 0 0 40px rgba(198,244,50,0.6); }
+  .cuchara { width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ffffff, #dfe9e6 60%, #9fb8b4); color: #071316; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: "Anton", sans-serif; font-size: 120px; line-height: 0.95; box-shadow: 0 0 80px rgba(255,255,255,0.25); }
+  .cuchara small { font-size: 46px; }
+  .dias { display: flex; gap: 16px; }
+  .dia { width: 104px; height: 104px; border-radius: 22px; background: rgba(255,255,255,0.08); border: 3px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 34px; color: var(--suave); position: relative; }
+  .dia i { position: absolute; inset: 0; border-radius: 19px; background: var(--lima); display: flex; align-items: center; justify-content: center; font-style: normal; color: #071316; font-size: 56px; }
+  .etiqueta { width: 760px; padding: 50px 40px; border-radius: 40px; background: linear-gradient(160deg, #f4f7f2, #cfe0db); color: #071316; }
+  .etiqueta .medio { font-size: 104px; }
+  .ventajas { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+  .ventaja { font-weight: 900; font-size: 52px; display: flex; gap: 22px; align-items: center; }
+  .ventaja b { width: 70px; height: 70px; border-radius: 50%; background: var(--lima); color: #071316; display: flex; align-items: center; justify-content: center; font-size: 46px; }
+  .fibra { position: relative; width: 820px; height: 300px; border-radius: 150px; background: linear-gradient(180deg, #d9505b, #9f1f2c); overflow: hidden; }
+  .fibra::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0 14px, transparent 14px 40px); }
+  .gota { position: absolute; width: 64px; height: 64px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--cian); box-shadow: 0 0 20px rgba(67,224,255,0.8); }
+  .escudo { width: 360px; height: 420px; }
+  .boton { font-weight: 900; font-size: 56px; color: #071316; background: var(--lima); padding: 28px 70px; border-radius: 999px; box-shadow: 0 0 60px rgba(198,244,50,0.6); }
+  .aviso { font-size: 30px; font-weight: 600; color: var(--suave); max-width: 760px; }
+</style>
+
+<section class="clip escena" id="c0" data-beat="0">
+  <div class="chip lima" id="c0-tema">CREATINA</div>
+  <div class="sello">
+    <div class="titular" id="c0-t">¿Esteroide?</div>
+    <div id="c0-sello">NO</div>
+  </div>
+</section>
+
+<section class="clip escena" id="c1" data-beat="1">
+  <div class="fila" id="c1-aa">
+    <div class="pastilla" style="background: var(--cian)">ARGININA</div>
+    <div class="pastilla" style="background: var(--rosa)">GLICINA</div>
+    <div class="pastilla" style="background: var(--naranja)">METIONINA</div>
+  </div>
+  <div class="circ" id="c1-cr">CREATINA</div>
+  <div class="fila" id="c1-comida">
+    <div class="chip">+ CARNE</div>
+    <div class="chip">+ PESCADO</div>
+  </div>
+</section>
+
+<section class="clip escena" id="c2" data-beat="2">
+  <div class="bateria"><div class="carga" id="c2-carga"></div><b>PCr</b></div>
+  <div class="medio lima" id="c2-t">Fosfocreatina</div>
+</section>
+
+<section class="clip escena" id="c3" data-beat="3">
+  <div class="fila" id="c3-chips"><div class="chip">SPRINT</div><div class="chip">SERIE PESADA</div></div>
+  <div class="reaccion">
+    <div class="mol" id="c3-pcr">PCr</div>
+    <div id="c3-cr">Cr</div>
+    <div class="mol" id="c3-adp">ADP</div>
+    <div id="c3-atp">ATP</div>
+    <div id="c3-flecha"></div>
+    <div id="c3-p">P</div>
+  </div>
+  <div class="medio naranja" id="c3-t">¡ATP al instante!</div>
+</section>
+
+<section class="clip escena" id="c4" data-beat="4">
+  <div class="bateria" style="height: 420px"><div class="carga" id="c4-carga"></div></div>
+  <div class="fila" style="align-items: baseline"><div id="c4-num">0</div><div class="medio">seg</div></div>
+</section>
+
+<section class="clip escena" id="c5" data-beat="5">
+  <div class="barras" style="margin-bottom: 80px">
+    <div class="barra" id="c5-a"><span>SIN</span></div>
+    <div class="barra" id="c5-b"><div id="c5-tag">+20–40 %</div><span>CON</span></div>
+  </div>
+  <div class="chico">reservas de fosfocreatina</div>
+</section>
+
+<section class="clip escena" id="c6" data-beat="6">
+  <div class="reps" id="c6-reps">
+    <div class="rep"></div><div class="rep"></div><div class="rep"></div><div class="rep"></div>
+    <div class="rep"></div><div class="rep"></div><div class="rep"></div><div class="rep"></div>
+    <div class="rep extra"></div><div class="rep extra"></div>
+  </div>
+  <div class="medio lima" id="c6-t">+1–2 reps</div>
+  <div class="fila" id="c6-chips"><div class="chip">↑ FUERZA</div><div class="chip">↑ MÚSCULO</div></div>
+</section>
+
+<section class="clip escena" id="c7" data-beat="7">
+  <div class="cuchara" id="c7-c">3–5 g<small>AL DÍA</small></div>
+  <div class="dias">
+    <div class="dia">L<i>✓</i></div><div class="dia">M<i>✓</i></div><div class="dia">M<i>✓</i></div><div class="dia">J<i>✓</i></div>
+    <div class="dia">V<i>✓</i></div><div class="dia">S<i>✓</i></div><div class="dia">D<i>✓</i></div>
+  </div>
+  <div class="chico">Carga: opcional</div>
+</section>
+
+<section class="clip escena" id="c8" data-beat="8">
+  <div class="etiqueta" id="c8-e">
+    <div class="chico" style="color: #35514d">ELIGE</div>
+    <div class="medio">Monohidrato de creatina</div>
+  </div>
+  <div class="ventajas">
+    <div class="ventaja"><b>✓</b>La más estudiada</div>
+    <div class="ventaja"><b>✓</b>La más barata</div>
+  </div>
+</section>
+
+<section class="clip escena" id="c9" data-beat="9">
+  <div class="chip naranja" id="c9-kg">+1 kg en la báscula</div>
+  <div class="fibra" id="c9-f">
+    <div class="gota" style="left: 120px; top: 110px"></div>
+    <div class="gota" style="left: 260px; top: 60px"></div>
+    <div class="gota" style="left: 390px; top: 150px"></div>
+    <div class="gota" style="left: 520px; top: 80px"></div>
+    <div class="gota" style="left: 640px; top: 150px"></div>
+  </div>
+  <div class="medio"><span class="cian">Agua</span> ≠ <span class="rojo">grasa</span></div>
+</section>
+
+<section class="clip escena" id="c10" data-beat="10">
+  <svg class="escudo" id="c10-e" viewBox="0 0 120 140">
+    <path d="M60 6 L110 24 V66 C110 100 88 124 60 134 C32 124 10 100 10 66 V24 Z" fill="rgba(198,244,50,0.15)" stroke="#c6f432" stroke-width="6" />
+    <path id="c10-ok" d="M36 70 L54 88 L86 50" fill="none" stroke="#c6f432" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <div class="medio lima">Segura</div>
+  <div class="chip" id="c10-r">¿Enfermedad renal? → tu médico</div>
+</section>
+
+<section class="clip escena" id="c11" data-beat="11">
+  <div class="titular" id="c11-n" style="font-size: 120px">Come con <span class="lima">ciencia</span></div>
+  <div class="boton" id="c11-b">SÍGUEME</div>
+  <div class="aviso">Contenido educativo. No sustituye la consulta con un profesional de la salud.</div>
+</section>
+
+<script>
+  // 0 · Gancho
+  tl.fromTo("#c0-tema", { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, B[0] + 0.05);
+  tl.fromTo("#c0-t", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, B[0] + 0.1);
+  tl.fromTo("#c0-sello", { scale: 2.6, rotation: -28, opacity: 0 }, { scale: 1, rotation: -12, opacity: 1, duration: 0.3, ease: "power4.in" }, B[0] + 1.75);
+  tl.fromTo("#c0-t", { x: 0 }, { x: 14, duration: 0.05, repeat: 5, yoyo: true, ease: "none" }, B[0] + 2.05);
+
+  // 1 · Aminoacidos -> creatina
+  tl.from("#c1-aa .pastilla", { y: 120, opacity: 0, stagger: 0.18, duration: 0.5, ease: "back.out(1.8)" }, B[1] + 0.3);
+  tl.from("#c1-cr", { scale: 0, rotation: -90, duration: 0.7, ease: "back.out(1.6)" }, B[1] + 1.6);
+  tl.from("#c1-comida .chip", { x: (i) => (i ? 200 : -200), opacity: 0, duration: 0.5, stagger: 0.2, ease: "power3.out" }, B[1] + 3.4);
+  tl.to("#c1-cr", { scale: 1.06, duration: 0.6, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[1] + 2.4);
+
+  // 2 · Bateria de fosfocreatina
+  tl.fromTo("#c2-carga", { scaleY: 0.05 }, { scaleY: 1, duration: 2.2, ease: "power2.out" }, B[2] + 0.4);
+  tl.from("#c2-t", { y: 50, opacity: 0, duration: 0.5, ease: "power3.out" }, B[2] + 1.2);
+
+  // 3 · PCr + ADP -> Cr + ATP
+  tl.from("#c3-chips .chip", { y: -40, opacity: 0, stagger: 0.15, duration: 0.4 }, B[3] + 0.2);
+  tl.from("#c3-pcr, #c3-adp, #c3-p", { scale: 0, duration: 0.5, stagger: 0.12, ease: "back.out(2)" }, B[3] + 0.6);
+  tl.set("#c3-cr, #c3-atp", { opacity: 0 }, B[3]);
+  tl.from("#c3-flecha", { scaleX: 0, duration: 0.5, ease: "power2.out" }, B[3] + 4.0);
+  tl.to("#c3-p", { x: 540, y: -30, duration: 1.1, ease: "power2.inOut" }, B[3] + 4.3);
+  tl.to("#c3-pcr", { opacity: 0, duration: 0.3 }, B[3] + 5.2);
+  tl.to("#c3-cr", { opacity: 1, duration: 0.3 }, B[3] + 5.2);
+  tl.to("#c3-adp", { opacity: 0, duration: 0.25 }, B[3] + 5.4);
+  tl.fromTo("#c3-atp", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, B[3] + 5.4);
+  tl.to("#c3-p", { scale: 0.75, duration: 0.3 }, B[3] + 5.4);
+  tl.from("#c3-t", { y: 60, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[3] + 6.0);
+
+  // 4 · Se agota en ~10 s
+  tl.fromTo("#c4-carga", { scaleY: 1 }, { scaleY: 0.04, duration: 2.6, ease: "none" }, B[4] + 0.3);
+  tl.fromTo("#c4-carga", { filter: "hue-rotate(0deg)" }, { filter: "hue-rotate(-80deg)", duration: 2.6, ease: "none" }, B[4] + 0.3);
+  tl.fromTo("#c4-num", { textContent: 0 }, { textContent: 10, snap: { textContent: 1 }, duration: 2.6, ease: "none" }, B[4] + 0.3);
+
+  // 5 · +20-40 %
+  tl.from("#c5-a", { scaleY: 0, duration: 0.6, ease: "power3.out" }, B[5] + 0.3);
+  tl.from("#c5-b", { scaleY: 0, duration: 0.9, ease: "power3.out" }, B[5] + 0.9);
+  tl.from("#c5-tag", { scale: 0, duration: 0.45, ease: "back.out(2.5)" }, B[5] + 2.2);
+
+  // 6 · Reps extra
+  tl.from("#c6-reps .rep", { scaleY: 0, transformOrigin: "50% 100%", stagger: 0.12, duration: 0.3, ease: "back.out(2)" }, B[6] + 0.2);
+  tl.from("#c6-t", { scale: 0.5, opacity: 0, duration: 0.4, ease: "back.out(2.5)" }, B[6] + 1.6);
+  tl.from("#c6-chips .chip", { y: 50, opacity: 0, stagger: 0.25, duration: 0.45, ease: "power3.out" }, B[6] + 4.0);
+
+  // 7 · Dosis diaria
+  tl.from("#c7-c", { scale: 0, rotation: -40, duration: 0.6, ease: "back.out(1.8)" }, B[7] + 0.3);
+  tl.from("#c7 .dia i", { scale: 0, stagger: 0.22, duration: 0.25, ease: "back.out(3)" }, B[7] + 2.4);
+  tl.from("#c7 .chico", { opacity: 0, y: 30, duration: 0.4 }, B[7] + 4.6);
+
+  // 8 · Monohidrato
+  tl.from("#c8-e", { rotationY: 80, opacity: 0, duration: 0.7, ease: "power3.out", transformPerspective: 900 }, B[8] + 0.2);
+  tl.from("#c8 .ventaja", { x: -80, opacity: 0, stagger: 0.6, duration: 0.45, ease: "power3.out" }, B[8] + 2.4);
+
+  // 9 · Agua, no grasa
+  tl.from("#c9-kg", { y: -50, opacity: 0, duration: 0.4 }, B[9] + 0.2);
+  tl.from("#c9-f .gota", { y: -380, opacity: 0, stagger: 0.2, duration: 0.7, ease: "bounce.out" }, B[9] + 1.2);
+  tl.to("#c9-f", { scaleY: 1.12, duration: 1.2, ease: "sine.out" }, B[9] + 2.2);
+
+  // 10 · Seguridad
+  tl.from("#c10-e", { scale: 0.4, opacity: 0, duration: 0.6, ease: "back.out(2)" }, B[10] + 0.2);
+  tl.fromTo("#c10-ok", { strokeDasharray: 90, strokeDashoffset: 90 }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, B[10] + 0.8);
+  tl.from("#c10-r", { y: 50, opacity: 0, duration: 0.45 }, B[10] + 2.0);
+
+  // 11 · Cierre
+  tl.from("#c11-n", { y: 80, opacity: 0, duration: 0.6, ease: "power3.out" }, B[11] + 0.1);
+  tl.from("#c11-b", { scale: 0, duration: 0.5, ease: "back.out(2.5)" }, B[11] + 0.7);
+  tl.to("#c11-b", { scale: 1.08, duration: 0.45, yoyo: true, repeat: 5, ease: "sine.inOut" }, B[11] + 1.3);
+</script>

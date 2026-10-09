@@ -1,0 +1,152 @@
+<style>
+  #p0-q { font-family: "Anton", sans-serif; font-size: 360px; line-height: 0.9; color: var(--lima); text-shadow: 0 0 80px rgba(198,244,50,0.45); }
+  .dosis { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .dosis .num { font-family: "Anton", sans-serif; font-size: 210px; line-height: 0.95; }
+  .dosis .uni { font-weight: 900; font-size: 50px; color: var(--suave); }
+  .regla { position: relative; width: 880px; height: 150px; margin-top: 30px; }
+  .regla .pista { position: absolute; left: 0; right: 0; top: 40px; height: 30px; border-radius: 15px; background: rgba(255,255,255,0.12); }
+  .rango { position: absolute; top: 34px; height: 42px; border-radius: 21px; transform-origin: 0 50%; }
+  .marca { position: absolute; top: 90px; width: 120px; margin-left: -60px; text-align: center; font-weight: 900; font-size: 34px; color: var(--suave); }
+  .marca::before { content: ""; position: absolute; left: 58px; top: -26px; width: 4px; height: 20px; background: rgba(255,255,255,0.4); }
+  .calc { display: flex; flex-direction: column; gap: 26px; align-items: center; }
+  .calc .linea { font-family: "Anton", sans-serif; font-size: 104px; line-height: 1; display: flex; gap: 26px; align-items: baseline; }
+  .calc .linea span { color: var(--suave); font-size: 70px; }
+  .platos { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+  .plato { width: 330px; height: 330px; border-radius: 50%; background: radial-gradient(circle, #f4f7f2 0 54%, #cfe0db 56% 64%, rgba(255,255,255,0.08) 66%); color: #071316; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .plato b { font-family: "Anton", sans-serif; font-size: 66px; line-height: 1; }
+  .plato small { font-weight: 900; font-size: 26px; color: #35514d; }
+  .alimentos { display: flex; flex-direction: column; gap: 26px; width: 900px; }
+  .alimento { display: flex; align-items: center; justify-content: space-between; padding: 26px 40px; }
+  .alimento .que { font-weight: 900; font-size: 46px; text-align: left; }
+  .alimento .que small { display: block; font-size: 30px; color: var(--suave); font-weight: 700; }
+  .alimento .g { font-family: "Anton", sans-serif; font-size: 96px; color: var(--lima); }
+  #p6-flecha { position: absolute; top: -70px; width: 0; height: 0; margin-left: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; border-top: 44px solid var(--lima); }
+  .rinones { width: 420px; height: 300px; }
+  .boton { font-weight: 900; font-size: 56px; color: #071316; background: var(--lima); padding: 28px 70px; border-radius: 999px; box-shadow: 0 0 60px rgba(198,244,50,0.6); }
+  .aviso { font-size: 30px; font-weight: 600; color: var(--suave); max-width: 760px; }
+</style>
+
+<section class="clip escena" id="p0" data-beat="0">
+  <div class="chip lima" id="p0-chip">PROTEÍNA AL DÍA</div>
+  <div id="p0-q">¿? g</div>
+</section>
+
+<section class="clip escena" id="p1" data-beat="1">
+  <div class="chip">SEDENTARIO</div>
+  <div class="dosis"><div class="num cian" id="p1-n">0.8</div><div class="uni">g por kg de peso</div></div>
+</section>
+
+<section class="clip escena" id="p2" data-beat="2">
+  <div class="chip">ENTRENAS FUERZA</div>
+  <div class="dosis"><div class="num lima" id="p2-n">1.6–2.2</div><div class="uni">g por kg de peso</div></div>
+  <div class="regla">
+    <div class="pista"></div>
+    <div class="rango" id="p2-r0" style="left: 0; width: 26.7%; background: var(--cian)"></div>
+    <div class="rango" id="p2-r1" style="left: 53.3%; width: 20%; background: var(--lima)"></div>
+    <div class="marca" style="left: 0">0</div>
+    <div class="marca" style="left: 26.7%">0.8</div>
+    <div class="marca" style="left: 53.3%">1.6</div>
+    <div class="marca" style="left: 73.3%">2.2</div>
+    <div class="marca" style="left: 100%">3</div>
+  </div>
+</section>
+
+<section class="clip escena" id="p3" data-beat="3">
+  <div class="chip">SI PESAS 70 KG</div>
+  <div class="calc">
+    <div class="linea" id="p3-a">70 <span>×</span> 1.6 <span>=</span> <b class="cian">112 g</b></div>
+    <div class="linea" id="p3-b">70 <span>×</span> 2.2 <span>=</span> <b class="lima">154 g</b></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p4" data-beat="4">
+  <div class="platos">
+    <div class="plato"><small>DESAYUNO</small><b>20–40 g</b></div>
+    <div class="plato"><small>COMIDA</small><b>20–40 g</b></div>
+    <div class="plato"><small>CENA</small><b>20–40 g</b></div>
+    <div class="plato"><small>COLACIÓN</small><b>20–40 g</b></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p5" data-beat="5">
+  <div class="alimentos">
+    <div class="tarjeta alimento"><div class="que">Pechuga de pollo<small>150 g cocida</small></div><div class="g">~<span id="p5-g0">45</span> g</div></div>
+    <div class="tarjeta alimento"><div class="que">Huevos<small>2 piezas</small></div><div class="g">~<span id="p5-g1">12</span> g</div></div>
+    <div class="tarjeta alimento"><div class="que">Frijoles<small>1 taza cocidos</small></div><div class="g">~<span id="p5-g2">15</span> g</div></div>
+  </div>
+</section>
+
+<section class="clip escena" id="p6" data-beat="6">
+  <div class="chip naranja">PERDER GRASA, NO MÚSCULO</div>
+  <div class="regla" style="margin-top: 110px">
+    <div class="pista"></div>
+    <div class="rango" style="left: 53.3%; width: 20%; background: var(--lima)"></div>
+    <div id="p6-flecha" style="left: 70%"></div>
+    <div class="marca" style="left: 53.3%">1.6</div>
+    <div class="marca" style="left: 73.3%">2.2</div>
+  </div>
+  <div class="medio lima">Parte alta</div>
+</section>
+
+<section class="clip escena" id="p7" data-beat="7">
+  <svg class="rinones" id="p7-r" viewBox="0 0 140 100">
+    <path d="M40 10 C14 10 6 34 8 54 C10 80 30 94 46 88 C58 84 54 66 48 58 C44 50 52 44 54 36 C58 20 54 10 40 10 Z" fill="#c0505a" />
+    <path d="M100 10 C126 10 134 34 132 54 C130 80 110 94 94 88 C82 84 86 66 92 58 C96 50 88 44 86 36 C82 20 86 10 100 10 Z" fill="#c0505a" />
+  </svg>
+  <div class="medio" style="font-size: 80px">Sanos: <span class="lima">sin evidencia</span></div>
+  <div class="chip" id="p7-c">¿Enfermedad renal? → tu médico</div>
+</section>
+
+<section class="clip escena" id="p8" data-beat="8">
+  <div class="titular" id="p8-n" style="font-size: 120px">Come con <span class="lima">ciencia</span></div>
+  <div class="boton" id="p8-b">SÍGUEME</div>
+  <div class="aviso">Contenido educativo. No sustituye la consulta con un profesional de la salud.</div>
+</section>
+
+<script>
+  // 0 · Gancho
+  tl.from("#p0-chip", { y: -40, opacity: 0, duration: 0.4 }, B[0] + 0.05);
+  tl.from("#p0-q", { scale: 0.3, opacity: 0, duration: 0.5, ease: "back.out(2.2)" }, B[0] + 0.1);
+  tl.to("#p0-q", { rotation: 6, duration: 0.3, yoyo: true, repeat: 9, ease: "sine.inOut" }, B[0] + 0.6);
+
+  // 1 · 0.8 g/kg
+  tl.from("#p1 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[1] + 0.2);
+  tl.fromTo("#p1-n", { textContent: 0 }, { textContent: 0.8, snap: { textContent: 0.1 }, duration: 1.0, ease: "power2.out" }, B[1] + 2.0);
+
+  // 2 · 1.6-2.2 g/kg
+  tl.from("#p2 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[2] + 0.2);
+  tl.from("#p2-n", { scale: 0.5, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[2] + 2.4);
+  tl.from("#p2-r0", { scaleX: 0, duration: 0.5 }, B[2] + 0.6);
+  tl.from("#p2-r1", { scaleX: 0, duration: 0.8, ease: "power2.out" }, B[2] + 2.6);
+
+  // 3 · Ejemplo 70 kg
+  tl.from("#p3 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[3] + 0.2);
+  tl.from("#p3-a", { x: -200, opacity: 0, duration: 0.5, ease: "power3.out" }, B[3] + 2.6);
+  tl.from("#p3-b", { x: 200, opacity: 0, duration: 0.5, ease: "power3.out" }, B[3] + 3.6);
+
+  // 4 · Reparto en comidas
+  tl.from("#p4 .plato", { scale: 0, rotation: -90, stagger: 0.3, duration: 0.5, ease: "back.out(1.8)" }, B[4] + 0.3);
+
+  // 5 · Alimentos
+  [0, 1, 2].forEach((i) => {
+    const t = B[5] + [0.6, 4.2, 6.4][i];
+    tl.from(`#p5 .alimento:nth-child(${i + 1})`, { x: i % 2 ? 300 : -300, opacity: 0, duration: 0.5, ease: "power3.out" }, t);
+    const fin = [45, 12, 15][i];
+    tl.fromTo(`#p5-g${i}`, { textContent: 0 }, { textContent: fin, snap: { textContent: 1 }, duration: 1.2, ease: "power2.out" }, t + 0.3);
+  });
+
+  // 6 · Parte alta del rango
+  tl.from("#p6 .chip", { y: -40, opacity: 0, duration: 0.4 }, B[6] + 0.2);
+  tl.fromTo("#p6-flecha", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "bounce.out" }, B[6] + 2.6);
+  tl.to("#p6-flecha", { y: -14, duration: 0.35, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[6] + 3.2);
+
+  // 7 · Rinon
+  tl.from("#p7-r", { scale: 0.4, opacity: 0, duration: 0.5, ease: "back.out(2)" }, B[7] + 0.2);
+  tl.from("#p7 .medio", { y: 50, opacity: 0, duration: 0.45 }, B[7] + 2.0);
+  tl.from("#p7-c", { y: 50, opacity: 0, duration: 0.45 }, B[7] + 4.4);
+
+  // 8 · Cierre
+  tl.from("#p8-n", { y: 80, opacity: 0, duration: 0.6, ease: "power3.out" }, B[8] + 0.1);
+  tl.from("#p8-b", { scale: 0, duration: 0.5, ease: "back.out(2.5)" }, B[8] + 0.7);
+  tl.to("#p8-b", { scale: 1.08, duration: 0.45, yoyo: true, repeat: 3, ease: "sine.inOut" }, B[8] + 1.3);
+</script>
