@@ -25,6 +25,9 @@ export const hashTexto = (t: string) => {
 
 export const tieneNarracion = (t: string) => NARRACION[hashTexto(t)] !== undefined;
 
+/** Segundos de voz del texto (o una estimacion si aun no tiene narracion). */
+export const durVoz = (t: string) => NARRACION[hashTexto(t)] ?? t.replace(/\*\*/g, "").length / CPS;
+
 export const durTexto = (t: string) => {
   const voz = NARRACION[hashTexto(t)];
   if (voz !== undefined) return Math.round(FPS * Math.max(3.5, voz + 0.9));

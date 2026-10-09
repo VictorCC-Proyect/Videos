@@ -10,6 +10,7 @@ type SegProps = {
   pos?: [number, number, number];
   musculo: number;
   brilla?: number;
+  colorBrillo?: string;
   children?: React.ReactNode;
 };
 
@@ -20,6 +21,7 @@ const Segmento: React.FC<SegProps> = ({
   pos = [0, 0, 0],
   musculo,
   brilla = 0,
+  colorBrillo = C.musculoClaro,
   children,
 }) => (
   <group position={pos} rotation={rot}>
@@ -38,7 +40,7 @@ const Segmento: React.FC<SegProps> = ({
         <capsuleGeometry args={[grosor, Math.max(0.01, largo - grosor * 1.4), 8, 20]} />
         <meshPhysicalMaterial
           color={C.musculo}
-          emissive={C.musculoClaro}
+          emissive={colorBrillo}
           emissiveIntensity={brilla * 0.9}
           roughness={0.45}
           clearcoat={0.4}
@@ -57,6 +59,9 @@ export const Humano: React.FC<{
   marcha?: number; // amplitud 0..1
   musculo?: number; // opacidad del musculo
   brillaMuslo?: number;
+  brilla?: number; // brillo de todos los musculos
+  colorBrillo?: string;
+  pesa?: boolean; // mancuernas en las manos
   pose?: {
     hombroI?: [number, number, number];
     hombroD?: [number, number, number];
@@ -68,7 +73,8 @@ export const Humano: React.FC<{
     rodillaD?: number;
     antebrazoD?: number; // pronacion/supinacion
   };
-}> = ({ fase = 0, marcha = 0, musculo = 0.55, brillaMuslo = 0, pose = {} }) => {
+}> = ({ fase = 0, marcha = 0, musculo = 0.55, brillaMuslo = 0, brilla = 0, colorBrillo, pesa = false, pose = {} }) => {
+  const bm = { brilla, colorBrillo };
   const s = Math.sin(fase) * marcha;
   const cD: [number, number, number] = pose.caderaD ?? [s * 0.55, 0, 0];
   const cI: [number, number, number] = pose.caderaI ?? [-s * 0.55, 0, 0];
@@ -126,6 +132,8 @@ export const Humano: React.FC<{
         <capsuleGeometry args={[0.17, 0.4, 8, 24]} />
         <meshPhysicalMaterial
           color={C.musculo}
+          emissive={colorBrillo ?? C.musculoClaro}
+          emissiveIntensity={brilla * 0.6}
           transparent
           opacity={musculo * 0.75}
           roughness={0.45}
@@ -141,13 +149,29 @@ export const Humano: React.FC<{
             grosor={0.05}
             rot={lado > 0 ? hD : hI}
             musculo={musculo}
+            {...bm}
           >
             <Segmento
               largo={0.27}
               grosor={0.04}
               rot={[lado > 0 ? coD : coI, lado > 0 ? (pose.antebrazoD ?? 0) : 0, 0]}
               musculo={musculo}
+              {...bm}
             >
+              {pesa ? (
+                <group position={[0, -0.07, 0]}>
+                  <mesh rotation={[0, 0, Math.PI / 2]}>
+                    <cylinderGeometry args={[0.012, 0.012, 0.24, 10]} />
+                    <meshStandardMaterial color="#c9d3dc" metalness={0.8} roughness={0.3} />
+                  </mesh>
+                  {[-0.1, 0.1].map((x) => (
+                    <mesh key={x} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+                      <cylinderGeometry args={[0.055, 0.055, 0.04, 20]} />
+                      <meshStandardMaterial color="#2a2f36" metalness={0.5} roughness={0.4} />
+                    </mesh>
+                  ))}
+                </group>
+              ) : null}
               <mesh position={[0, -0.05, 0]} scale={[1, 1.4, 0.45]}>
                 <sphereGeometry args={[0.045, 16, 12]} />
                 <meshPhysicalMaterial
@@ -169,13 +193,15 @@ export const Humano: React.FC<{
             grosor={0.075}
             rot={lado > 0 ? cD : cI}
             musculo={musculo}
-            brilla={lado > 0 ? brillaMuslo : 0}
+            brilla={Math.max(brilla, lado > 0 ? brillaMuslo : 0)}
+            colorBrillo={colorBrillo}
           >
             <Segmento
               largo={0.43}
               grosor={0.055}
               rot={[lado > 0 ? rD : rI, 0, 0]}
               musculo={musculo}
+              {...bm}
             >
               <mesh position={[0, -0.02, 0.06]} scale={[0.8, 0.4, 1.8]}>
                 <sphereGeometry args={[0.05, 16, 12]} />

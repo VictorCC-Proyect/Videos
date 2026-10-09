@@ -232,7 +232,7 @@ export const Subtitulo: React.FC<{ textos: string[] }> = ({ textos }) => {
   );
 };
 
-const Seccion: React.FC<{ t: string }> = ({ t }) =>
+export const Seccion: React.FC<{ t: string }> = ({ t }) =>
   t ? (
     <div
       style={{
@@ -447,7 +447,7 @@ const srcNarracion = (h: string) => {
   return base ? `${base}${h}.mp3` : staticFile(`narracion/${h}.mp3`);
 };
 
-const Narracion: React.FC<{ textos: string[] }> = ({ textos }) => {
+export const Narracion: React.FC<{ textos: string[] }> = ({ textos }) => {
   let inicio = 0;
   return (
     <>

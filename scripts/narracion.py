@@ -19,6 +19,9 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 CAPS = sorted((RAIZ / "src/fisio/capitulos").glob("cap*.tsx")) + sorted((RAIZ / "src/fisio/energia").glob("e*.tsx"))
+# Shorts verticales: sus textos van en "const T = [...]" y se leen un poco mas rapido.
+SHORTS = sorted((RAIZ / "src/shorts").glob("*.tsx"))
+VEL_SHORTS = 0.93
 SALIDA = RAIZ / "public/narracion"
 INDICE = RAIZ / "src/fisio/narracion.json"
 
@@ -31,11 +34,11 @@ def fnv1a(texto: str) -> str:
     return f"{h:08x}"
 
 
-def textos():
+def textos(archivos=None, patron=r"textos: \[([\s\S]*?)\n    \],"):
     vistos = []
-    for f in CAPS:
+    for f in archivos or CAPS:
         s = f.read_text(encoding="utf-8")
-        for bloque in re.findall(r"textos: \[([\s\S]*?)\n    \],", s):
+        for bloque in re.findall(patron, s):
             for t in re.findall(r'"((?:[^"\\]|\\.)*)"', bloque):
                 t = json.loads('"' + t + '"')
                 if t not in vistos:
@@ -45,6 +48,11 @@ def textos():
 
 REEMPLAZOS = [
     (r"\*\*", ""),
+    (r"\bPCr\b", "fosfocreatina"),
+    (r"\bpH\b", "pe hache"),
+    (r"(\d+(?:\.\d+)?)\s*g/kg", r"\1 gramos por kilo"),
+    (r"(\d+)\s*g\b", r"\1 gramos"),
+    (r"(\d+)\s*kg\b", r"\1 kilos"),
     (r"\s*\(Ca²⁺\)", ""),
     (r"fosfato \(Pi\)", "fosfato inorgánico"),
     (r"\s+/\s+", " o "),
@@ -142,10 +150,12 @@ def main():
 
     voz_modelo = PiperVoice.load(sys.argv[1])
     config = SynthesisConfig(length_scale=1.0)
+    rapido = SynthesisConfig(length_scale=VEL_SHORTS)
     SALIDA.mkdir(parents=True, exist_ok=True)
     indice = json.loads(INDICE.read_text()) if INDICE.exists() else {}
     ffmpeg = ffmpeg_bin()
-    lista = textos()
+    de_shorts = textos(SHORTS, r"const T = \[([\s\S]*?)\n\];")
+    lista = textos() + [t for t in de_shorts if t not in textos()]
     nuevo = {}
     for i, t in enumerate(lista):
         h = fnv1a(t)
@@ -157,7 +167,7 @@ def main():
         with tempfile.TemporaryDirectory() as d:
             wav = Path(d) / "a.wav"
             with wave.open(str(wav), "wb") as w:
-                voz_modelo.synthesize_wav(voz, w, syn_config=config)
+                voz_modelo.synthesize_wav(voz, w, syn_config=rapido if t in de_shorts else config)
             with wave.open(str(wav)) as w:
                 seg = w.getnframes() / w.getframerate()
             subprocess.run(

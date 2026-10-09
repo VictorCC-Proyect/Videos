@@ -9,6 +9,7 @@ import {
   VideoCompleto,
   VideoEnergia,
 } from "./fisio/Video";
+import { durShort, SHORTS, ShortView } from "./shorts/Shorts";
 
 // Cada <Composition> aparece en la barra lateral de Remotion Studio.
 
@@ -56,6 +57,20 @@ export const RemotionRoot: React.FC = () => {
             width={1920}
             height={1080}
             defaultProps={{ capId: c.id }}
+          />
+        ))}
+      </Folder>
+      <Folder name="Shorts">
+        {SHORTS.map((s) => (
+          <Composition
+            key={s.id}
+            id={s.id}
+            component={ShortView}
+            durationInFrames={durShort(s)}
+            fps={FPS}
+            width={1080}
+            height={1920}
+            defaultProps={{ shortId: s.id }}
           />
         ))}
       </Folder>

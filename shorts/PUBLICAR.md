@@ -3,24 +3,32 @@
 Canal: **NutriFit** (`@nutrifit`). Si ese usuario está ocupado en alguna red, prueba `@nutrifit.mx`,
 `@nutrifit_oficial` o `@soynutrifit`; cambia el usuario en `shorts/canal.json` y vuelve a generar (ver abajo).
 
-Formato: vertical 1080×1920, 60–70 s, voz sintética (Piper, español de México), subtítulos grandes.
+Formato: vertical (9:16), 60–75 s, animación 3D, voz sintética (Piper, español de México), subtítulos grandes.
 
-## Editar y volver a renderizar (Windows, PowerShell)
+## Estilo de todos los shorts (desde ahora)
+
+Animación **3D** que muestra el proceso, no solo texto: empieza afuera del cuerpo (atleta entrenando),
+la cámara hace zoom al músculo → fibra → interior de la fibra, y ahí se ve lo que pasa (moléculas,
+reacciones, ATP, miosina…). El texto en pantalla es solo de apoyo: subtítulos grandes y datos clave.
+
+Los shorts 3D están en `src/shorts/` (Remotion), uno por archivo: `creatina.tsx`, `ardor.tsx`,
+`proteina.tsx`. Piezas compartidas: `marco.tsx` (formato vertical, subtítulos, marca, cierre),
+`viaje.tsx` (zoom del cuerpo al interior de la fibra) y `modelos.tsx` (atleta, fibra, riñones, comida…).
+
+## Ver, editar y renderizar (Windows, PowerShell)
 
 ```powershell
-cd Videos\shorts
-# 1) Cambia el texto en <short>\guion.json y la animación en <short>\escenas.html
-# 2) Voz nueva (solo si cambiaste el guion):
-python voz.py C:\ruta\es_MX-claude-high.onnx creatina
-# 3) Arma el video y míralo en el navegador (editor HyperFrames Studio):
-node generar.mjs creatina
-cd creatina
-npx hyperframes preview
-# 4) Renderiza el MP4:
-npx hyperframes render -o renders\creatina.mp4
+cd Videos
+npm run dev                      # Remotion Studio -> carpeta "Shorts"
+# Voz nueva si cambiaste algún texto (lista "const T" de cada short):
+python scripts\narracion.py C:\ruta\es_MX-claude-high.onnx
+# Render vertical 720x1280 (rápido y suficiente para redes):
+npx remotion render src/index.ts Short-Creatina out/shorts/Creatina-3D.mp4 --scale=0.6666666666666666 --gl=angle --timeout=120000
+# Para 1080x1920 quita --scale.
 ```
 
-La primera vez, `npx hyperframes browser ensure` descarga el navegador que usa para renderizar.
+La versión anterior (solo gráficos 2D, HyperFrames) sigue en `shorts/creatina`, `shorts/ardor`,
+`shorts/proteina` por si la quieres usar.
 
 ## Antes de publicar (todas las redes)
 
