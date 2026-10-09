@@ -37,8 +37,8 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
   const cam = bebe
     ? camara(
         [
-          { b: 0, p: [1.3, 1.55, 2.7], l: [0, 1.25, 0], fov: 36 },
-          { b: 0.5, p: [0.6, 1.5, 2.3], l: [0, 1.28, 0], fov: 36 },
+          { b: 0, p: [1.6, 1.5, 3.9], l: [0, 1.05, 0], fov: 36 },
+          { b: 0.5, p: [0.8, 1.45, 3.4], l: [0, 1.1, 0], fov: 36 },
         ],
         b,
       )
@@ -70,7 +70,7 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
 
 // ---- Adenosina que se acumula y se une a los receptores ----------------------------------
 
-const inicioAd = (i: number): V3 => [(rnd(`ax${i}`) - 0.5) * 3.2, 2.3 + rnd(`ay${i}`) * 1.4, (rnd(`az${i}`) - 0.5) * 1.4];
+const inicioAd = (i: number): V3 => [(rnd(`ax${i}`) - 0.5) * 2.6, 1.5 + rnd(`ay${i}`) * 0.9, (rnd(`az${i}`) - 0.5) * 1.4];
 const deriva = (p: V3, b: number, i: number): V3 => [p[0] + Math.sin(b * 6 + i) * 0.08, p[1] + Math.cos(b * 5 + i * 2) * 0.08, p[2]];
 const EXTRA = 4;
 
@@ -90,15 +90,15 @@ const Adenosina1: React.FC<{ textos: string[] }> = ({ textos }) => {
       : tramo === 1
         ? camara(
             [
-              { b: 0.18, p: [0, 0.4, 4.6], l: [0, -0.3, 0], fov: 38 },
-              { b: 0.38, p: [0.3, 0.3, 3.4], l: [0, -0.25, 0], fov: 38 },
+              { b: 0.18, p: [0, 0.5, 7.0], l: [0, -0.45, 0], fov: 38 },
+              { b: 0.38, p: [0.4, 0.4, 5.8], l: [0, -0.4, 0], fov: 38 },
             ],
             b,
           )
         : camara(
             [
-              { b: 0.38, p: [0, 3.0, 8.4], l: [0, 0.2, 0], fov: 40 },
-              { b: 1, p: [0.8, 2.4, 7.4], l: [0, 0.1, 0], fov: 40 },
+              { b: 0.38, p: [0, 3.2, 8.6], l: [0, 0.75, 0], fov: 40 },
+              { b: 1, p: [0.7, 2.8, 7.8], l: [0, 0.7, 0], fov: 40 },
             ],
             b,
           );
@@ -143,8 +143,8 @@ const Adenosina1: React.FC<{ textos: string[] }> = ({ textos }) => {
           b={b}
           items={[
             { p: inicioAd(10), t: "Adenosina", a: 0.42, z: 1, o: [-60, -80], color: ADENOSINA },
-            { p: [0.95, 0.3, -0.45], t: "Receptor", a: 0.6, z: 1, o: [60, 120], color: RECEPTOR },
-            { p: [-1.6, -0.5, 1.2], t: "Neurona", a: 0.5, z: 1, o: [-30, 130], color: "#ff8fb0" },
+            { p: [-0.5, 0.3, 0.45], t: "Receptor", a: 0.6, z: 1, o: [-40, 140], color: RECEPTOR },
+            { p: [1.3, -0.4, 1.2], t: "Neurona", a: 0.5, z: 1, o: [30, 110], color: "#ff8fb0" },
           ]}
         />
       ) : null}
@@ -159,10 +159,10 @@ const Bloqueo: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [0, 2.7, 4.0], l: [0, 2.15, 0], fov: 40 },
-      { b: 0.26, p: [0, 2.7, 4.6], l: [0, 2.05, 0], fov: 40 },
-      { b: 0.42, p: [0, 3.0, 8.4], l: [0, 0.2, 0], fov: 40 },
-      { b: 1, p: [-0.8, 2.6, 7.6], l: [0, 0.1, 0], fov: 40 },
+      { b: 0, p: [0, 2.5, 6.6], l: [0, 1.85, 0], fov: 40 },
+      { b: 0.26, p: [0, 2.5, 7.0], l: [0, 1.8, 0], fov: 40 },
+      { b: 0.42, p: [0, 3.2, 8.6], l: [0, 0.75, 0], fov: 40 },
+      { b: 1, p: [-0.7, 2.8, 7.8], l: [0, 0.7, 0], fov: 40 },
     ],
     b,
   );
@@ -177,7 +177,7 @@ const Bloqueo: React.FC<{ textos: string[] }> = ({ textos }) => {
         <Sinapsis b={b} actividad={actividad} ocupado={entra} />
         {/* adenosina: estaba unida, se suelta y ya no puede volver a entrar */}
         {RECEPTORES_C.map((_, i) => {
-          const fuera: V3 = [RECEPTORES_C[i][0] * 1.3 + (i % 2 ? 0.5 : -0.5), 1.9 + rnd(`fy${i}`) * 0.6, RECEPTORES_C[i][1] + 0.3];
+          const fuera: V3 = [RECEPTORES_C[i][0] * 1.3 + (i % 2 ? 0.5 : -0.5), 1.5 + rnd(`fy${i}`) * 0.5, RECEPTORES_C[i][1] + 0.3];
           let p = mix3(enReceptor(i, 0.12), fuera, sale[i]);
           const r = rebota(i);
           if (r > 0 && r < 1) {
@@ -190,20 +190,20 @@ const Bloqueo: React.FC<{ textos: string[] }> = ({ textos }) => {
         })}
         {/* cafeina que llega y ocupa la copa */}
         {RECEPTORES_C.map((_, i) => {
-          const ini: V3 = i === 1 ? [-0.75, 2.15, 0.6] : [(rnd(`cx${i}`) - 0.5) * 3.4, 3.1 + rnd(`cy${i}`) * 0.6, 0.4];
+          const ini: V3 = i === 1 ? [-0.6, 2.15, 0.6] : [(rnd(`cx${i}`) - 0.5) * 2.8, 2.2 + rnd(`cy${i}`) * 0.5, 0.4];
           const vis = i === 1 ? 1 : entre(b, 0.3, 0.38);
           return <Cafeina key={i} p={mix3(deriva(ini, b, i + 5), enReceptor(i, 0.08), entra[i])} escala={0.75 + 0.35 * (i === 1 ? compara : 0)} rot={[0, 0, (1 - entra[i]) * Math.sin(b * 3 + i) * 0.6]} op={vis} />;
         })}
-        {compara > 0 ? <Adenosina p={[0.55, 2.15, 0.6]} escala={1.1 * compara} op={compara} /> : null}
+        {compara > 0 ? <Adenosina p={[0.5, 2.15, 0.6]} escala={1.1 * compara} op={compara} /> : null}
         <Polvo b={b} radio={5} color="#c8b8ff" />
       </Escena3D>
       <Etiquetas
         cam={cam}
         b={b}
         items={[
-          { p: [-0.75, 2.45, 0.6], t: "Cafeína", a: 0.03, z: 0.28, o: [-40, -110], color: CAFEINA_C },
-          { p: [0.6, 2.45, 0.6], t: "Adenosina", a: 0.08, z: 0.28, o: [40, -110], color: ADENOSINA },
-          { p: enReceptor(0, 0.1), t: "Cafeína en el receptor", a: 0.5, z: 0.95, o: [-30, 150], color: CAFEINA_C },
+          { p: [-0.6, 2.45, 0.6], t: "Cafeína", a: 0.03, z: 0.28, o: [-20, -130], color: CAFEINA_C },
+          { p: [0.5, 2.5, 0.6], t: "Adenosina", a: 0.08, z: 0.28, o: [20, -130], color: ADENOSINA },
+          { p: enReceptor(3, 0.1), t: "Cafeína en el receptor", a: 0.5, z: 0.95, o: [40, 170], color: CAFEINA_C },
         ]}
       />
       <Chip b={b} a={0.12} z={0.3} t="FORMA PARECIDA" x={540} y={1060} color={CAFEINA_C} />
@@ -286,10 +286,10 @@ const Dosis: React.FC<{ textos: string[] }> = ({ textos }) => {
     <AbsoluteFill>
       <Escena3D cam={cam}>
         <Taza p={[-0.65, 0, 0]} escala={1.25} b={b} giro={-0.5 + b * 0.6} />
-        <group rotation={[0, b * 1.4, 0]} position={[0.75, 0.55, 0.2]}>
-          <Capsula p={[0, 0, 0]} rot={[0, 0, 0.5]} escala={4.2} />
+        <group rotation={[0, b * 1.4, 0]} position={[0.8, 0.42, 0.2]}>
+          <Capsula p={[0, 0, 0]} rot={[0, 0, 0.5]} escala={3.6} />
         </group>
-        {reloj > 0 ? <Reloj p={[0, 1.95, -0.2]} escala={0.9 * reloj} t={lineal(b, 0.45, 0.75) * 0.75} /> : null}
+        {reloj > 0 ? <Reloj p={[0.5, 1.6, -0.3]} escala={0.7 * reloj} t={lineal(b, 0.45, 0.75) * 0.75} /> : null}
         <Piso color={CAFE_TXT} r={1.6} brillo={0.25} />
         <Polvo b={b} radio={5} />
       </Escena3D>
@@ -335,7 +335,7 @@ const Barra: React.FC<{ b: number; f: number; op: number }> = ({ b, f, op }) => 
   const ancho = 800;
   const mg = Math.round((f * 400) / 10) * 10;
   return (
-    <div style={{ position: "absolute", top: 1000, left: (1080 - ancho) / 2, width: ancho, opacity: op * visible(b, 0.04, 1.2, 0.06) }}>
+    <div style={{ position: "absolute", top: 1060, left: (1080 - ancho) / 2, width: ancho, opacity: op * visible(b, 0.04, 1.2, 0.06) }}>
       <div style={{ height: 40, borderRadius: 20, background: "rgba(255,255,255,0.12)", border: "3px solid rgba(255,255,255,0.25)", overflow: "hidden" }}>
         <div style={{ width: `${f * 100}%`, height: "100%", background: `linear-gradient(90deg, ${CAFE_TXT}, ${K.naranja})`, boxShadow: `0 0 20px ${K.naranja}88` }} />
       </div>
@@ -357,15 +357,15 @@ const Limite: React.FC<{ textos: string[] }> = ({ textos }) => {
   const cam = noche
     ? camara(
         [
-          { b: 0.55, p: [1.6, 1.9, 6.0], l: [0, 0.75, 0], fov: 38 },
-          { b: 1, p: [-0.6, 1.7, 5.4], l: [0, 0.75, 0], fov: 38 },
+          { b: 0.55, p: [1.6, 1.9, 7.2], l: [0.1, 0.85, 0], fov: 38 },
+          { b: 1, p: [-0.6, 1.7, 6.8], l: [0.1, 0.85, 0], fov: 38 },
         ],
         b,
       )
     : camara(
         [
-          { b: 0, p: [0, 1.2, 6.6], l: [0, 0.45, 0], fov: 38 },
-          { b: 0.55, p: [0.5, 1.3, 6.2], l: [0, 0.45, 0], fov: 38 },
+          { b: 0, p: [0, 1.1, 6.4], l: [0, 0.0, 0], fov: 38 },
+          { b: 0.55, p: [0.4, 1.2, 6.0], l: [0, 0.0, 0], fov: 38 },
         ],
         b,
       );
@@ -375,22 +375,22 @@ const Limite: React.FC<{ textos: string[] }> = ({ textos }) => {
       <Escena3D cam={cam} fondo={noche ? "#141a3a" : K.fondo2}>
         {noche ? (
           <>
-            <Cama p={[-0.2, 0, 0]} escala={1.0} />
-            <Luna p={[0.75, 2.05, -0.6]} escala={0.8} />
+            <Cama p={[-0.25, 0, 0]} escala={0.85} />
+            <Luna p={[0.85, 1.6, -0.8]} escala={0.65} />
             {Array.from({ length: 18 }).map((_, i) => (
               <mesh key={i} position={[(rnd(`es${i}`) - 0.5) * 6, 1.6 + rnd(`ey${i}`) * 2.4, -2.5]}>
                 <sphereGeometry args={[0.025, 6, 6]} />
                 <meshBasicMaterial color="#fff6d0" />
               </mesh>
             ))}
-            <Taza p={[1.05, 0, 0.75]} escala={0.45} b={b} vapor={0.6} />
-            <Tache p={[1.05, 0.28, 1.05]} escala={0.5 * entre(b, 0.7, 0.8)} />
+            <Taza p={[0.75, 0, 0.8]} escala={0.4} b={b} vapor={0.6} />
+            <Tache p={[0.75, 0.25, 1.1]} escala={0.5 * entre(b, 0.7, 0.8)} />
           </>
         ) : (
           [0, 1, 2, 3].map((i) => {
             const a = 0.06 + i * 0.085;
             const t = entre(b, a, a + 0.06);
-            return t > 0 ? <Taza key={i} p={[-1.05 + i * 0.7, 0, 0]} escala={0.5 * pop(b, a)} b={b + i * 0.2} giro={-0.4} brillo={i === 3 ? 0.15 * entre(b, 0.38, 0.45) : 0} /> : null;
+            return t > 0 ? <Taza key={i} p={[-0.93 + i * 0.62, 0, 0]} escala={0.45 * pop(b, a)} b={b + i * 0.2} giro={-0.4} brillo={i === 3 ? 0.15 * entre(b, 0.38, 0.45) : 0} /> : null;
           })
         )}
         {noche ? null : <Piso color={K.naranja} r={1.6} brillo={0.2} />}
@@ -409,8 +409,8 @@ const Precaucion: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [0, 0.2, 5.6], l: [0, -0.3, 0], fov: 38 },
-      { b: 1, p: [0.6, 0.3, 5.0], l: [0, -0.3, 0], fov: 38 },
+      { b: 0, p: [0, 0.2, 5.6], l: [0, -0.42, 0], fov: 38 },
+      { b: 1, p: [0.5, 0.25, 5.3], l: [0, -0.4, 0], fov: 38 },
     ],
     b,
   );
@@ -421,7 +421,7 @@ const Precaucion: React.FC<{ textos: string[] }> = ({ textos }) => {
     <AbsoluteFill>
       <Escena3D cam={cam}>
         <group rotation={[0, Math.sin(b * 3) * 0.35, 0]}>
-          <Corazon p={[0, 0, 0]} escala={0.75} pulso={pulso} />
+          <Corazon p={[0, 0, 0]} escala={0.5} pulso={pulso} />
         </group>
         <Polvo b={b} radio={4} color="#ffb0b0" />
       </Escena3D>

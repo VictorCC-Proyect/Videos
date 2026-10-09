@@ -78,8 +78,8 @@ export const Taza: React.FC<{ p?: V3; escala?: number; b?: number; vapor?: numbe
 
 /** Atleta de pie que sube la taza a la boca. bebe 0..1 (0 = brazo abajo). */
 export const AtletaTaza: React.FC<{ bebe: number; b: number; brilla?: number }> = ({ bebe, b, brilla = 0 }) => {
-  const a = mix(0, -0.55, bebe);
-  const c = mix(-0.6, -2.05, bebe);
+  const a = mix(0, -0.8, bebe);
+  const c = mix(-0.6, -2.25, bebe);
   const codo: V3 = [0.23, 1.47 - 0.3 * Math.cos(a), -0.3 * Math.sin(a)];
   const mano: V3 = [0.23, codo[1] - 0.34 * Math.cos(a + c), codo[2] - 0.34 * Math.sin(a + c)];
   return (
