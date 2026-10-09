@@ -105,10 +105,10 @@ export const Sol: React.FC<{ p: V3; r?: number; op?: number }> = ({ p, r = 0.8, 
       <sphereGeometry args={[r, 40, 30]} />
       <meshBasicMaterial color="#ffb347" transparent={op < 1} opacity={op} />
     </mesh>
-    {[1.35, 1.9, 2.7].map((k, i) => (
+    {[1.3, 1.7].map((k, i) => (
       <mesh key={i}>
         <sphereGeometry args={[r * k, 24, 18]} />
-        <meshBasicMaterial color="#ff8a3d" transparent opacity={(0.22 - i * 0.06) * op} depthWrite={false} />
+        <meshBasicMaterial color="#ff8a3d" transparent opacity={(0.2 - i * 0.08) * op} depthWrite={false} />
       </mesh>
     ))}
   </group>

@@ -2,7 +2,7 @@
 // Del atleta al cerebro y las suprarrenales, el higado, el adipocito y la fibra muscular.
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { Cam, camara, entre, lineal, mix, mix3, PlanoDef, useBeat, V3, visible } from "../fisio/motor";
+import { camara, entre, lineal, mix, mix3, PlanoDef, useBeat, V3, visible } from "../fisio/motor";
 import { Polvo, rnd } from "../fisio/modelos/comun";
 import { Cadena, Higado, Mol, Vaso } from "../fisio/modelos/energia";
 import { CilindroX } from "../fisio/modelos/musculo";
@@ -41,7 +41,7 @@ const Curva: React.FC<{
   y?: number;
   alto?: number;
   desde?: number;
-  nota?: { x: number; t: string; color: string; op: number };
+  nota?: { x: number; t: string; color: string; op: number; dx?: number; dy?: number; ancla?: "start" | "middle" | "end" };
 }> = ({ b, a, z, prog, f, color = CORT, fantasma, y = 400, alto: hh = 300, desde = 0, nota }) => {
   const op = visible(b, a, z, 0.08);
   if (op <= 0) return null;
@@ -76,7 +76,15 @@ const Curva: React.FC<{
           </text>
         ))}
         {nota && nota.op > 0 ? (
-          <text x={X(nota.x)} y={Y(f(nota.x)) - 24} fill={nota.color} opacity={nota.op} fontFamily="Anton, Impact, sans-serif" fontSize={40} textAnchor="middle">
+          <text
+            x={X(nota.x) + (nota.dx ?? 0)}
+            y={Y(f(nota.x)) + (nota.dy ?? -24)}
+            fill={nota.color}
+            opacity={nota.op}
+            fontFamily="Anton, Impact, sans-serif"
+            fontSize={40}
+            textAnchor={nota.ancla ?? "middle"}
+          >
             {nota.t}
           </text>
         ) : null}
@@ -85,23 +93,14 @@ const Curva: React.FC<{
   );
 };
 
-const camAtleta = (b: number, a = 0, z = 1, ly = 0.6): Cam =>
-  camara(
-    [
-      { b: a, p: [2.4, 1.3, 6.4], l: [0, ly, 0], fov: 36 },
-      { b: z, p: [-2.0, 1.2, 6.1], l: [0, ly, 0], fov: 36 },
-    ],
-    b,
-  );
-
 // 0 · Gancho: amanece, el atleta despierta y el cortisol sube -----------------------
 const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const sale = entre(b, 0.05, 0.85);
   const cam = camara(
     [
-      { b: 0, p: [2.2, 1.1, 7.0], l: [0, 0.35, 0], fov: 36 },
-      { b: 1, p: [-1.4, 1.0, 6.4], l: [0, 0.35, 0], fov: 36 },
+      { b: 0, p: [2.6, 1.2, 9.2], l: [0, 0.8, 0], fov: 36 },
+      { b: 1, p: [-1.6, 1.1, 8.6], l: [0, 0.8, 0], fov: 36 },
     ],
     b,
   );
@@ -110,19 +109,19 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
     <AbsoluteFill>
       <Escena3D cam={cam} fondo={fondo} luz={mix(0.55, 1.05, sale)}>
         <Estrellas op={1 - sale} />
-        <Sol p={[1.3, mix(-1.2, 2.1, sale), -5]} r={0.7} />
+        <Sol p={[1.5, mix(-1.0, 2.0, sale), -6]} r={0.6} />
         <Atleta ej="parado" brilla={0.1 + 0.35 * entre(b, 0.55, 0.8)} colorBrillo={CORT} />
         <Piso color={CORT} brillo={0.2 + 0.4 * sale} />
         {Array.from({ length: 6 }).map((_, i) => {
           const k = lineal(b, 0.55 + i * 0.05, 0.85 + i * 0.05);
           if (k <= 0) return null;
           const ini: V3 = [0.12 * (i % 2 ? 1 : -1), 1.05, 0.1];
-          const fin: V3 = [(rnd(`g${i}`) - 0.5) * 1.6, 0.6 + rnd(`h${i}`) * 1.4, 0.5];
+          const fin: V3 = [(rnd(`g${i}`) - 0.5) * 1.8, 0.5 + rnd(`h${i}`) * 1.0, 0.5];
           return <MolCortisol key={i} p={mix3(ini, fin, k)} escala={0.45} op={Math.min(1, k * 4)} giro={b * 3 + i} />;
         })}
       </Escena3D>
       <Titular b={b} a={0.03} z={1.2} y={250} tam={120} t="Cortisol" color={CORT} />
-      <Curva b={b} a={0.08} z={1.2} y={400} alto={250} prog={mix(0.02, 0.34, sale)} f={normal} nota={{ x: 0.32, t: "PICO AL DESPERTAR", color: K.amarillo, op: entre(b, 0.8, 0.9) }} />
+      <Curva b={b} a={0.08} z={1.2} y={400} alto={250} prog={mix(0.02, 0.34, sale)} f={normal} nota={{ x: 0.32, t: "PICO AL DESPERTAR", color: K.amarillo, op: entre(b, 0.8, 0.9), dx: 36, dy: 30, ancla: "start" }} />
       <Chip b={b} a={0.6} z={1.2} t="TE DESPIERTA" x={540} y={1100} color={CORT} />
     </AbsoluteFill>
   );
@@ -142,14 +141,14 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
       )
     : camara(
         [
-          { b: 0.16, p: [0, 0.6, 14], l: [0, -0.4, 0], fov: 40 },
-          { b: 1, p: [-1.4, 0.4, 13.2], l: [0, -0.4, 0], fov: 40 },
+          { b: 0.16, p: [0, 0.6, 18], l: [0, 0.0, 0], fov: 40 },
+          { b: 1, p: [-1.5, 0.5, 17.2], l: [0, 0.0, 0], fov: 40 },
         ],
         b,
       );
-  const cer: V3 = [0, 2.7, 0];
-  const hip: V3 = [0, 2.2, 0.35];
-  const rin: V3 = [0, -1.6, 0];
+  const cer: V3 = [0, 2.45, 0];
+  const hip: V3 = [0, 1.95, 0.35];
+  const rin: V3 = [0, -1.1, 0];
   const sup = (l: number): V3 => [rin[0] + l * 0.68, rin[1] + 0.95, 0.3];
   return (
     <AbsoluteFill>
@@ -164,9 +163,9 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
             <Cerebro p={cer} escala={1.0} brillo={0.1} giro={-0.25 + b * 0.5} />
             {/* hipotalamo e hipofisis */}
             <Mol p={hip} color={ACTH} r={0.13} brillo={0.6 + 1.2 * entre(b, 0.6, 0.66) * (0.5 + 0.5 * Math.sin(b * 60))} />
-            <Mol p={[0, 1.95, 0.4]} color={ACTH} r={0.1} brillo={0.8} />
+            <Mol p={[0, 1.72, 0.4]} color={ACTH} r={0.1} brillo={0.8} />
             {/* vaso que baja hasta los rinones */}
-            <Vaso desde={[0, 1.7, 0.1]} hasta={[0, -1.0, 0.1]} t={b * 1.2} radio={0.3} />
+            <Vaso desde={[0, 1.5, 0.1]} hasta={[0, -0.6, 0.1]} t={b * 1.2} radio={0.3} />
             <group position={rin} scale={0.8}>
               <Rinones brillo={0.02} />
               <Suprarrenales brillo={0.6 * entre(b, 0.7, 0.8)} />
@@ -176,7 +175,7 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
               const k = lineal(b, 0.58 + i * 0.025, 0.74 + i * 0.025);
               if (k <= 0 || k >= 1) return null;
               const l = i % 2 ? 1 : -1;
-              const p = k < 0.8 ? mix3([0, 1.8, 0.35], [0, rin[1] + 1.0, 0.35], k / 0.8) : mix3([0, rin[1] + 1.0, 0.35], sup(l), (k - 0.8) / 0.2);
+              const p = k < 0.8 ? mix3([0, 1.6, 0.35], [0, rin[1] + 1.0, 0.35], k / 0.8) : mix3([0, rin[1] + 1.0, 0.35], sup(l), (k - 0.8) / 0.2);
               return <Mol key={i} p={p} color={ACTH} r={0.08} />;
             })}
             {/* cortisol que sale de las suprarrenales */}
@@ -185,7 +184,7 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
               const k = lineal(b, a, a + 0.3);
               if (k <= 0) return null;
               const l = i % 2 ? 1 : -1;
-              const fin: V3 = [l * (0.8 + rnd(`cx${i}`) * 1.4), rin[1] + 1.1 + rnd(`cy${i}`) * 2.2, 0.8];
+              const fin: V3 = [l * (0.8 + rnd(`cx${i}`) * 1.3), rin[1] + 0.9 + rnd(`cy${i}`) * 1.8, 0.8];
               return <MolCortisol key={`c${i}`} p={mix3(sup(l), fin, k)} escala={0.6} op={Math.min(1, k * 5)} giro={b * 4 + i} />;
             })}
             <Polvo b={b} radio={6} />
@@ -198,12 +197,12 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
           cam={cam}
           b={b}
           items={[
-            { p: [-0.6, 2.5, 0.4], t: "Cerebro", a: 0.2, z: 0.55, o: [-60, -80], color: "#ff8fb0" },
-            { p: hip, t: "Hipotálamo-hipófisis", a: 0.5, z: 1, o: [60, -110], color: ACTH },
+            { p: [-0.6, 2.3, 0.4], t: "Cerebro", a: 0.2, z: 0.55, o: [-60, -80], color: "#ff8fb0" },
+            { p: hip, t: "Hipotálamo-hipófisis", a: 0.5, z: 1, o: [110, 30], color: ACTH },
             { p: [0, 0.6, 0.35], t: "Señal (ACTH)", a: 0.62, z: 0.8, o: [60, 0], color: ACTH },
-            { p: [rin[0] - 0.7, rin[1] + 0.85, 0.3], t: "Suprarrenales", a: 0.32, z: 1, o: [-40, 130], color: SUPRA },
+            { p: [rin[0] - 0.7, rin[1] + 0.85, 0.3], t: "Suprarrenales", a: 0.32, z: 1, o: [-60, -90], color: SUPRA },
             { p: [rin[0] + 0.7, rin[1] - 0.4, 0.3], t: "Riñones", a: 0.4, z: 0.75, o: [40, 110], color: "#d26a73" },
-            { p: [1.3, rin[1] + 2.4, 0.8], t: "Cortisol", a: 0.82, z: 1, o: [60, -70], color: CORT },
+            { p: [1.3, rin[1] + 2.0, 0.8], t: "Cortisol", a: 0.82, z: 1, o: [60, -70], color: CORT },
           ]}
         />
       ) : null}
@@ -310,7 +309,13 @@ const Ejercicio: React.FC<{ textos: string[] }> = ({ textos }) => {
 // 3 · Problema: se queda alto todo el dia ---------------------------------------------
 const Problema: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
-  const cam = camAtleta(b, 0, 1, 0.42);
+  const cam = camara(
+    [
+      { b: 0, p: [2.6, 1.2, 9.0], l: [0, 0.75, 0], fov: 36 },
+      { b: 1, p: [-2.2, 1.1, 8.6], l: [0, 0.75, 0], fov: 36 },
+    ],
+    b,
+  );
   const rojo = entre(b, 0.3, 0.6);
   return (
     <AbsoluteFill>
@@ -364,13 +369,13 @@ const Cronico: React.FC<{ textos: string[] }> = ({ textos }) => {
       )
     : camara(
         [
-          { b: 0.6, p: [0, 0.3, 9.5], l: [0, -0.5, 0], fov: 40 },
-          { b: 1, p: [-0.8, 0.3, 8.6], l: [0, -0.5, 0], fov: 40 },
+          { b: 0.6, p: [0, 0.3, 10.5], l: [0, -0.6, 0], fov: 40 },
+          { b: 1, p: [-0.8, 0.3, 9.8], l: [0, -0.6, 0], fov: 40 },
         ],
         b,
       );
   const crece = entre(b, 0.65, 1);
-  const adC: V3 = [0, 0.6, 0];
+  const adC: V3 = [0, 0, 0];
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} niebla={[8, 28]}>
@@ -389,13 +394,13 @@ const Cronico: React.FC<{ textos: string[] }> = ({ textos }) => {
           </>
         ) : (
           <>
-            <Adipocito p={adC} r={mix(1.3, 1.75, crece)} gota={mix(0.6, 0.85, crece)} brillo={0.15 * crece} />
+            <Adipocito p={adC} r={mix(0.95, 1.3, crece)} gota={mix(0.6, 0.85, crece)} brillo={0.15 * crece} />
             {Array.from({ length: 8 }).map((_, i) => {
               const a = 0.62 + i * 0.04;
               const k = lineal(b, a, a + 0.18);
               if (k <= 0 || k >= 1) return null;
               const ang = (i / 8) * Math.PI * 2;
-              const ini: V3 = [Math.cos(ang) * 3.2, adC[1] + Math.sin(ang) * 3.2, 1];
+              const ini: V3 = [Math.cos(ang) * 2.6, adC[1] + Math.sin(ang) * 2.2, 1];
               const p = mix3(ini, [adC[0] + Math.cos(ang) * 0.6, adC[1] + Math.sin(ang) * 0.6, 0.6], k);
               return i % 2 ? <Glucosa key={i} p={p} escala={1.2} /> : <Cadena key={i} n={7} p={[p[0] - 0.35, p[1], p[2]]} color={GRASO} sep={0.11} brillo={0.6} />;
             })}
@@ -410,12 +415,12 @@ const Cronico: React.FC<{ textos: string[] }> = ({ textos }) => {
           b={b}
           items={[
             { p: [2.6, 2.0, 1.8], t: "Cortisol alto", a: 0.08, z: 0.4, o: [-60, -120], color: CORT },
-            { p: PROTS[1], t: "Proteína muscular", a: 0.3, z: 0.6, o: [-40, -130], color: K.lima },
+            { p: PROTS[1], t: "Proteína muscular", a: 0.3, z: 0.6, o: [-40, 140], color: K.lima },
             { p: [0.1, -0.6, 2.0], t: "Aminoácidos", a: 0.45, z: 0.6, o: [60, 160], color: K.cian },
           ]}
         />
       ) : (
-        <Etiquetas cam={cam} b={b} items={[{ p: [adC[0] + 1.0, adC[1] + 1.0, 0.4], t: "Adipocito abdominal", a: 0.66, z: 1, o: [-30, -130], color: GRASO }]} />
+        <Etiquetas cam={cam} b={b} items={[{ p: [adC[0] - 0.75, adC[1] + 0.6, 0.5], t: "Adipocito abdominal", a: 0.66, z: 1, o: [-30, -70], color: GRASO }]} />
       )}
       <Dato b={b} a={0.05} z={0.6} t="Proteína muscular ↓" sub="se degrada" color={K.rojo} y={250} tam={84} />
       <Dato b={b} a={0.6} z={1.2} t="Grasa abdominal ↑" sub="cortisol alto crónico" color={GRASO} y={250} tam={84} />
@@ -430,8 +435,8 @@ const Regula: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [1.6, 2.6, 5.4], l: [0, 0.05, 0], fov: 36 },
-      { b: 1, p: [-1.4, 2.5, 5.0], l: [0, 0.05, 0], fov: 36 },
+      { b: 0, p: [1.4, 3.0, 7.6], l: [0, 0.15, 0], fov: 36 },
+      { b: 1, p: [-1.2, 2.9, 7.2], l: [0, 0.15, 0], fov: 36 },
     ],
     b,
   );
@@ -440,10 +445,10 @@ const Regula: React.FC<{ textos: string[] }> = ({ textos }) => {
     <AbsoluteFill>
       <Escena3D cam={cam} fondo="#0a1630" luz={0.75}>
         <Estrellas />
-        <Luna p={[1.6, 2.3, -3.5]} r={0.35} />
+        <Luna p={[-1.5, 1.1, -2.5]} r={0.28} />
         <Cama />
         {/* atleta acostado boca arriba, cabeza hacia la almohada */}
-        <group position={[0.75, 0.5, 0]} rotation={[0, -Math.PI / 2, 0]}>
+        <group position={[0.8, 0.5, 0]} rotation={[0, Math.PI / 2, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]} scale={[1, 1, 1 + respira]}>
             <Atleta ej="parado" brilla={0.12} colorBrillo={K.cian} musculo={0.8} />
           </group>
@@ -454,7 +459,7 @@ const Regula: React.FC<{ textos: string[] }> = ({ textos }) => {
           return <Mol key={i} p={[-0.9 + f * 0.5, 0.75 + f * 1.0, 0.2]} color="#9fb8ff" r={0.05 + f * 0.04} op={1 - f} />;
         })}
       </Escena3D>
-      <Curva b={b} a={0.02} z={1.2} y={250} alto={300} prog={mix(0.35, 1, entre(b, 0.05, 0.6))} desde={0} f={normal} color={K.cian} nota={{ x: 0.92, t: "BAJA DE NOCHE", color: K.cian, op: entre(b, 0.55, 0.65) }} />
+      <Curva b={b} a={0.02} z={1.2} y={250} alto={300} prog={mix(0.35, 1, entre(b, 0.05, 0.6))} desde={0} f={normal} color={K.cian} nota={{ x: 0.9, t: "BAJA DE NOCHE", color: K.cian, op: entre(b, 0.55, 0.65), dy: -40, ancla: "end" }} />
       <Chip b={b} a={0.1} z={1.2} t="DORMIR 7–9 H" x={290} y={1010} color={K.cian} />
       <Chip b={b} a={0.42} z={1.2} t="COMER SUFICIENTE" x={760} y={1010} color={K.lima} />
       <Chip b={b} a={0.58} z={1.2} t="DESCANSOS" x={290} y={1100} color={K.lima} />
@@ -468,8 +473,8 @@ const Suplementos: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [0.8, 1.2, 4.2], l: [0, 0.35, 0], fov: 36 },
-      { b: 1, p: [-0.6, 1.1, 3.8], l: [0, 0.35, 0], fov: 36 },
+      { b: 0, p: [0.9, 1.1, 6.2], l: [0, 0.2, 0], fov: 36 },
+      { b: 1, p: [-0.7, 1.0, 5.8], l: [0, 0.2, 0], fov: 36 },
     ],
     b,
   );
