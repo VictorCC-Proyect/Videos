@@ -54,16 +54,15 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 2. ¿Por qué te arde el músculo?
+## 2. ¿Por qué te arde el músculo? Los protones, no el lactato
 
-**Título YouTube Shorts:** ¿Por qué te ARDE el músculo al entrenar? 🔥 (no es el ácido láctico) #shorts
+**Título YouTube Shorts:** ¿Por qué te ARDE el músculo? 🔥 Los protones, no el lactato #shorts
 
 **Texto TikTok / Reels / Facebook:**
-Ese ardor en las últimas repeticiones NO es culpa del ácido láctico 🔥 Te explico qué pasa de verdad
-en tu músculo y por qué el lactato es tu aliado.
+El ardor al entrenar NO es culpa del lactato: son los protones (H⁺) que bajan el pH de tu músculo 🔥 Mira el proceso en 3D.
 Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
-**Hashtags:** #acidolactico #gym #fisiologia #entrenamiento #nutriciondeportiva #fitness #ciencia #aprendeentiktok #agujetas #musculo
+**Hashtags:** #acidolactico #lactato #gym #fisiologia #entrenamiento #fitness #ciencia #nutriciondeportiva #aprendeentiktok #musculo
 
 ---
 
@@ -77,6 +76,114 @@ cuánto aportan pollo, huevo y frijoles.
 Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 **Hashtags:** #proteina #nutricion #gym #ganarmusculo #perdergrasa #nutriciondeportiva #fitness #dieta #aprendeentiktok #comidasaludable
+
+---
+
+## 4. Continuum energético
+
+**Título YouTube Shorts:** ¿La grasa se quema solo después de 30 minutos? ⏱️ FALSO #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Tus 3 sistemas de energía trabajan a la vez desde el primer segundo. Te muestro el continuum energético dentro de tu músculo 🔥
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #quemargrasa #cardio #continuumenergetico #fisiologia #gym #fitness #perdergrasa #ciencia #aprendeentiktok #nutricion
+
+---
+
+## 5. Ayuno intermitente por horas
+
+**Título YouTube Shorts:** Ayuno intermitente: qué pasa en tu cuerpo HORA por HORA ⏳ #shorts
+
+**Texto TikTok / Reels / Facebook:**
+0, 4, 12, 18 horas… ¿qué hace tu cuerpo cuando dejas de comer? Insulina, glucógeno, grasa, cetonas y autofagia en 3D.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #ayunointermitente #ayuno #cetosis #autofagia #nutricion #perdergrasa #salud #ciencia #aprendeentiktok #metabolismo
+
+---
+
+## 6. Picos de glucosa e insulina
+
+**Título YouTube Shorts:** Picos de GLUCOSA y resistencia a la insulina 🍩 explicado en 3D #shorts
+
+**Texto TikTok / Reels / Facebook:**
+¿Sueño después de comer? Es un pico de glucosa. Mira cómo la insulina abre tus células y cómo se llega a la resistencia a la insulina.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #glucosa #insulina #resistenciaalainsulina #diabetes #nutricion #salud #azucar #ciencia #aprendeentiktok #metabolismo
+
+---
+
+## 7. Déficit calórico
+
+**Título YouTube Shorts:** Déficit calórico: por qué NO bajas de peso ⚖️ #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Haces dieta y la báscula no se mueve. Te explico el déficit calórico y los 3 errores más comunes.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #deficitcalorico #bajardepeso #perdergrasa #nutricion #dieta #gym #fitness #calorias #aprendeentiktok #ciencia
+
+---
+
+## 8. Microbiota, ultraprocesados y edulcorantes
+
+**Título YouTube Shorts:** Ultraprocesados, edulcorantes y tu MICROBIOTA 🦠 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Billones de bacterias viven en tu intestino y lo que comes las cambia. Fibra, butirato, emulsionantes y edulcorantes en 3D.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #microbiota #intestino #ultraprocesados #edulcorantes #fibra #nutricion #salud #ciencia #aprendeentiktok #probioticos
+
+---
+
+## 9. Magnesio
+
+**Título YouTube Shorts:** MAGNESIO: el mineral que relaja tus músculos 💪 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+El magnesio participa en más de 300 reacciones. Mira qué hace dentro de tu músculo y dónde encontrarlo.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #magnesio #minerales #calambres #nutricion #suplementos #gym #salud #ciencia #aprendeentiktok #musculo
+
+---
+
+## 10. Colágeno
+
+**Título YouTube Shorts:** ¿Sirve tomar COLÁGENO? 🦴 Lo que dice la ciencia #shorts
+
+**Texto TikTok / Reels / Facebook:**
+El colágeno que tomas no va directo a tu piel ni a tus rodillas. Te muestro el camino real en 3D.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #colageno #articulaciones #tendones #suplementos #nutricion #vitaminac #gym #ciencia #aprendeentiktok #salud
+
+---
+
+## 11. Cortisol
+
+**Título YouTube Shorts:** CORTISOL: ¿enemigo o aliado? 😰 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+El cortisol te despierta cada mañana y te da energía al entrenar. El problema es cuando no baja.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #cortisol #estres #hormonas #sueño #grasaabdominal #salud #gym #ciencia #aprendeentiktok #nutricion
+
+---
+
+## 12. Cafeína antes de entrenar
+
+**Título YouTube Shorts:** CAFEÍNA antes de entrenar: cómo funciona ☕ #shorts
+
+**Texto TikTok / Reels / Facebook:**
+La cafeína bloquea a la adenosina y por eso sientes menos cansancio. Dosis, tiempos y precauciones.
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #cafeina #preentreno #cafe #gym #rendimiento #suplementos #nutriciondeportiva #ciencia #aprendeentiktok #fitness
 
 ---
 
