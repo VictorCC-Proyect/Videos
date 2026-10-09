@@ -67,6 +67,7 @@ function generar(dir) {
   });
   fs.mkdirSync(path.join(dir, "fonts"), { recursive: true });
   for (const f of ["Anton.woff2", "Inter.woff2"]) fs.copyFileSync(path.join(AQUI, "comun/fonts", f), path.join(dir, "fonts", f));
+  fs.copyFileSync(path.join(AQUI, "comun/gsap.min.js"), path.join(dir, "gsap.min.js"));
 
   const B = [];
   const D = [];
@@ -109,7 +110,7 @@ function generar(dir) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=${W}, height=${H}" />
     <title>${esc(guion.titulo)}</title>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="gsap.min.js"></script>
     <style>
       @font-face { font-family: "Anton"; src: url("fonts/Anton.woff2") format("woff2"); font-weight: 400; }
       @font-face { font-family: "Inter"; src: url("fonts/Inter.woff2") format("woff2"); font-weight: 100 900; }
