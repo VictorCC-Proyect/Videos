@@ -51,7 +51,7 @@ const Llama: React.FC<{ p: V3; escala?: number; b: number }> = ({ p, escala = 1,
 /** Balanza: pilar, barra que se inclina y dos platillos colgantes. ang > 0 baja el lado derecho. */
 const Balanza: React.FC<{ ang: number; izq: React.ReactNode; der: React.ReactNode }> = ({ ang, izq, der }) => {
   const alto = 2.1;
-  const L = 1.55;
+  const L = 1.2;
   const cuelga = 0.95;
   const ext = (s: number): V3 => [s * L * Math.cos(ang), alto - s * L * Math.sin(ang), 0];
   const metal = <meshPhysicalMaterial color="#cfd8dc" metalness={0.7} roughness={0.25} clearcoat={0.6} />;
@@ -213,8 +213,8 @@ const Balance: React.FC<{ textos: string[] }> = ({ textos }) => {
   const ang = mix(0, 0.22, inclina) + Math.sin(b * 6) * 0.01;
   const cam = camara(
     [
-      { b: 0, p: [1.6, 2.4, 10.4], l: [0, 0.8, 0], fov: 40 },
-      { b: 1, p: [-1.2, 2.0, 9.6], l: [0, 0.8, 0], fov: 40 },
+      { b: 0, p: [1.0, 2.4, 10.6], l: [0, 0.75, 0], fov: 38 },
+      { b: 1, p: [-0.9, 2.2, 10.0], l: [0, 0.75, 0], fov: 38 },
     ],
     b,
   );
@@ -235,7 +235,7 @@ const Balance: React.FC<{ textos: string[] }> = ({ textos }) => {
       <Llama p={[-0.38, 0, -0.05]} escala={0.45} b={b + 0.3} />
     </group>
   );
-  const L = 1.55;
+  const L = 1.2;
   const izq: V3 = [-L * Math.cos(ang), 2.1 + L * Math.sin(ang) - 0.95, 0];
   const der: V3 = [L * Math.cos(ang), 2.1 - L * Math.sin(ang) - 0.95, 0];
   return (
@@ -248,8 +248,8 @@ const Balance: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [izq[0], izq[1] + 0.25, 0], t: "Lo que comes", a: 0.12, z: 1.2, o: [-10, -170], color: K.cian },
-          { p: [der[0], der[1] + 0.6, 0], t: "Lo que gastas", a: 0.25, z: 1.2, o: [10, -170], color: K.naranja },
+          { p: [izq[0], izq[1] + 0.25, 0], t: "Lo que comes", a: 0.12, z: 1.2, o: [10, 190], color: K.cian },
+          { p: [der[0], der[1] + 0.6, 0], t: "Lo que gastas", a: 0.25, z: 1.2, o: [-10, 170], color: K.naranja },
         ]}
       />
       <Dato b={b} a={0.08} z={1.2} t="Déficit calórico" sub="gastas más de lo que comes" color={K.lima} y={250} tam={100} />
@@ -265,14 +265,14 @@ const Grasa: React.FC<{ textos: string[] }> = ({ textos }) => {
     ? camara(
         [
           { b: 0, p: [1.4, 1.2, 5.8], l: [0, 0.75, 0], fov: 36 },
-          { b: 0.24, p: [0.15, 1.06, 0.55], l: [0, 1.04, 0], fov: 36 },
+          { b: 0.24, p: [0.35, 1.1, 1.5], l: [0, 1.0, 0], fov: 36 },
         ],
         b,
       )
     : camara(
         [
-          { b: 0.24, p: [0, 0.4, 13.5], l: [0, -0.4, 0], fov: 40 },
-          { b: 1, p: [0.9, 0.2, 15.5], l: [0, -0.5, 0], fov: 40 },
+          { b: 0.24, p: [0, 0.9, 17], l: [0, 0.9, 0], fov: 40 },
+          { b: 1, p: [0.9, 0.8, 18.5], l: [0, 0.9, 0], fov: 40 },
         ],
         b,
       );
@@ -282,7 +282,7 @@ const Grasa: React.FC<{ textos: string[] }> = ({ textos }) => {
   const mito: V3 = [0.4, -1.75, 0];
   return (
     <AbsoluteFill>
-      <Escena3D cam={cam} niebla={fuera ? undefined : [9, 30]}>
+      <Escena3D cam={cam} niebla={fuera ? undefined : [12, 34]}>
         {fuera ? (
           <>
             <Atleta ej="parado" brilla={0.2 + entre(b, 0.08, 0.22) * 0.8} colorBrillo={GRASO} />
@@ -340,18 +340,18 @@ const Grasa: React.FC<{ textos: string[] }> = ({ textos }) => {
 
 // 3 · Error 1: calorias ocultas --------------------------------------------------------
 const OCULTAS: { t: string; kcal: number; a: number; p: V3; o: [number, number]; c: string }[] = [
-  { t: "Aceite · 1 cda", kcal: 120, a: 0.4, p: [-1.05, 0, -0.3], o: [-30, -150], c: "#f2b81f" },
-  { t: "Refresco · 600 ml", kcal: 250, a: 0.5, p: [1.05, 0, -0.35], o: [30, -150], c: K.rojo },
-  { t: "Mayonesa · 1 cda", kcal: 90, a: 0.6, p: [-0.75, 0, 0.75], o: [-30, 120], c: "#fff2c4" },
-  { t: "Papas · 45 g", kcal: 240, a: 0.7, p: [0.8, 0, 0.75], o: [30, 120], c: "#f5c542" },
+  { t: "Aceite 1 cda", kcal: 120, a: 0.4, p: [-0.75, 0, -0.35], o: [20, -170], c: "#f2b81f" },
+  { t: "Refresco 600 ml", kcal: 250, a: 0.5, p: [0.75, 0, -0.4], o: [-20, -230], c: K.rojo },
+  { t: "Mayonesa 1 cda", kcal: 90, a: 0.6, p: [-0.6, 0, 0.65], o: [20, 110], c: "#fff2c4" },
+  { t: "Papas 45 g", kcal: 240, a: 0.7, p: [0.62, 0, 0.65], o: [-20, 170], c: "#f5c542" },
 ];
 
 const Ocultas: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [0, 3.2, 7.2], l: [0, -0.1, 0], fov: 38 },
-      { b: 1, p: [0.8, 2.8, 6.6], l: [0, -0.1, 0], fov: 38 },
+      { b: 0, p: [0, 3.6, 8.6], l: [0, -0.35, 0], fov: 38 },
+      { b: 1, p: [0.6, 3.2, 8.2], l: [0, -0.35, 0], fov: 38 },
     ],
     b,
   );
@@ -361,7 +361,7 @@ const Ocultas: React.FC<{ textos: string[] }> = ({ textos }) => {
       <Escena3D cam={cam}>
         <group rotation={[0, b * 0.25 - 0.1, 0]}>
           <mesh position={[0, -0.04, 0]}>
-            <cylinderGeometry args={[1.9, 1.9, 0.08, 64]} />
+            <cylinderGeometry args={[1.45, 1.45, 0.08, 64]} />
             <meshStandardMaterial color="#123238" roughness={0.7} />
           </mesh>
           <Plato p={[0, 0.03, 0]} escala={0.9} />
@@ -383,11 +383,11 @@ const Ocultas: React.FC<{ textos: string[] }> = ({ textos }) => {
         })}
       />
       <Dato b={b} a={0.03} z={1.2} t="Error 1" sub="subestimas lo que comes" color={K.naranja} y={240} tam={100} />
-      <div style={{ position: "absolute", top: 1030, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: visible(b, 0.38, 1.2) }}>
+      <div style={{ position: "absolute", top: 1065, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: visible(b, 0.38, 1.2) }}>
         <div
           style={{
             fontFamily: ANTON,
-            fontSize: 110,
+            fontSize: 100,
             color: K.naranja,
             WebkitTextStroke: "8px #04090b",
             paintOrder: "stroke fill",
@@ -448,8 +448,8 @@ const Tendencia: React.FC<{ textos: string[] }> = ({ textos }) => {
   const n = Math.max(1, Math.round(dibuja * DIAS));
   const cam = camara(
     [
-      { b: 0, p: [1.2, 1.9, 9.6], l: [0, 0.9, 0], fov: 38 },
-      { b: 1, p: [-0.8, 1.7, 9.2], l: [0, 0.9, 0], fov: 38 },
+      { b: 0, p: [1.0, 2.0, 12.4], l: [0, 1.15, 0], fov: 38 },
+      { b: 1, p: [-0.7, 1.8, 12.0], l: [0, 1.15, 0], fov: 38 },
     ],
     b,
   );
@@ -497,7 +497,7 @@ const Tendencia: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [PX(pico) - 0.1, PY(pesoDia(pico)) + 0.7, 0.2], t: "Agua y glucógeno", a: 0.36, z: 1.2, o: [-20, -130], color: K.cian },
+          { p: [PX(pico) - 0.1, PY(pesoDia(pico)) + 0.7, 0.2], t: "Agua y glucógeno", a: 0.36, z: 1.2, o: [20, -130], color: K.cian },
           { p: [PX(DIAS - 1), PY(72.3 - 0.05 * (DIAS - 1)), 0.05], t: "Tendencia ↓", a: 0.8, z: 1.2, o: [-40, 130], color: K.lima },
         ]}
       />
@@ -525,15 +525,15 @@ const Recomposicion: React.FC<{ textos: string[] }> = ({ textos }) => {
       )
     : camara(
         [
-          { b: 0.26, p: [0, 0.3, 11.5], l: [0, -0.8, 0], fov: 40 },
-          { b: 1, p: [0.8, 0.5, 10.5], l: [0, -0.8, 0], fov: 40 },
+          { b: 0.26, p: [0, 0.3, 15], l: [0, -0.4, 0], fov: 40 },
+          { b: 1, p: [0.8, 0.5, 14], l: [0, -0.4, 0], fov: 40 },
         ],
         b,
       );
   const rFibra = mix(0.38, 0.52, crece);
   return (
     <AbsoluteFill>
-      <Escena3D cam={cam} niebla={fuera ? undefined : [7, 26]}>
+      <Escena3D cam={cam} niebla={fuera ? undefined : [10, 30]}>
         {fuera ? (
           <>
             <Atleta ej="curl" k={k} brilla={0.6} colorBrillo={K.lima} />
@@ -548,7 +548,7 @@ const Recomposicion: React.FC<{ textos: string[] }> = ({ textos }) => {
                 [-0.55, -0.4],
                 [-1.0, -1.1],
               ].map(([x, z], i) => (
-                <CilindroX key={i} radio={rFibra} largo={7} x={3.5} y={-x * (1 + crece * 0.15)} z={z} color="#c03a46" estriado={8} emisivo={0.1 + crece * 0.5} />
+                <CilindroX key={i} radio={rFibra} largo={5} x={2.5} y={-x * (1 + crece * 0.15)} z={z} color="#c03a46" estriado={8} emisivo={0.1 + crece * 0.5} />
               ))}
             </group>
             {/* adipocitos (derecha) que se encogen */}
@@ -570,8 +570,8 @@ const Recomposicion: React.FC<{ textos: string[] }> = ({ textos }) => {
           cam={cam}
           b={b}
           items={[
-            { p: [-1.0, 1.4, 0.4], t: "Fibra muscular", a: 0.3, z: 1.2, o: [-20, -120], color: K.rojo },
-            { p: [1.3, 1.4, 0], t: "Adipocito", a: 0.36, z: 1.2, o: [10, -120], color: GRASO },
+            { p: [-1.0, 2.2, 0.4], t: "Fibra muscular", a: 0.3, z: 1.2, o: [20, -150], color: K.rojo },
+            { p: [1.3, 1.5, 0], t: "Adipocito", a: 0.36, z: 1.2, o: [-20, -150], color: GRASO },
           ]}
         />
       ) : null}
@@ -602,10 +602,10 @@ const Clave: React.FC<{ textos: string[] }> = ({ textos }) => {
         <Atleta ej="sentadilla" k={k} brilla={0.3 + 0.4 * k} colorBrillo={K.lima} pesa={false} />
         <Piso />
       </Escena3D>
-      <Titular b={b} a={0.02} z={1.2} y={230} tam={110} t="La clave" color={K.lima} />
+      <Titular b={b} a={0.02} z={1.2} y={265} tam={110} t="La clave" color={K.lima} />
       {CLAVE.map((c, i) => {
         const pos: [number, number][] = [
-          [540, 400],
+          [540, 430],
           [300, 1010],
           [780, 1010],
           [300, 1100],
