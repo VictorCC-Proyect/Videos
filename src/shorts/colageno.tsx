@@ -128,28 +128,28 @@ const Estructura: React.FC<{ textos: string[] }> = ({ textos }) => {
     camara(
       [
         { b: 0, p: [1.6, 1.0, 4.6], l: [0, 0.65, 0], fov: 36 },
-        { b: C1, p: [0.9, 0.42, 1.6], l: [0.05, 0.3, 0], fov: 36 },
+        { b: C1, p: [1.2, 0.7, 3.4], l: [0.05, 0.5, 0], fov: 36 },
       ],
       b,
     ),
     camara(
       [
-        { b: C1, p: [3.6, 4.8, 7.6], l: [0, 0.6, 0], fov: 40 },
-        { b: C2, p: [2.6, 3.8, 5.6], l: [0, 1.0, 0], fov: 40 },
+        { b: C1, p: [3.6, 6.6, 8.4], l: [0, 1.0, 0], fov: 40 },
+        { b: C2, p: [3.2, 6.2, 8.0], l: [0, 0.9, 0], fov: 40 },
       ],
       b,
     ),
     camara(
       [
-        { b: C2, p: [2.2, 1.2, 6.6], l: [0, -0.4, 0], fov: 40 },
-        { b: C3, p: [1.4, 0.8, 5.0], l: [0, -0.3, 0], fov: 40 },
+        { b: C2, p: [2.6, 1.2, 10.4], l: [0, -0.5, 0], fov: 40 },
+        { b: C3, p: [1.6, 0.8, 8.8], l: [0, -0.4, 0], fov: 40 },
       ],
       b,
     ),
     camara(
       [
-        { b: C3, p: [0.2, 0.3, 6.4], l: [0, -0.6, 0], fov: 40 },
-        { b: 1, p: [-0.6, 0.4, 5.6], l: [0, -0.6, 0], fov: 40 },
+        { b: C3, p: [0.2, 0.3, 9.6], l: [0, -0.5, 0], fov: 40 },
+        { b: 1, p: [-0.6, 0.4, 8.6], l: [0, -0.5, 0], fov: 40 },
       ],
       b,
     ),
@@ -166,14 +166,16 @@ const Estructura: React.FC<{ textos: string[] }> = ({ textos }) => {
           </>
         ) : fase === 1 ? (
           <group rotation={[0, b * 0.6, 0]}>
-            <HazTendon alto={7} brillo={0.2} />
+            <HazTendon alto={5} brillo={0.2} />
           </group>
         ) : fase === 2 ? (
-          <group rotation={[0, b * 0.8, 0]}>
-            <Fibrilla alto={7} destaca={0} brillo={0.15} />
+          <group rotation={[0, b * 0.8, -0.35]}>
+            <Fibrilla alto={5} destaca={0} brillo={0.15} />
           </group>
         ) : (
-          <TripleHelice rot={[0.15, b * 2.5, 0]} largo={5} n={27} b={b} escala={1.2} />
+          <group rotation={[0, 0, -0.45]}>
+            <TripleHelice rot={[0.15, b * 2.5, 0]} largo={5} n={27} b={b} escala={1.1} />
+          </group>
         )}
         {fase > 0 ? <Polvo b={b} radio={5} /> : null}
       </Escena3D>
@@ -187,7 +189,7 @@ const Estructura: React.FC<{ textos: string[] }> = ({ textos }) => {
         <Etiquetas
           cam={cam}
           b={b}
-          items={[{ p: [0.25, 1.4, 0], t: "Triple hélice", a: C3 + 0.02, z: 1.1, o: [70, -60], color: K.rosa }]}
+          items={[{ p: [0.2, -0.3, 0], t: "Triple hélice", a: C3 + 0.02, z: 1.1, o: [90, -40], color: K.rosa }]}
         />
       ) : null}
       <Dato b={b} a={0.04} z={1.1} t="PROTEÍNA Nº 1" sub="la más abundante de tu cuerpo" color={TENDON} y={260} tam={96} />
@@ -212,9 +214,9 @@ const fragmentos = (): Frag[] => {
       const tam = rnd(`tm${k}${f}`) < 0.6 ? 1 : rnd(`tm2${k}${f}`) < 0.6 ? 2 : 3;
       const grupo = cad.slice(i, i + tam);
       // helice horizontal: (x,y,z) -> (-y, x, z) y elevada
-      const pts = grupo.map((c) => ({ p: [-c.p[1], c.p[0] + 2.3, c.p[2]] as V3, tipo: c.tipo === 2 ? 2 : c.tipo }));
+      const pts = grupo.map((c) => ({ p: [-c.p[1], c.p[0] + 1.6, c.p[2]] as V3, tipo: c.tipo === 2 ? 2 : c.tipo }));
       const centro = pts[0].p;
-      const destino: V3 = [(rnd(`dx${k}${f}`) - 0.5) * 5.6, 0.6 + rnd(`dy${k}${f}`) * 2.2, (rnd(`dz${k}${f}`) - 0.5) * 1.6];
+      const destino: V3 = [(rnd(`dx${k}${f}`) - 0.5) * 4.6, 0.5 + rnd(`dy${k}${f}`) * 1.6, (rnd(`dz${k}${f}`) - 0.5) * 1.6];
       out.push({ cuentas: pts, destino, centro });
       i += tam;
       f++;
@@ -230,27 +232,27 @@ const Digestion: React.FC<{ textos: string[] }> = ({ textos }) => {
   const absorbe = entre(b, 0.6, 0.88);
   const cam = camara(
     [
-      { b: 0, p: [0, 1.6, 9.6], l: [0, 0.2, 0], fov: 40 },
-      { b: 1, p: [0.8, 1.2, 9.0], l: [0, 0.0, 0], fov: 40 },
+      { b: 0, p: [0, 1.4, 12.4], l: [0, -0.2, 0], fov: 40 },
+      { b: 1, p: [0.8, 1.1, 11.6], l: [0, -0.3, 0], fov: 40 },
     ],
     b,
   );
   const xs = [-2.1, -1.4, -0.7, 0, 0.7, 1.4, 2.1];
   const posFrag = (f: Frag, i: number): V3 => {
     const suelto = mix3(f.centro, f.destino, corta);
-    const punta: V3 = [xs[i % xs.length], -0.3, 0.45];
+    const punta: V3 = [xs[i % xs.length], -0.1, 0.45];
     const t = Math.min(1, Math.max(0, absorbe * 1.3 - rnd(`ab${i}`) * 0.3));
     return mix3(suelto, punta, t);
   };
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} fondo="#2a0f18">
-        <group position={[0, -1.8, 0]}>
+        <group position={[0, -1.4, 0]}>
           <Vellosidades b={b} brillo={absorbe} />
         </group>
-        <Vaso desde={[-4.5, -2.75, 1.0]} hasta={[4.5, -2.75, 1.0]} t={b * 1.5} radio={0.32} />
+        <Vaso desde={[-4.5, -2.35, 1.0]} hasta={[4.5, -2.35, 1.0]} t={b * 1.5} radio={0.32} />
         {corta < 0.02 ? (
-          <TripleHelice p={[0, 2.3, 0]} rot={[0, 0, Math.PI / 2]} largo={4.4} n={15} />
+          <TripleHelice p={[0, 1.6, 0]} rot={[0, 0, Math.PI / 2]} largo={4.4} n={15} />
         ) : (
           FRAGS.map((f, i) => {
             const pos = posFrag(f, i);
@@ -280,7 +282,7 @@ const Digestion: React.FC<{ textos: string[] }> = ({ textos }) => {
         {absorbe > 0.3
           ? Array.from({ length: 12 }).map((_, i) => {
               const f = (i / 12 + b * 0.5) % 1;
-              return <Amino key={`s${i}`} p={[mix(-4.2, 4.2, f), -2.75 + Math.sin(i * 2) * 0.12, 1.0]} tipo={i % 3} r={0.09} op={entre(absorbe, 0.3, 0.6)} />;
+              return <Amino key={`s${i}`} p={[mix(-4.2, 4.2, f), -2.35 + Math.sin(i * 2) * 0.12, 1.0]} tipo={i % 3} r={0.09} op={entre(absorbe, 0.3, 0.6)} />;
             })
           : null}
         <Polvo b={b} radio={5} color="#ffc2d0" />
@@ -289,12 +291,12 @@ const Digestion: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [0, 2.3, 0], t: "Colágeno", a: 0.02, z: 0.14, o: [80, -80], color: K.rosa },
+          { p: [0, 1.6, 0], t: "Colágeno", a: 0.02, z: 0.14, o: [80, -80], color: K.rosa },
           { p: posFrag(FRAGS[0], 0), t: "Glicina", a: 0.3, z: 0.62, o: [-50, -80], color: GLY },
           { p: posFrag(FRAGS[1], 1), t: "Prolina", a: 0.33, z: 0.62, o: [60, -80], color: PRO },
           { p: posFrag(FRAGS[5], 5), t: "Hidroxiprolina", a: 0.36, z: 0.62, o: [60, 80], color: HYP },
-          { p: [0, -0.2, 0.45], t: "Intestino", a: 0.5, z: 0.75, o: [-80, 120], color: "#ff8fa3" },
-          { p: [2.5, -2.75, 1.0], t: "Sangre", a: 0.7, z: 1.1, o: [40, 110], color: K.rojo },
+          { p: [0.35, 0.0, 0.45], t: "Intestino", a: 0.5, z: 0.75, o: [-80, 120], color: "#ff8fa3" },
+          { p: [1.5, -2.35, 1.0], t: "Sangre", a: 0.7, z: 1.1, o: [40, 110], color: K.rojo },
         ]}
       />
       <Dato b={b} a={0.4} z={1.1} t="AMINOÁCIDOS" sub="+ péptidos pequeños" color={K.lima} y={260} tam={96} />
@@ -312,28 +314,28 @@ const Fibro: React.FC<{ textos: string[] }> = ({ textos }) => {
   const sale = entre(b, 0.75, 0.98);
   const cam = camara(
     [
-      { b: 0, p: [0, 0.6, 11.5], l: [0, -0.5, 0], fov: 40 },
-      { b: 1, p: [1.0, 0.3, 10.0], l: [0.6, -0.5, 0], fov: 40 },
+      { b: 0, p: [0, 0.5, 10.5], l: [0, -0.3, 0], fov: 40 },
+      { b: 1, p: [0.6, 0.3, 9.4], l: [0.3, -0.4, 0], fov: 40 },
     ],
     b,
   );
-  const heliceP: V3 = mix3([0.9, -0.15, 0.2], [5.2, -2.0, -0.6], sale);
+  const heliceP: V3 = mix3([0.55, -0.1, 0.2], [2.6, -1.9, -0.4], sale);
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} fondo="#10223a" niebla={[8, 26]}>
         <FondoFibras z={-2.2} n={8} />
-        <Vaso desde={[-6, 2.6, -0.4]} hasta={[6, 2.6, -0.4]} t={b * 1.4} radio={0.4} />
-        <Fibroblasto p={[0, 0, 0]} brillo={crece * 0.6} />
+        <Vaso desde={[-6, 1.7, -0.4]} hasta={[6, 1.7, -0.4]} t={b * 1.4} radio={0.35} />
+        <Fibroblasto p={[0, 0, 0]} escala={0.55} brillo={crece * 0.6} />
         {/* aminoacidos que bajan de la sangre */}
         {Array.from({ length: 14 }).map((_, i) => {
           const t = Math.min(1, Math.max(0, llegan * 1.4 - rnd(`ll${i}`) * 0.4));
           if (t <= 0 || t >= 1) return null;
-          const x0 = (rnd(`lx${i}`) - 0.5) * 6;
-          const p = mix3([x0, 2.6, -0.4], [mix(0.4, 2.0, rnd(`lt${i}`)), -0.2 + (rnd(`ly${i}`) - 0.5) * 0.5, 0.2], t);
-          return <Amino key={i} p={p} tipo={i % 3} r={0.1} />;
+          const x0 = (rnd(`lx${i}`) - 0.5) * 4;
+          const p = mix3([x0, 1.7, -0.4], [mix(0.1, 1.1, rnd(`lt${i}`)), -0.1 + (rnd(`ly${i}`) - 0.5) * 0.3, 0.2], t);
+          return <Amino key={i} p={p} tipo={i % 3} r={0.07} />;
         })}
         {crece > 0 ? (
-          <TripleHelice p={heliceP} rot={[0, 0.3, Math.PI / 2]} largo={2.6} n={15} crece={crece} enrolla={enrolla} b={b} escala={0.85} brillo={0.4} />
+          <TripleHelice p={heliceP} rot={[0, 0.3, Math.PI / 2]} largo={2.6} n={15} crece={crece} enrolla={enrolla} b={b} escala={0.5} brillo={0.4} />
         ) : null}
         <Polvo b={b} radio={6} />
       </Escena3D>
@@ -341,9 +343,9 @@ const Fibro: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [-1.6, 0.4, 0.3], t: "Fibroblasto", a: 0.04, z: 1.1, o: [-40, -110], color: "#9fb0ff" },
-          { p: [-3.5, 2.6, -0.4], t: "Aminoácidos de la sangre", a: 0.12, z: 0.45, o: [30, -90], color: K.rojo },
-          { p: heliceP, t: "Colágeno nuevo", a: 0.6, z: 1.1, o: [-40, 120], color: K.rosa },
+          { p: [-0.6, 0.3, 0.3], t: "Fibroblasto", a: 0.04, z: 1.1, o: [-40, -110], color: "#9fb0ff" },
+          { p: [-1.2, 1.7, -0.4], t: "Aminoácidos de la sangre", a: 0.12, z: 0.45, o: [30, -100], color: K.rojo },
+          { p: heliceP, t: "Colágeno nuevo", a: 0.6, z: 1.1, o: [-40, 140], color: K.rosa },
         ]}
       />
       <Dato b={b} a={0.1} z={1.1} t="FIBROBLASTOS" sub="fabrican su propio colágeno" color="#9fb0ff" y={260} tam={92} />
@@ -359,13 +361,13 @@ const VitC: React.FC<{ textos: string[] }> = ({ textos }) => {
   const estab = entre(b, 0.38, 0.75);
   const cam = camara(
     [
-      { b: 0, p: [0, 0.4, 6.6], l: [0, -0.3, 0], fov: 40 },
-      { b: 1, p: [0.6, 0.3, 5.6], l: [0, -0.4, 0], fov: 40 },
+      { b: 0, p: [0, 0.4, 9.2], l: [0, -0.3, 0], fov: 40 },
+      { b: 1, p: [0.5, 0.3, 8.4], l: [0, -0.4, 0], fov: 40 },
     ],
     b,
   );
-  const naranja: V3 = [-1.3, 1.9, -0.6];
-  const blancos: V3[] = [-1.4, -0.7, 0, 0.7, 1.4].map((x, i) => [x, -0.45 + (i % 2 ? 0.25 : -0.25), 0.4]);
+  const naranja: V3 = [-1.25, 1.05, -0.4];
+  const blancos: V3[] = [-1.4, -0.7, 0, 0.7, 1.4].map((t, i) => [0.35 - 0.34 * t + (i % 2 ? 0.25 : -0.25), -0.6 + 0.94 * t, 0.4]);
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} fondo="#13203d" niebla={[5, 18]}>
@@ -373,22 +375,22 @@ const VitC: React.FC<{ textos: string[] }> = ({ textos }) => {
           <sphereGeometry args={[1, 32, 24]} />
           <meshBasicMaterial color="#2b3c7a" transparent opacity={0.35} depthWrite={false} />
         </mesh>
-        <Naranja p={naranja} escala={0.9} giro={b * 2} />
+        <Naranja p={naranja} escala={0.6} giro={b * 2} />
         {blancos.map((d, i) => {
           const t = Math.min(1, Math.max(0, vuela * 1.3 - i * 0.07));
           if (t <= 0) return null;
           const p = mix3(naranja, d, t);
           return <VitaminaC key={i} p={[p[0], p[1] + Math.sin(b * 8 + i) * 0.04, p[2]]} escala={0.9} giro={b * 6 + i} op={1 - entre(estab, 0.85, 1) * 0.6} />;
         })}
-        <TripleHelice p={[0, -0.5, 0]} rot={[0.25, 0, Math.PI / 2 + 0.05]} largo={4.4} n={21} floja={1 - estab} hidrox={estab} puentes={estab} b={b} brillo={0.3} />
+        <TripleHelice p={[0.35, -0.6, 0]} rot={[0.25, 0, 0.35]} largo={4.0} n={21} floja={1 - estab} hidrox={estab} puentes={estab} b={b} brillo={0.3} />
         <Polvo b={b} radio={4} color="#ffe28a" />
       </Escena3D>
       <Etiquetas
         cam={cam}
         b={b}
         items={[
-          { p: naranja, t: "Vitamina C", a: 0.05, z: 1.1, o: [70, -60], color: VITC },
-          { p: [-1.6, -0.5, 0.2], t: estab < 0.5 ? "Sin vitamina C: hélice floja" : "Hélice estable", a: 0.1, z: 1.1, o: [-20, 150], color: estab < 0.5 ? K.rojo : K.lima },
+          { p: naranja, t: "Vitamina C", a: 0.05, z: 1.1, o: [60, -80], color: VITC },
+          { p: [0.6, -1.3, 0.2], t: estab < 0.5 ? "Sin vitamina C: hélice floja" : "Hélice estable", a: 0.1, z: 1.1, o: [-60, 120], color: estab < 0.5 ? K.rojo : K.lima },
         ]}
       />
       <Dato b={b} a={0.03} z={1.1} t="VITAMINA C" sub="necesaria para armar el colágeno" color={VITC} y={260} tam={100} />
@@ -410,8 +412,8 @@ const Estudio: React.FC<{ textos: string[] }> = ({ textos }) => {
     fase === 0
       ? camara(
           [
-            { b: 0, p: [0.2, 1.3, 5.6], l: [0.2, 0.15, 0], fov: 38 },
-            { b: E1, p: [-0.4, 1.1, 5.0], l: [0.2, 0.15, 0], fov: 38 },
+            { b: 0, p: [0.3, 0.9, 6.0], l: [0, -0.3, 0], fov: 38 },
+            { b: E1, p: [-0.3, 0.8, 5.6], l: [0, -0.3, 0], fov: 38 },
           ],
           b,
         )
@@ -425,8 +427,8 @@ const Estudio: React.FC<{ textos: string[] }> = ({ textos }) => {
           )
         : camara(
             [
-              { b: E2, p: [3.2, 4.6, 6.8], l: [0, 0.8, 0], fov: 40 },
-              { b: 1, p: [2.4, 3.8, 5.4], l: [0, 1.0, 0], fov: 40 },
+              { b: E2, p: [3.6, 6.6, 8.4], l: [0, 1.0, 0], fov: 40 },
+              { b: 1, p: [3.2, 6.2, 8.0], l: [0, 0.9, 0], fov: 40 },
             ],
             b,
           );
@@ -435,9 +437,9 @@ const Estudio: React.FC<{ textos: string[] }> = ({ textos }) => {
       <Escena3D cam={cam} fondo={K.fondo2} niebla={fase === 2 ? [5, 22] : undefined}>
         {fase === 0 ? (
           <>
-            <Shaker p={[-0.75, -0.6, 0]} escala={0.95} rot={[0, b * 2, 0]} nivel={0.7} />
-            <Naranja p={[0.55, -0.15, 0.3]} escala={0.9} giro={b * 3} />
-            <Reloj p={[0.75, 1.35, -0.4]} escala={1.0} t={lineal(b, 0.05, E1)} />
+            <Shaker p={[-0.45, -1.0, 0]} escala={0.62} rot={[0, b * 2, 0]} nivel={0.7} />
+            <Naranja p={[0.5, -0.65, 0.3]} escala={0.62} giro={b * 3} />
+            <Reloj p={[0, 0.5, -0.3]} escala={0.55} t={lineal(b, 0.05, E1)} />
           </>
         ) : fase === 1 ? (
           <>
@@ -448,7 +450,7 @@ const Estudio: React.FC<{ textos: string[] }> = ({ textos }) => {
           </>
         ) : (
           <group rotation={[0, b * 0.5, 0]}>
-            <HazTendon alto={7} brillo={0.15 + nuevas * 0.3} nuevas={nuevas} b={b} />
+            <HazTendon alto={5} brillo={0.15 + nuevas * 0.3} nuevas={nuevas} b={b} />
           </group>
         )}
         {fase !== 1 ? <Polvo b={b} radio={5} /> : null}
@@ -459,8 +461,8 @@ const Estudio: React.FC<{ textos: string[] }> = ({ textos }) => {
           cam={cam}
           b={b}
           items={[
-            { p: [-0.75, 0.3, 0.4], t: "15 g colágeno", a: 0.1, z: E1, o: [-30, -230], color: K.rosa },
-            { p: [0.55, -0.15, 0.6], t: "+ vitamina C", a: 0.16, z: E1, o: [30, 170], color: VITC },
+            { p: [-0.45, -0.5, 0.3], t: "15 g colágeno", a: 0.1, z: E1, o: [-30, 110], color: K.rosa },
+            { p: [0.5, -0.65, 0.5], t: "+ vitamina C", a: 0.16, z: E1, o: [40, 80], color: VITC },
           ]}
         />
       ) : null}
@@ -519,7 +521,7 @@ const Basico: React.FC<{ textos: string[] }> = ({ textos }) => {
         </group>
         <Piso r={0.85} />
         {b > 0.3 ? (
-          <group position={[1.1, 0, 0.3]} scale={entre(b, 0.3, 0.4)}>
+          <group position={[0.75, 0, 0.55]} scale={entre(b, 0.3, 0.4)}>
             <Plato p={[0, 0.03, 0]} escala={0.5} />
             <Pechuga p={[0, 0.07, 0]} escala={0.5} />
           </group>

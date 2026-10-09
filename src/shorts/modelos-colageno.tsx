@@ -139,6 +139,19 @@ export const HazTendon: React.FC<{ alto?: number; R?: number; brillo?: number; n
             <cylinderGeometry args={[0.22, 0.22, alto - 0.3, 24]} />
             <meshPhysicalMaterial color={TENDON} emissive={TENDON} emissiveIntensity={0.05 + brillo * 0.3} roughness={0.5} clearcoat={0.3} />
           </mesh>
+          {/* fibras nuevas (sintesis de colageno) a lo largo del fasciculo */}
+          {nuevas > 0
+            ? [0, 1, 2, 3].map((k) => {
+                if (rnd(`nf${i}_${k}`) > nuevas) return null;
+                const a = k * 1.57 + i;
+                return (
+                  <mesh key={`n${k}`} position={[Math.cos(a) * 0.2, 0, Math.sin(a) * 0.2]}>
+                    <cylinderGeometry args={[0.035, 0.035, alto - 0.3, 10]} />
+                    <meshStandardMaterial color={K.lima} emissive={K.lima} emissiveIntensity={0.8 + 0.4 * Math.sin(b * 10 + i + k)} />
+                  </mesh>
+                );
+              })
+            : null}
           {/* fibras en la cara de corte */}
           {hexPack(0.17, 0.075).map(([u, v], j) => {
             const nueva = rnd(`nv${i}_${j}`) < nuevas * 0.6;
