@@ -49,7 +49,7 @@ export const MG_EN_ATP: V3 = [1.0, -0.5, 0.05];
  * coordinado con los fosfatos beta y gamma (enlaces punteados).
  */
 export const MgATP: React.FC<{ une?: number; brillo?: number }> = ({ une = 1, brillo = 0 }) => {
-  const mg = [mix(2.4, MG_EN_ATP[0], une), mix(-1.6, MG_EN_ATP[1], une), mix(0.6, MG_EN_ATP[2], une)] as V3;
+  const mg = [mix(1.0, MG_EN_ATP[0], une), mix(-2.0, MG_EN_ATP[1], une), mix(0.6, MG_EN_ATP[2], une)] as V3;
   const fos: V3[] = [
     [0.75, -0.1, 0],
     [1.25, -0.1, 0],

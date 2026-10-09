@@ -83,8 +83,8 @@ const Unido: React.FC<{ textos: string[] }> = ({ textos }) => {
   const cam = cerca
     ? camara(
         [
-          { b: FIN, p: [0.3, 0.4, 7.2], l: [0, -0.5, 0], fov: 40 },
-          { b: 1, p: [-0.6, 0.3, 6.2], l: [0, -0.5, 0], fov: 40 },
+          { b: FIN, p: [0.4, -0.2, 15.0], l: [0, -0.7, 0], fov: 40 },
+          { b: 1, p: [-0.9, -0.3, 13.6], l: [0, -0.7, 0], fov: 40 },
         ],
         b,
       )
@@ -156,9 +156,9 @@ const Ciclo: React.FC<{ textos: string[] }> = ({ textos }) => {
   const L = mix(4.0, 3.1, contrae);
   const cam = camara(
     [
-      { b: 0, p: [2.4, 2.2, 10.4], l: [0, -0.7, 0], fov: 40 },
-      { b: 0.5, p: [1.0, 1.6, 9.6], l: [0, -0.7, 0], fov: 40 },
-      { b: 1, p: [-1.2, 1.8, 10.0], l: [0, -0.7, 0], fov: 40 },
+      { b: 0, p: [2.6, 2.4, 13.4], l: [0, -0.9, 0], fov: 40 },
+      { b: 0.5, p: [1.2, 1.8, 12.6], l: [0, -0.9, 0], fov: 40 },
+      { b: 1, p: [-1.4, 2.0, 13.0], l: [0, -0.9, 0], fov: 40 },
     ],
     b,
   );
@@ -168,14 +168,13 @@ const Ciclo: React.FC<{ textos: string[] }> = ({ textos }) => {
     if (r > 0) return r < 0.5 ? mix3(c.libre, c.bomba, r * 2) : mix3(c.bomba, c.casa, (r - 0.5) * 2);
     return difusion(c.casa, c.libre, s, `cf${i}`, 0.12);
   });
-  const relajado = b > 0.62;
   return (
     <AbsoluteFill>
-      <Escena3D cam={cam} niebla={[7, 22]}>
+      <Escena3D cam={cam} niebla={[10, 26]}>
         <group rotation={[0, 0, Math.PI / 2]}>
           <Sarcomero L={L} radio={0.62} resaltaFinos={contrae * 0.5} />
         </group>
-        <Reticulo brillo={suelta * (1 - regresa) * 0.5} />
+        <Reticulo brillo={suelta * (1 - regresa) * 0.5} op={0.4} />
         {BOMBAS.map((p, i) => (
           <Serca key={i} p={p} activa={bombas * (0.6 + 0.4 * Math.sin(b * 40 + i))} />
         ))}
@@ -201,7 +200,7 @@ const Ciclo: React.FC<{ textos: string[] }> = ({ textos }) => {
       <Dato b={b} a={0.2} z={0.56} t="CONTRAE" sub="el calcio sale del retículo" color={CA} y={270} tam={110} />
       <Dato b={b} a={0.6} z={1} t="SE RELAJA" sub="el calcio vuelve a su lugar" color={MG} y={270} tam={110} />
       <Chip b={b} a={0.22} z={1} t="Ca²⁺ = contrae" x={300} y={1100} color={CA} />
-      <Chip b={b} a={relajado ? 0.62 : 0.62} z={1} t="Mg²⁺ = relaja" x={780} y={1100} color={MG} />
+      <Chip b={b} a={0.62} z={1} t="Mg²⁺ = relaja" x={780} y={1100} color={MG} />
     </AbsoluteFill>
   );
 };
@@ -215,8 +214,8 @@ const Falta: React.FC<{ textos: string[] }> = ({ textos }) => {
   const cam = camara(
     [
       { b: 0, p: [0.6, 1.1, 6.2], l: [0, 0.72, 0], fov: 36 },
-      { b: 0.55, p: [2.6, 0.9, 3.6], l: [0, 0.6, 0], fov: 36 },
-      { b: 1, p: [1.6, 0.6, -2.8], l: [0.05, 0.42, 0], fov: 36 },
+      { b: 0.55, p: [3.6, 1.0, 4.4], l: [0, 0.68, 0], fov: 36 },
+      { b: 1, p: [2.8, 0.8, -4.6], l: [0.05, 0.72, 0], fov: 36 },
     ],
     b,
   );
@@ -293,8 +292,8 @@ const Alimentos: React.FC<{ textos: string[] }> = ({ textos }) => {
   const b = useBeat(textos);
   const cam = camara(
     [
-      { b: 0, p: [0, 5.6, 6.4], l: [0, -0.9, -0.2], fov: 38 },
-      { b: 1, p: [0.8, 5.0, 5.8], l: [0, -0.9, -0.2], fov: 38 },
+      { b: 0, p: [0, 7.4, 7.6], l: [0, 0, 0.35], fov: 38 },
+      { b: 1, p: [0.8, 7.0, 7.2], l: [0, 0, 0.35], fov: 38 },
     ],
     b,
   );
@@ -326,8 +325,8 @@ const Alimentos: React.FC<{ textos: string[] }> = ({ textos }) => {
           p: [pl.p[0], 0.25, pl.p[2]] as V3,
           t: pl.n,
           a: pl.a,
-          z: 1.2,
-          o: [i % 2 ? 40 : -40, -90] as [number, number],
+          z: i < PLATOS.length - 1 ? PLATOS[i + 1].a + 0.02 : 1.2,
+          o: [i % 2 ? -30 : 30, -100] as [number, number],
           color: pl.c,
         }))}
       />
@@ -352,15 +351,15 @@ const Suplementos: React.FC<{ textos: string[] }> = ({ textos }) => {
   const cam = rinon
     ? camara(
         [
-          { b: CORTE, p: [0, 0.2, 9.4], l: [0, -1.0, 0], fov: 40 },
-          { b: 1, p: [1.2, 0.4, 8.6], l: [0, -1.0, 0], fov: 40 },
+          { b: CORTE, p: [0, 0.2, 12.4], l: [0, -1.3, 0], fov: 40 },
+          { b: 1, p: [1.4, 0.4, 11.4], l: [0, -1.3, 0], fov: 40 },
         ],
         b,
       )
     : camara(
         [
-          { b: 0, p: [0, 2.2, 5.2], l: [0, 0.0, 0], fov: 38 },
-          { b: CORTE, p: [0.9, 2.6, 5.8], l: [0, 0.0, 0], fov: 38 },
+          { b: 0, p: [0, 2.6, 6.6], l: [0, 0.15, 0], fov: 38 },
+          { b: CORTE, p: [0.9, 2.8, 6.8], l: [0, 0.15, 0], fov: 38 },
         ],
         b,
       );
