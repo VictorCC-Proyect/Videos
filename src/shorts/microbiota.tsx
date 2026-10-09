@@ -83,7 +83,7 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
     : camara(
         [
           { b: 0.42, p: [0, 0.3, 4.6], l: [0, 0, -3], fov: 40 },
-          { b: 1, p: [0.3, 0, 2.4], l: [0, -0.1, -3], fov: 40 },
+          { b: 1, p: [0.3, 0, 3.2], l: [0, -0.1, -3], fov: 40 },
         ],
         b,
       );
@@ -182,7 +182,7 @@ const Colonocitos: React.FC<{ textos: string[] }> = ({ textos }) => {
         items={[
           { p: [-0.6, 1.1, 0.8], t: "Butirato", a: 0.05, z: 0.6, o: [-50, -110], color: BUT },
           { p: [0, -0.9, 1.33], t: "Colonocitos", a: 0.2, z: 1, o: [-60, 130], color: "#ffcf70" },
-          { p: [0.6, -0.12, 1.37], t: "Uniones firmes", a: 0.4, z: 1, o: [40, 120], color: "#47d18c" },
+          { p: [0.6, -0.12, 1.37], t: "Uniones firmes", a: 0.4, z: 1, o: [-40, 120], color: "#47d18c" },
         ]}
       />
       <Dato b={b} a={0.55} z={1} t="Barrera intestinal fuerte" sub="células bien alimentadas y unidas" color="#47d18c" y={270} tam={76} />
@@ -342,7 +342,7 @@ const Edulcorantes: React.FC<{ textos: string[] }> = ({ textos }) => {
         b={b}
         items={[
           { p: sobres[0], t: "Edulcorantes", a: 0.05, z: 0.5, o: [30, 150], color: "#ffffff" },
-          { p: posBacteria(col, 3), t: "Microbiota alterada", a: 0.45, z: 1, o: [60, -140], color: "#9aa3ad" },
+          { p: posBacteria(col, 3), t: "Microbiota alterada", a: 0.45, z: 1, o: [60, -220], color: "#9aa3ad" },
         ]}
       />
       <Dato b={b} a={0.6} z={1} t="Evidencia mixta" sub="algunos estudios, no todos" color={K.amarillo} y={270} tam={92} />
@@ -377,7 +377,7 @@ const Debil: React.FC<{ textos: string[] }> = ({ textos }) => {
         b={b}
         items={[
           { p: posBacteria(col, 0), t: "Menos bacterias benéficas", a: 0.12, z: 0.55, o: [-40, -130], color: "#9aa3ad" },
-          { p: [0.3, -0.12, 1.25], t: "Uniones abiertas", a: 0.45, z: 1, o: [-40, 140], color: K.rojo },
+          { p: [0.0, -0.05, 0.0], t: "Uniones abiertas", a: 0.45, z: 1, o: [-40, -130], color: K.rojo },
         ]}
       />
       <Dato b={b} a={0.55} z={1} t="Barrera más débil" color={K.rojo} y={270} tam={100} />
