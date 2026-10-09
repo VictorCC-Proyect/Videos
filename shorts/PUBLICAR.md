@@ -1,8 +1,7 @@
 # Shorts de nutrición: cómo editarlos y publicarlos
 
-Canal: **Come Con Ciencia** (`@comeconciencia`). Si el usuario está ocupado en alguna red, cambia
-`shorts/canal.json` y vuelve a generar (ver abajo). Alternativas: `@nutriconciencia`,
-`@cienciaentuplato`, `@nutrialoclaro`, `@nutriexplica`.
+Canal: **NutriFit** (`@nutrifit`). Si ese usuario está ocupado en alguna red, prueba `@nutrifit.mx`,
+`@nutrifit_oficial` o `@soynutrifit`; cambia el usuario en `shorts/canal.json` y vuelve a generar (ver abajo).
 
 Formato: vertical 1080×1920, 60–70 s, voz sintética (Piper, español de México), subtítulos grandes.
 
