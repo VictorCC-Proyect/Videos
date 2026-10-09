@@ -198,11 +198,11 @@ const Eje: React.FC<{ textos: string[] }> = ({ textos }) => {
           b={b}
           items={[
             { p: [-0.6, 2.3, 0.4], t: "Cerebro", a: 0.2, z: 0.55, o: [-60, -80], color: "#ff8fb0" },
-            { p: hip, t: "Hipotálamo-hipófisis", a: 0.5, z: 1, o: [110, 30], color: ACTH },
+            { p: hip, t: "Hipotálamo-hipófisis", a: 0.5, z: 1.2, o: [110, 30], color: ACTH },
             { p: [0, 0.6, 0.35], t: "Señal (ACTH)", a: 0.62, z: 0.8, o: [60, 0], color: ACTH },
-            { p: [rin[0] - 0.7, rin[1] + 0.85, 0.3], t: "Suprarrenales", a: 0.32, z: 1, o: [-60, -90], color: SUPRA },
+            { p: [rin[0] - 0.7, rin[1] + 0.85, 0.3], t: "Suprarrenales", a: 0.32, z: 1.2, o: [-60, -90], color: SUPRA },
             { p: [rin[0] + 0.7, rin[1] - 0.4, 0.3], t: "Riñones", a: 0.4, z: 0.75, o: [40, 110], color: "#d26a73" },
-            { p: [1.3, rin[1] + 2.0, 0.8], t: "Cortisol", a: 0.82, z: 1, o: [60, -70], color: CORT },
+            { p: [1.3, rin[1] + 2.0, 0.8], t: "Cortisol", a: 0.82, z: 1.2, o: [60, -70], color: CORT },
           ]}
         />
       ) : null}
@@ -294,10 +294,10 @@ const Ejercicio: React.FC<{ textos: string[] }> = ({ textos }) => {
           b={b}
           items={[
             { p: [0.2, vy + 0.3, 0.4], t: "Cortisol", a: 0.26, z: 0.55, o: [40, -150], color: CORT },
-            { p: [hig[0] - 0.4, hig[1] + 0.4, 0], t: "Hígado", a: 0.4, z: 1, o: [-20, -80], color: HIGADO },
-            { p: [-1.0, vy - 0.1, 0.5], t: "Glucosa", a: 0.5, z: 1, o: [-30, 120], color: GLU },
-            { p: [ad[0] + 0.5, ad[1] + 0.6, 0], t: "Grasa", a: 0.62, z: 1, o: [20, -80], color: GRASO },
-            { p: [1.6, -1.6, 0.6], t: "Músculo", a: 0.75, z: 1, o: [20, 110], color: K.rojo },
+            { p: [hig[0] - 0.4, hig[1] + 0.4, 0], t: "Hígado", a: 0.4, z: 1.2, o: [-20, -80], color: HIGADO },
+            { p: [-1.0, vy - 0.1, 0.5], t: "Glucosa", a: 0.5, z: 1.2, o: [-30, 120], color: GLU },
+            { p: [ad[0] + 0.5, ad[1] + 0.6, 0], t: "Grasa", a: 0.62, z: 1.2, o: [20, -80], color: GRASO },
+            { p: [1.6, -1.6, 0.6], t: "Músculo", a: 0.75, z: 1.2, o: [20, 110], color: K.rojo },
           ]}
         />
       ) : null}
@@ -420,7 +420,7 @@ const Cronico: React.FC<{ textos: string[] }> = ({ textos }) => {
           ]}
         />
       ) : (
-        <Etiquetas cam={cam} b={b} items={[{ p: [adC[0] - 0.75, adC[1] + 0.6, 0.5], t: "Adipocito abdominal", a: 0.66, z: 1, o: [-30, -70], color: GRASO }]} />
+        <Etiquetas cam={cam} b={b} items={[{ p: [adC[0] - 0.75, adC[1] + 0.6, 0.5], t: "Adipocito abdominal", a: 0.66, z: 1.2, o: [30, -70], color: GRASO }]} />
       )}
       <Dato b={b} a={0.05} z={0.6} t="Proteína muscular ↓" sub="se degrada" color={K.rojo} y={250} tam={84} />
       <Dato b={b} a={0.6} z={1.2} t="Grasa abdominal ↑" sub="cortisol alto crónico" color={GRASO} y={250} tam={84} />
@@ -445,7 +445,7 @@ const Regula: React.FC<{ textos: string[] }> = ({ textos }) => {
     <AbsoluteFill>
       <Escena3D cam={cam} fondo="#0a1630" luz={0.75}>
         <Estrellas />
-        <Luna p={[-1.5, 1.1, -2.5]} r={0.28} />
+        <Luna p={[-0.9, 1.3, -2.5]} r={0.28} />
         <Cama />
         {/* atleta acostado boca arriba, cabeza hacia la almohada */}
         <group position={[0.8, 0.5, 0]} rotation={[0, Math.PI / 2, 0]}>
