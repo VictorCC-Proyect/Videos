@@ -66,7 +66,21 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 3. ¿Cuánta proteína necesitas?
+## 3. ¿Por qué duelen los músculos al día siguiente? (agujetas · parte 2 del ardor)
+
+**Título YouTube Shorts:** ¿Por qué te DUELEN los músculos al día siguiente? 😣 Parte 2 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Parte 2 del ardor 🔥 Las agujetas NO son el lactato: son microdesgarros e inflamación que tu músculo repara para hacerse más fuerte. 💬 ¿Qué suplemento quieres que explique? Déjalo en los comentarios 👇
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #agujetas #dolormuscular #gym #fisiologia #recuperacion #entrenamiento #fitness #ciencia #aprendeentiktok #musculo
+
+**Tip:** publícalo 1–2 días después del video del ardor y fija un comentario tuyo con la pregunta: "¿Qué suplemento explico en el próximo video?"
+
+---
+
+## 4. ¿Cuánta proteína necesitas?
 
 **Título YouTube Shorts:** ¿Cuánta PROTEÍNA necesitas al día? 🍗 Calcúlalo en 10 segundos #shorts
 
@@ -79,7 +93,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 4. Continuum energético
+## 5. Continuum energético
 
 **Título YouTube Shorts:** ¿La grasa se quema solo después de 30 minutos? ⏱️ FALSO #shorts
 
@@ -91,7 +105,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 5. Ayuno intermitente por horas
+## 6. Ayuno intermitente por horas
 
 **Título YouTube Shorts:** Ayuno intermitente: qué pasa en tu cuerpo HORA por HORA ⏳ #shorts
 
@@ -103,7 +117,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 6. Picos de glucosa e insulina
+## 7. Picos de glucosa e insulina
 
 **Título YouTube Shorts:** Picos de GLUCOSA y resistencia a la insulina 🍩 explicado en 3D #shorts
 
@@ -115,7 +129,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 7. Déficit calórico
+## 8. Déficit calórico
 
 **Título YouTube Shorts:** Déficit calórico: por qué NO bajas de peso ⚖️ #shorts
 
@@ -127,7 +141,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 8. Microbiota, ultraprocesados y edulcorantes
+## 9. Microbiota, ultraprocesados y edulcorantes
 
 **Título YouTube Shorts:** Ultraprocesados, edulcorantes y tu MICROBIOTA 🦠 #shorts
 
@@ -139,7 +153,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 9. Magnesio
+## 10. Magnesio
 
 **Título YouTube Shorts:** MAGNESIO: el mineral que relaja tus músculos 💪 #shorts
 
@@ -151,7 +165,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 10. Colágeno
+## 11. Colágeno
 
 **Título YouTube Shorts:** ¿Sirve tomar COLÁGENO? 🦴 Lo que dice la ciencia #shorts
 
@@ -163,7 +177,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 11. Cortisol
+## 12. Cortisol
 
 **Título YouTube Shorts:** CORTISOL: ¿enemigo o aliado? 😰 #shorts
 
@@ -175,7 +189,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 12. Cafeína antes de entrenar
+## 13. Cafeína antes de entrenar
 
 **Título YouTube Shorts:** CAFEÍNA antes de entrenar: cómo funciona ☕ #shorts
 
