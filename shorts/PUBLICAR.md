@@ -3,7 +3,7 @@
 Canal: **NutriFit.ConCiencia** (`@nutrifit.conciencia`). Si ese usuario está ocupado en alguna red, prueba
 `@nutrifitconciencia` o `@nutrifit_conciencia`; cambia el usuario en `shorts/canal.json` y vuelve a generar (ver abajo).
 
-Formato: vertical (9:16), 60–75 s, animación 3D, voz sintética (Piper, español de México), subtítulos grandes.
+Formato: vertical (9:16), 60–90 s, animación 3D, voz sintética (Piper o ElevenLabs "Emiliano"), subtítulos grandes.
 
 ## Estilo de todos los shorts (desde ahora)
 
@@ -105,7 +105,33 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 6. Ayuno intermitente por horas
+## 6. Contracción muscular · Parte 1: del cerebro al calcio
+
+**Título YouTube Shorts:** ¿Cómo le ORDENA tu cerebro al músculo que se contraiga? 🧠⚡ Parte 1 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Ya viste cómo tu cuerpo fabrica ATP… ahora mira en qué lo gasta 💪 Del cerebro a la fibra: motoneurona, acetilcolina, potencial de acción y calcio, en 3D. 💬 ¿Te quedó alguna duda? Déjala en los comentarios 👇
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #contraccionmuscular #fisiologia #sistemanervioso #musculo #gym #ciencia #anatomia #nutricion #aprendeentiktok #estudiantes
+
+**Tip:** publícalo justo después del continuum; fija un comentario: "Parte 2 en 2 días 👀".
+
+---
+
+## 7. Contracción muscular · Parte 2: dentro del sarcómero
+
+**Título YouTube Shorts:** ¿Qué pasa DENTRO de tu músculo cuando se contrae? 🔬 Parte 2 #shorts
+
+**Texto TikTok / Reels / Facebook:**
+Parte 2 🔥 Actina, miosina, troponina, el puente cruzado y el golpe de fuerza, en 3D. Y lo que tu músculo necesita para contraerse sale de lo que comes. 💬 ¿De qué tema quieres la siguiente serie?
+Contenido educativo; no sustituye la consulta con un profesional de la salud.
+
+**Hashtags:** #contraccionmuscular #sarcomero #actina #miosina #fisiologia #gym #ciencia #nutricion #aprendeentiktok #estudiantes
+
+---
+
+## 8. Ayuno intermitente por horas
 
 **Título YouTube Shorts:** Ayuno intermitente: qué pasa en tu cuerpo HORA por HORA ⏳ #shorts
 
@@ -117,7 +143,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 7. Picos de glucosa e insulina
+## 9. Picos de glucosa e insulina
 
 **Título YouTube Shorts:** Picos de GLUCOSA y resistencia a la insulina 🍩 explicado en 3D #shorts
 
@@ -129,7 +155,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 8. Déficit calórico
+## 10. Déficit calórico
 
 **Título YouTube Shorts:** Déficit calórico: por qué NO bajas de peso ⚖️ #shorts
 
@@ -141,7 +167,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 9. Microbiota, ultraprocesados y edulcorantes
+## 11. Microbiota, ultraprocesados y edulcorantes
 
 **Título YouTube Shorts:** Ultraprocesados, edulcorantes y tu MICROBIOTA 🦠 #shorts
 
@@ -153,7 +179,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 10. Magnesio
+## 12. Magnesio
 
 **Título YouTube Shorts:** MAGNESIO: el mineral que relaja tus músculos 💪 #shorts
 
@@ -165,7 +191,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 11. Colágeno
+## 13. Colágeno
 
 **Título YouTube Shorts:** ¿Sirve tomar COLÁGENO? 🦴 Lo que dice la ciencia #shorts
 
@@ -177,7 +203,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 12. Cortisol
+## 14. Cortisol
 
 **Título YouTube Shorts:** CORTISOL: ¿enemigo o aliado? 😰 #shorts
 
@@ -189,7 +215,7 @@ Contenido educativo; no sustituye la consulta con un profesional de la salud.
 
 ---
 
-## 13. Cafeína antes de entrenar
+## 15. Cafeína antes de entrenar
 
 **Título YouTube Shorts:** CAFEÍNA antes de entrenar: cómo funciona ☕ #shorts
 
