@@ -455,7 +455,7 @@ const ActinaEscena: React.FC<{ textos: string[] }> = ({ textos }) => {
 const SARC_LEN = 10 / 7;
 const zLineas = (n: number) => Array.from({ length: n }).map((_, k) => 2 - k * SARC_LEN);
 // uniones A-I de cada sarcomero (donde se ubican las triadas)
-const triadas = () =>
+export const triadas = () =>
   zLineas(6).flatMap((z) => [z - SARC_LEN * 0.18, z - SARC_LEN * 0.82]).filter((x) => x > -6.5 && x < 2);
 
 export const Triada: React.FC<{

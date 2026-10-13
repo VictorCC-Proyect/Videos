@@ -48,7 +48,7 @@ const Hemisferio: React.FC<{ lado: number; motor: number; op: number }> = ({ lad
   );
 };
 
-const Cerebro: React.FC<{ motor?: number; cerebelo?: number; ganglios?: number; op?: number }> = ({
+export const Cerebro: React.FC<{ motor?: number; cerebelo?: number; ganglios?: number; op?: number }> = ({
   motor = 0,
   cerebelo = 0,
   ganglios = 0,
