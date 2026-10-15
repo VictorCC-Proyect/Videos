@@ -6,14 +6,17 @@ import { FPS } from "../src/fisio/motor";
 import {
   Capitulo,
   CAPITULOS,
+  CAPITULOS_ACTIVIDAD,
   CAPITULOS_ENERGIA,
   CapituloView,
   durCapitulo,
+  VideoActividad,
   VideoCompleto,
   VideoEnergia,
 } from "../src/fisio/Video";
 
 const VIDEOS: { id: string; titulo: string; caps: Capitulo[]; Completo: React.FC }[] = [
+  { id: "actividad", titulo: "Unidad 4 · Ejercicio, actividad física y deporte", caps: CAPITULOS_ACTIVIDAD, Completo: VideoActividad },
   { id: "energia", titulo: "Unidad 2 · Sistemas energéticos", caps: CAPITULOS_ENERGIA, Completo: VideoEnergia },
   { id: "locomotor", titulo: "Aparato locomotor", caps: CAPITULOS, Completo: VideoCompleto },
 ];

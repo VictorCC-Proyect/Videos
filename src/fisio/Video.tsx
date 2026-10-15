@@ -15,6 +15,9 @@ import { E3 } from "./energia/e3";
 import { E4 } from "./energia/e4";
 import { E5 } from "./energia/e5";
 import { E6 } from "./energia/e6";
+import { A1 } from "./actividad/a1";
+import { A2 } from "./actividad/a2";
+import { A3, A4 } from "./actividad/a3";
 
 export type Capitulo = { id: string; titulo: string; planos: PlanoDef[] };
 
@@ -36,6 +39,14 @@ export const CAPITULOS_ENERGIA: Capitulo[] = [
   { id: "E4-Grasas-Aminoacidos", titulo: "Grasas y aminoácidos", planos: E4 },
   { id: "E5-Continuum", titulo: "Continuum energético", planos: E5 },
   { id: "E6-Umbral-Anaerobico", titulo: "Umbral anaeróbico", planos: E6 },
+];
+
+// Unidad 4: Ejercicio, actividad fisica y deporte
+export const CAPITULOS_ACTIVIDAD: Capitulo[] = [
+  { id: "A1-Definiciones", titulo: "4.1 Definiciones y características", planos: A1 },
+  { id: "A2-Intensidad", titulo: "4.2 Intensidad del entrenamiento", planos: A2 },
+  { id: "A3-Carga-Volumen", titulo: "4.3 Carga-volumen", planos: A3 },
+  { id: "A4-Repaso", titulo: "Repaso", planos: A4 },
 ];
 
 export const durCapitulo = (c: Capitulo) => durPlanos(c.planos);
@@ -60,7 +71,17 @@ export const VideoEnergia: React.FC = () => (
   </Series>
 );
 
+export const VideoActividad: React.FC = () => (
+  <Series>
+    {CAPITULOS_ACTIVIDAD.map((c) => (
+      <Series.Sequence key={c.id} durationInFrames={durCapitulo(c)} name={c.id}>
+        <Planos planos={c.planos} />
+      </Series.Sequence>
+    ))}
+  </Series>
+);
+
 export const CapituloView: React.FC<{ capId: string }> = ({ capId }) => {
-  const c = [...CAPITULOS, ...CAPITULOS_ENERGIA].find((x) => x.id === capId) ?? CAPITULOS[0];
+  const c = [...CAPITULOS, ...CAPITULOS_ENERGIA, ...CAPITULOS_ACTIVIDAD].find((x) => x.id === capId) ?? CAPITULOS[0];
   return <Planos planos={c.planos} />;
 };

@@ -3,9 +3,11 @@ import { HelloWorld } from "./HelloWorld";
 import { FPS } from "./fisio/motor";
 import {
   CAPITULOS,
+  CAPITULOS_ACTIVIDAD,
   CAPITULOS_ENERGIA,
   CapituloView,
   durCapitulo,
+  VideoActividad,
   VideoCompleto,
   VideoEnergia,
 } from "./fisio/Video";
@@ -48,6 +50,28 @@ export const RemotionRoot: React.FC = () => {
       />
       <Folder name="Capitulos-Energia">
         {CAPITULOS_ENERGIA.map((c) => (
+          <Composition
+            key={c.id}
+            id={c.id}
+            component={CapituloView}
+            durationInFrames={durCapitulo(c)}
+            fps={FPS}
+            width={1920}
+            height={1080}
+            defaultProps={{ capId: c.id }}
+          />
+        ))}
+      </Folder>
+      <Composition
+        id="EjercicioActividadDeporte"
+        component={VideoActividad}
+        durationInFrames={CAPITULOS_ACTIVIDAD.reduce((a, c) => a + durCapitulo(c), 0)}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      <Folder name="Capitulos-Actividad">
+        {CAPITULOS_ACTIVIDAD.map((c) => (
           <Composition
             key={c.id}
             id={c.id}
