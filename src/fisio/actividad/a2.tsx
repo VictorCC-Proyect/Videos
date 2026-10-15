@@ -150,7 +150,7 @@ const METs: React.FC<{ textos: string[] }> = ({ textos }) => {
 
 // ---- Frecuencia cardiaca: corazon latiendo + calculadora ---------------------
 
-const Corazon: React.FC<{ b: number; lpm: number }> = ({ b, lpm }) => {
+export const Corazon: React.FC<{ b: number; lpm: number }> = ({ b, lpm }) => {
   const latido = Math.pow(Math.max(0, Math.sin(b * lpm * 0.12)), 8);
   const s = 1 + latido * 0.12;
   const cam = camara([{ b: 0, p: [0, 0.2, 6.6], l: [0, 0, 0], fov: 38 }], b);

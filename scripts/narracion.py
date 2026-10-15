@@ -18,7 +18,7 @@ import wave
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-CAPS = sorted((RAIZ / "src/fisio/capitulos").glob("cap*.tsx")) + sorted((RAIZ / "src/fisio/energia").glob("e*.tsx")) + sorted((RAIZ / "src/fisio/actividad").glob("a*.tsx"))
+CAPS = sorted((RAIZ / "src/fisio/capitulos").glob("cap*.tsx")) + sorted((RAIZ / "src/fisio/energia").glob("e*.tsx")) + sorted((RAIZ / "src/fisio/actividad").glob("a*.tsx")) + sorted((RAIZ / "src/fisio/cardio").glob("k*.tsx"))
 # Shorts verticales: sus textos van en "const T = [...]" y se leen un poco mas rapido.
 SHORTS = sorted((RAIZ / "src/shorts").glob("*.tsx"))
 VEL_SHORTS = 0.93

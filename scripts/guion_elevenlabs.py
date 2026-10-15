@@ -26,17 +26,33 @@ EXTRA = [
     (r"\bRPE\b", "erre pe e"),
     (r"\bCR-10\b", "ce erre diez"),
     (r"\bFC\b", "efe ce"),
-    (r"\bMETs?\b", "mets"),
+    (r"\bMETs\b", "mets"),
+    (r"\bMET\b", "met"),
     (r"\bkcal\b", "kilocalorías"),
     (r"km/h", "kilómetros por hora"),
     (r"\bml\b", "mililitros"),
     (r"\bNEAT\b", "nit"),
     (r"\bOMS\b", "o eme ese"),
-    (r"(\d) punto (\d)", r"\1 punto \2"),
+    (r"(\d+)\.(\d+)", r"\1 punto \2"),
+    (r"\s\+\s", " más "),
+    (r"(\d) aproximadamente", r"\1, da aproximadamente"),
+    (r",:", ":"),
+]
+
+
+ANTES = [
+    (r"VO₂\s*máx(imo)?", "ve o dos máximo"),
+    (r"VO₂", "ve o dos"),
+    (r"CO₂", "ce o dos"),
+    (r"Hill \((\d+)\)", r"Hill, en \1"),
+    (r"\(ACSM\)", ", o A C S M,"),
+    (r"\bEPOC\b", "épok"),
 ]
 
 
 def voz(t: str) -> str:
+    for a, b in ANTES:
+        t = re.sub(a, b, t)
     t = para_voz(t)
     for a, b in EXTRA:
         t = re.sub(a, b, t)
