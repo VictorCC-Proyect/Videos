@@ -61,11 +61,17 @@ def cortes(largos: list[int], sil, total: float):
     return [sil[j] for j in reversed(elegidos)]
 
 
+def largo_hablado(t: str) -> int:
+    """Caracteres del texto, contando mas los digitos: un numero se dice mas lento de lo que se escribe."""
+    t = t.replace("**", "")
+    return len(t) + 4 * sum(c.isdigit() for c in t)
+
+
 def main():
     archivo, audio = Path(sys.argv[1]), Path(sys.argv[2])
     ts = textos([archivo])
     total = duracion(audio)
-    elegidos = cortes([len(t.replace("**", "")) for t in ts], silencios(audio), total)
+    elegidos = cortes([largo_hablado(t) for t in ts], silencios(audio), total)
     inicios = [0.0] + [b - 0.12 for _, b in elegidos]
     finales = [a + 0.15 for a, _ in elegidos] + [total]
     indice = json.loads(INDICE.read_text())
