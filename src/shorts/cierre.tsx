@@ -115,3 +115,65 @@ export const EscenaComentarios: React.FC<{
     </AbsoluteFill>
   );
 };
+
+/**
+ * Cierre que anuncia los próximos videos de la serie: tarjetas que entran una por una
+ * mientras la voz las menciona y al final el canal + SIGUEME.
+ * `items[i].a` es el momento (0..1 de la narración) en que aparece cada tarjeta.
+ */
+export const EscenaProximos: React.FC<{
+  textos: string[];
+  items: { t: string; sub: string; color: string; a: number }[];
+}> = ({ textos, items }) => {
+  const b = useBeat(textos);
+  const cam = camara([{ b: 0, p: [0, 1.0, 7.4], l: [0, 1.25, 0], fov: 36 }], b);
+  const final = entre(b, 0.8, 0.88);
+  return (
+    <AbsoluteFill>
+      <Escena3D cam={cam}>
+        <group rotation={[0, -0.4 + b * 1.0, 0]} position={[0, -0.25 - 0.75 * (1 - final), 0]}>
+          <Atleta ej="sprint" fase={b * 18 * (1 - final)} brilla={0.5} colorBrillo={K.lima} />
+          <Piso />
+        </group>
+      </Escena3D>
+      <div style={{ opacity: 1 - final }}>
+        <Titular b={b} a={0.02} z={1.2} y={250} tam={110} t={<>Próximos <span style={{ color: K.lima }}>videos</span></>} />
+        <div style={{ position: "absolute", top: 450, left: 70, right: 70, display: "flex", flexDirection: "column", gap: 26 }}>
+          {items.map((it, i) => {
+            const op = entre(b, it.a, it.a + 0.06);
+            return (
+              <div
+                key={i}
+                style={{
+                  opacity: op,
+                  transform: `translateX(${(1 - op) * 120}px)`,
+                  background: "rgba(4,14,17,0.86)",
+                  border: `4px solid ${it.color}`,
+                  borderRadius: 30,
+                  padding: "22px 30px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 24,
+                  boxShadow: `0 0 40px ${it.color}55`,
+                }}
+              >
+                <div style={{ width: 70, height: 70, borderRadius: 35, background: it.color, color: "#061317", fontFamily: INTER, fontWeight: 900, fontSize: 40, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  {i + 1}
+                </div>
+                <div>
+                  <div style={{ fontFamily: INTER, fontWeight: 900, fontSize: 48, color: it.color, lineHeight: 1.1 }}>{it.t}</div>
+                  <div style={{ fontFamily: INTER, fontWeight: 700, fontSize: 32, color: K.tinta, marginTop: 4 }}>{it.sub}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {final > 0 ? (
+        <div style={{ opacity: final }}>
+          <Cierre b={(b - 0.8) / 0.2} />
+        </div>
+      ) : null}
+    </AbsoluteFill>
+  );
+};
