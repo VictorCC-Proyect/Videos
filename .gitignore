@@ -12,3 +12,4 @@ shorts/*/snapshots/
 shorts/*/audio/*.wav
 shorts/*/.hyperframes/
 shorts/__pycache__/
+__pycache__/
