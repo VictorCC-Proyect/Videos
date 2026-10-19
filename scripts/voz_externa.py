@@ -5,7 +5,8 @@ de la lista "const T" del short. Este script detecta esas pausas, corta el audio
 clip por texto y lo guarda como public/narracion/<hash>.mp3, actualizando
 src/fisio/narracion.json (el mismo sistema que usa scripts/narracion.py).
 
-Uso: python3 scripts/voz_externa.py src/shorts/contraccion1.tsx narracion.mp3
+Uso: python3 scripts/voz_externa.py src/shorts/contraccion1.tsx narracion.mp3 [ignorar]
+  ignorar: números (desde 1) de pausas largas que NO separan textos, ej. "9" o "3,9".
 """
 
 import json
@@ -44,6 +45,9 @@ def main():
     archivo, audio = Path(sys.argv[1]), Path(sys.argv[2])
     ts = textos([archivo], r"const T = \[([\s\S]*?)\n\];")
     largos = [(a, b) for a, b in silencios(audio) if b - a >= PAUSA_MIN]
+    if len(sys.argv) > 3:
+        ign = {int(x) for x in sys.argv[3].split(",")}
+        largos = [s for i, s in enumerate(largos, 1) if i not in ign]
     if len(largos) != len(ts) - 1:
         largos = sorted(sorted(silencios(audio), key=lambda s: s[0] - s[1])[: len(ts) - 1])
     if len(largos) != len(ts) - 1:
