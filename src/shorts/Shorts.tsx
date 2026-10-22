@@ -3,6 +3,10 @@ import { AGUJETAS } from "./agujetas";
 import { ARDOR } from "./ardor";
 import { CREATINA } from "./creatina";
 import { CONTINUUM } from "./continuum";
+import { ENERGIA1 } from "./energia1";
+import { ENERGIA2 } from "./energia2";
+import { FIBRAS1 } from "./fibras1";
+import { FIBRAS2 } from "./fibras2";
 import { CONTRACCION1 } from "./contraccion1";
 import { CONTRACCION2 } from "./contraccion2";
 import { AYUNO } from "./ayuno";
@@ -17,7 +21,7 @@ import { CAFEINA } from "./cafeina";
 import { PROTEINA } from "./proteina";
 import { durShort, ShortDef, ShortVista } from "./marco";
 
-export const SHORTS: ShortDef[] = [CREATINA, ARDOR, AGUJETAS, PROTEINA, CONTINUUM, CONTRACCION1, CONTRACCION2, AYUNO, GLUCOSA, DEFICIT, MICROBIOTA, MAGNESIO, COLAGENO, CORTISOL, CAFEINA];
+export const SHORTS: ShortDef[] = [CREATINA, ARDOR, AGUJETAS, PROTEINA, CONTINUUM, CONTRACCION1, CONTRACCION2, ENERGIA1, ENERGIA2, FIBRAS1, FIBRAS2, AYUNO, GLUCOSA, DEFICIT, MICROBIOTA, MAGNESIO, COLAGENO, CORTISOL, CAFEINA];
 
 export { durShort };
 

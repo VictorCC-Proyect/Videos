@@ -11,7 +11,7 @@ import { Escena3D, Etiquetas } from "../fisio/ui";
 import { Chip, Dato, Destello, INTER, K, ShortDef, Titular } from "./marco";
 import { Atleta, Frijoles, Piso, Plato, Rinones } from "./modelos";
 import { camViaje, cortesViaje, Viaje } from "./viaje";
-import { EscenaCierre } from "./cierre";
+import { EscenaProximos } from "./cierre";
 import {
   BOMBAS,
   CA,
@@ -58,7 +58,7 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
     b,
   );
   const aparece = entre(b, 0.05, 0.3);
-  const cuenta = Math.round(300 * entre(b, 0.45, 0.75));
+  const cuenta = Math.round(300 * entre(b, 0.72, 0.92));
   return (
     <AbsoluteFill>
       <Escena3D cam={cam}>
@@ -67,8 +67,9 @@ const Gancho: React.FC<{ textos: string[] }> = ({ textos }) => {
         {ORBITA.map((_, i) => (aparece * 12 > i ? <IonMg key={i} p={posOrbita(i, b)} r={0.07} brillo={0.8 + 0.4 * Math.sin(b * 20 + i)} /> : null))}
       </Escena3D>
       <Etiquetas cam={cam} b={b} items={[{ p: posOrbita(0, b), t: "Mg²⁺", a: 0.1, z: 1, o: [70, -70], color: MG }]} />
-      <Titular b={b} a={0.02} z={0.45} y={290} tam={150} t="Magnesio" color={MG} />
-      <Dato b={b} a={0.45} z={1} t={cuenta >= 300 ? "300+" : `${cuenta}`} sub="reacciones en tu cuerpo" color={MG} y={260} tam={130} />
+      <Chip b={b} a={0.02} z={0.44} t="SERIE CONTRACCIÓN · PARTE 3" x={540} y={330} color={K.lima} />
+      <Titular b={b} a={0.45} z={0.72} y={290} tam={150} t="Magnesio" color={MG} />
+      <Dato b={b} a={0.72} z={1} t={cuenta >= 300 ? "300+" : `${cuenta}`} sub="reacciones en tu cuerpo" color={MG} y={260} tam={130} />
     </AbsoluteFill>
   );
 };
@@ -395,19 +396,29 @@ const Suplementos: React.FC<{ textos: string[] }> = ({ textos }) => {
 };
 
 const T = [
-  "El **magnesio** participa en más de **300 reacciones** de tu cuerpo.",
+  "Ya viste cómo se contrae tu músculo. Ahora conoce al mineral que lo ayuda a contraerse y a relajarse: el **magnesio**. Participa en más de **300 reacciones** de tu cuerpo.",
   "En el músculo es clave: el ATP casi siempre trabaja **unido al magnesio**.",
-  "El calcio hace que el músculo se **contraiga**, y el magnesio ayuda a que se **relaje** y a que el calcio regrese a su lugar.",
+  "Como viste en la parte dos, el calcio hace que el músculo se **contraiga**. El magnesio ayuda a que se **relaje** y a que el calcio regrese a su lugar.",
   "Si te falta, pueden aparecer **cansancio**, debilidad y, en algunas personas, **calambres**.",
   "Lo encuentras en **semillas**, nueces, cacao, frijoles, verduras de hoja verde y granos enteros.",
   "Los suplementos ayudan sobre todo si tienes **deficiencia**. En exceso causan diarrea, y con enfermedad renal hay que tener **cuidado**.",
-  "Sígueme para más **nutrición explicada con ciencia**.",
+  "En los próximos videos: de dónde sacan tus músculos la **energía**, con sus tres sistemas, y por qué no todas tus fibras son iguales: hay **rápidas y lentas**. Sígueme para no perdértelos.",
 ];
 
-const ESCENAS = [Gancho, Unido, Ciclo, Falta, Alimentos, Suplementos, EscenaCierre];
+const Proximos: React.FC<{ textos: string[] }> = ({ textos }) => (
+  <EscenaProximos
+    textos={textos}
+    items={[
+      { t: "Sistemas de energía", sub: "de dónde sacan energía tus músculos", color: K.naranja, a: 0.12 },
+      { t: "Fibras rápidas y lentas", sub: "por qué no todas son iguales", color: K.cian, a: 0.45 },
+    ]}
+  />
+);
+
+const ESCENAS = [Gancho, Unido, Ciclo, Falta, Alimentos, Suplementos, Proximos];
 
 export const MAGNESIO: ShortDef = {
   id: "Short-Magnesio",
-  titulo: "Magnesio: el mineral de tus músculos",
+  titulo: "Magnesio: el mineral de tus músculos (serie contracción · parte 3)",
   planos: ESCENAS.map((Escena, i) => ({ id: `magnesio-${i}`, seccion: "", textos: [T[i]], Escena })) as PlanoDef[],
 };
