@@ -22,6 +22,10 @@ import { K1 } from "./cardio/k1";
 import { K2 } from "./cardio/k2";
 import { K3 } from "./cardio/k3";
 import { K4 } from "./cardio/k4";
+import { F1 } from "./aptitudes/f1";
+import { F2 } from "./aptitudes/f2";
+import { F3 } from "./aptitudes/f3";
+import { F4 } from "./aptitudes/f4";
 
 export type Capitulo = { id: string; titulo: string; planos: PlanoDef[] };
 
@@ -59,6 +63,14 @@ export const CAPITULOS_CARDIO: Capitulo[] = [
   { id: "K2-VO2", titulo: "3.2 Consumo de oxígeno y VO₂máx", planos: K2 },
   { id: "K3-Deuda-O2-MET", titulo: "3.3 Deuda de oxígeno y 3.4 MET", planos: K3 },
   { id: "K4-Control-FC", titulo: "3.5 Control por FC y repaso", planos: K4 },
+];
+
+// Unidad 5: Bases del entrenamiento de las aptitudes fisicas basicas
+export const CAPITULOS_APTITUDES: Capitulo[] = [
+  { id: "F1-Fuerza", titulo: "5.1 Fuerza", planos: F1 },
+  { id: "F2-Resistencia-Aerobica", titulo: "5.2 Resistencia aeróbica", planos: F2 },
+  { id: "F3-Flexibilidad", titulo: "5.3 Flexibilidad", planos: F3 },
+  { id: "F4-Velocidad", titulo: "5.4 Velocidad y repaso", planos: F4 },
 ];
 
 export const durCapitulo = (c: Capitulo) => durPlanos(c.planos);
@@ -103,7 +115,17 @@ export const VideoCardio: React.FC = () => (
   </Series>
 );
 
+export const VideoAptitudes: React.FC = () => (
+  <Series>
+    {CAPITULOS_APTITUDES.map((c) => (
+      <Series.Sequence key={c.id} durationInFrames={durCapitulo(c)} name={c.id}>
+        <Planos planos={c.planos} />
+      </Series.Sequence>
+    ))}
+  </Series>
+);
+
 export const CapituloView: React.FC<{ capId: string }> = ({ capId }) => {
-  const c = [...CAPITULOS, ...CAPITULOS_ENERGIA, ...CAPITULOS_ACTIVIDAD, ...CAPITULOS_CARDIO].find((x) => x.id === capId) ?? CAPITULOS[0];
+  const c = [...CAPITULOS, ...CAPITULOS_ENERGIA, ...CAPITULOS_ACTIVIDAD, ...CAPITULOS_CARDIO, ...CAPITULOS_APTITUDES].find((x) => x.id === capId) ?? CAPITULOS[0];
   return <Planos planos={c.planos} />;
 };
