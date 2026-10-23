@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
 import { clearDiag, deviceSummary, readDiag, type DiagEntry } from "../diag";
+import { resetGuard } from "../engines/crashGuard";
 import { askPersistence } from "../db";
 import { elevenCredits } from "../engines/elevenlabs";
 import { useApp } from "../state";
@@ -132,6 +133,9 @@ export function SettingsScreen() {
           </Button>
           <Button variant="ghost" size="sm" onClick={() => { clearDiag(); setLog([]); }} disabled={!log.length}>
             Borrar registro
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => { resetGuard(); toast("Se volverán a probar todos los modos"); }}>
+            Reiniciar modos de los motores
           </Button>
         </div>
       </section>
