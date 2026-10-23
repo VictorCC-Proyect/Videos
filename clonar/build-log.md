@@ -16,3 +16,4 @@ Notas:
 - Supertonic 3 se carga desde Hugging Face (revisión fija) la primera vez y queda en la Cache del navegador.
 - Sin servidor: la carpeta dist se publica tal cual. Pesa unos 50 MB por los archivos de ONNX Runtime.
 - Pruebas: división de texto y codificación MP3 (unitarias), y recorrido en Chromium a 390 y 1440 px sin errores en la consola.
+- 2026-10-23: en el iPhone del usuario la pestaña se cerró por falta de memoria al generar. Arreglo: descarga directa a la Cache sin copias, sesiones de ONNX creadas una por una, un worker por motor (solo uno vivo a la vez) y WebAssembly en iPhone. Si vuelve a pasar, siguiente paso: versión INT8 de Supertonic (unos 100 MB en vez de 400).

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
+import { clearDiag, deviceSummary, readDiag, type DiagEntry } from "../diag";
 import { askPersistence } from "../db";
 import { elevenCredits } from "../engines/elevenlabs";
 import { useApp } from "../state";
@@ -15,7 +16,21 @@ export function SettingsScreen() {
   const [checking, setChecking] = useState(false);
   const [storage, setStorage] = useState<{ usage: number; quota: number; persisted: boolean } | null>(null);
 
+  const [log, setLog] = useState<DiagEntry[]>(readDiag);
+
   useEffect(() => setKey(prefs.elevenKey), [prefs.elevenKey]);
+
+  const logText = () =>
+    [deviceSummary(), ...log.map((e) => `${new Date(e.t).toLocaleTimeString("es-MX")} ${e.msg}`)].join("\n");
+
+  async function copyLog() {
+    try {
+      await navigator.clipboard.writeText(logText());
+      toast("Diagnóstico copiado");
+    } catch {
+      toast("No se pudo copiar; toma una captura", "error");
+    }
+  }
 
   const readStorage = async () => {
     try {
@@ -103,6 +118,22 @@ export function SettingsScreen() {
         <Button variant="secondary" icon={<Trash2 className="size-4" />} onClick={clearModels} className="self-start">
           Borrar las voces descargadas
         </Button>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-lg font-semibold">Diagnóstico</h2>
+        <p className="text-sm text-muted">Lo que hicieron los motores de voz, paso a paso. Se conserva aunque el navegador cierre la pestaña.</p>
+        <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded-md bg-surface p-3 font-mono text-xs text-fg">
+          {log.length ? logText() : "Todavía no hay registros."}
+        </pre>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="secondary" size="sm" icon={<Copy className="size-4" />} onClick={copyLog} disabled={!log.length}>
+            Copiar
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => { clearDiag(); setLog([]); }} disabled={!log.length}>
+            Borrar registro
+          </Button>
+        </div>
       </section>
 
       <section className="flex flex-col gap-2">

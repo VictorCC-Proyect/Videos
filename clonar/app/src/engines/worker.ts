@@ -1,6 +1,4 @@
 // Web Worker: carga los modelos y genera el audio sin congelar la pantalla.
-import { loadKokoro, synthKokoro } from "./kokoro";
-import { loadSupertonic, supertonicDevice, synthSupertonic } from "./supertonic";
 import type { EngineId } from "./types";
 
 export type WorkerRequest =
@@ -19,17 +17,19 @@ self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
   const req = e.data;
   const progress = (fraction: number, label: string) => post({ id: req.id, type: "progress", fraction, label });
   try {
-    if (req.engine === "supertonic") await loadSupertonic(progress);
-    else await loadKokoro(progress);
-
-    if (req.type === "load") {
-      post({ id: req.id, type: "loaded", device: req.engine === "supertonic" ? supertonicDevice() : undefined });
-      return;
+    let pcm: { samples: Float32Array; sampleRate: number };
+    // Cada worker importa solo su motor, así no carga el código del otro.
+    if (req.engine === "supertonic") {
+      const st = await import("./supertonic");
+      await st.loadSupertonic(progress);
+      if (req.type === "load") return post({ id: req.id, type: "loaded", device: st.supertonicDevice() });
+      pcm = await st.synthSupertonic(req.text, req.voice, { speed: req.speed, steps: req.steps }, (s, t) => progress(s / t, "Generando"));
+    } else {
+      const kk = await import("./kokoro");
+      await kk.loadKokoro(progress);
+      if (req.type === "load") return post({ id: req.id, type: "loaded" });
+      pcm = await kk.synthKokoro(req.text, req.voice, { speed: req.speed });
     }
-    const pcm =
-      req.engine === "supertonic"
-        ? await synthSupertonic(req.text, req.voice, { speed: req.speed, steps: req.steps }, (s, t) => progress(s / t, "Generando"))
-        : await synthKokoro(req.text, req.voice, { speed: req.speed });
     post({ id: req.id, type: "audio", samples: pcm.samples, sampleRate: pcm.sampleRate }, [pcm.samples.buffer]);
   } catch (err) {
     post({ id: req.id, type: "error", message: err instanceof Error ? err.message : String(err) });
