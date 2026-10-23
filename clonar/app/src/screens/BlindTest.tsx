@@ -1,7 +1,10 @@
-import { useState } from "react";
-import { Eye, Play } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Eye, Play, RotateCcw } from "lucide-react";
 import { encodeMp3, fileName } from "../audio";
+import { samples as samplesTable, type BlindSample } from "../db";
+import { diag } from "../diag";
 import { synthEleven } from "../engines/elevenlabs";
+import { isIOS } from "../engines/fetchCached";
 import { synthLocal } from "../engines/local";
 import { engines, type EngineId } from "../engines/types";
 import { useApp } from "../state";
@@ -14,83 +17,126 @@ import { builtinVoices } from "../voices";
 const SCRIPT =
   "Ese ardor en las últimas repeticiones no es culpa del lactato. Los verdaderos culpables son los protones. Cuando entrenas intenso, tu músculo pide ATP más rápido de lo que el oxígeno alcanza a producirlo.";
 
-type Sample = { engine: EngineId; voiceName: string; blob: Blob; seconds: number };
+const letters = "ABC";
 
-// Prueba a ciegas: el mismo guion con cada motor, en orden aleatorio.
+// Prueba a ciegas: el mismo guion con cada motor. Cada motor se genera con su propio
+// botón y la muestra se guarda en cuanto sale, así un cierre de la pestaña no borra las demás.
 export function BlindTest() {
   const { prefs, elevenVoices, play, toast } = useApp();
   const [text, setText] = useState(SCRIPT);
-  const [stVoice, setStVoice] = useState("M1");
-  const [kkVoice, setKkVoice] = useState("em_alex");
-  const [elVoice, setElVoice] = useState(elevenVoices.find((v) => /emiliano/i.test(v.name))?.id ?? elevenVoices[0]?.id ?? "");
-  const [busy, setBusy] = useState<{ label: string; fraction?: number } | null>(null);
-  const [samples, setSamples] = useState<Sample[]>([]);
+  const [voices, setVoices] = useState<Record<EngineId, string>>({
+    supertonic: "M1",
+    kokoro: "em_alex",
+    elevenlabs: elevenVoices.find((v) => /emiliano/i.test(v.name))?.id ?? elevenVoices[0]?.id ?? "",
+  });
+  const [busy, setBusy] = useState<{ engine: EngineId; label: string; fraction?: number } | null>(null);
+  const [done, setDone] = useState<BlindSample[]>([]);
+  const [order, setOrder] = useState<EngineId[]>([]);
   const [revealed, setRevealed] = useState(false);
-  const [pick, setPick] = useState<number | null>(null);
+  const [pick, setPick] = useState<EngineId | null>(null);
 
-  async function run() {
-    setSamples([]);
+  useEffect(() => {
+    samplesTable.toArray().then((list) => {
+      setDone(list);
+      setOrder(list.map((s) => s.engine).sort(() => Math.random() - 0.5));
+    });
+  }, []);
+
+  const available: EngineId[] = ["supertonic", "kokoro", ...(prefs.elevenKey && elevenVoices.length ? (["elevenlabs"] as const) : [])];
+
+  async function run(engine: EngineId) {
+    setBusy({ engine, label: "Preparando" });
     setRevealed(false);
     setPick(null);
-    const out: Sample[] = [];
+    const started = performance.now();
     try {
-      const jobs: { engine: EngineId; voice: string; name: string }[] = [
-        { engine: "supertonic", voice: stVoice, name: builtinVoices.supertonic.find((v) => v.id === stVoice)!.name },
-        { engine: "kokoro", voice: kkVoice, name: builtinVoices.kokoro.find((v) => v.id === kkVoice)!.name },
-      ];
-      if (prefs.elevenKey && elVoice) jobs.push({ engine: "elevenlabs", voice: elVoice, name: elevenVoices.find((v) => v.id === elVoice)?.name ?? "ElevenLabs" });
-      for (const [i, j] of jobs.entries()) {
-        const label = `Motor ${i + 1} de ${jobs.length}`;
-        const started = performance.now();
-        setBusy({ label });
-        const pcm =
-          j.engine === "elevenlabs"
-            ? await synthEleven(prefs.elevenKey, text, j.voice, { ...prefs.settings, modelId: "eleven_multilingual_v2" }, {})
-            : await synthLocal(j.engine, text, j.voice, { speed: 1, steps: 8 }, (f, l) => setBusy({ label: `${label}: ${l.toLowerCase()}`, fraction: f }));
-        out.push({ engine: j.engine, voiceName: j.name, blob: encodeMp3(pcm), seconds: (performance.now() - started) / 1000 });
-      }
-      setSamples(out.sort(() => Math.random() - 0.5));
+      const voice = voices[engine];
+      const pcm =
+        engine === "elevenlabs"
+          ? await synthEleven(prefs.elevenKey, text, voice, { ...prefs.settings, modelId: "eleven_multilingual_v2" }, {})
+          : await synthLocal(engine, text, voice, { speed: 1, steps: 8 }, (f, l) => setBusy({ engine, label: l, fraction: f }));
+      const voiceName =
+        engine === "elevenlabs" ? (elevenVoices.find((v) => v.id === voice)?.name ?? "ElevenLabs") : builtinVoices[engine].find((v) => v.id === voice)!.name;
+      const sample: BlindSample = { engine, voiceName, blob: encodeMp3(pcm), seconds: (performance.now() - started) / 1000, createdAt: Date.now() };
+      await samplesTable.put(sample);
+      diag(`prueba a ciegas: muestra de ${engine} guardada`);
+      setDone((d) => [...d.filter((s) => s.engine !== engine), sample]);
+      setOrder((o) => (o.includes(engine) ? o : [...o, engine].sort(() => Math.random() - 0.5)));
     } catch (e) {
       toast(e instanceof Error ? e.message : String(e), "error");
-      if (out.length) setSamples(out.sort(() => Math.random() - 0.5));
     } finally {
       setBusy(null);
     }
   }
 
-  const letters = "ABC";
+  async function reset() {
+    await samplesTable.clear();
+    setDone([]);
+    setOrder([]);
+    setRevealed(false);
+    setPick(null);
+  }
+
+  const byEngine = (e: EngineId) => done.find((s) => s.engine === e);
+
   return (
     <div className="flex max-w-2xl flex-col gap-4">
       <h1 className="text-[28px] font-bold leading-[34px]">Prueba a ciegas</h1>
       <p className="text-sm text-muted">
-        El mismo texto con cada motor, en orden al azar. Escúchalos, elige el que suene más natural y después mira cuál era. La primera vez tarda porque descarga las voces: mejor con Wi-Fi.
+        El mismo texto con cada motor. Genera uno por uno; las muestras aparecen abajo con letras al azar. Escúchalas, elige la más natural y después mira cuál era. La primera vez tarda porque descarga cada voz: mejor con Wi-Fi.
       </p>
+      {isIOS && (
+        <p className="rounded-md bg-surface p-3 text-xs text-muted">
+          En iPhone, Supertonic pesa unos 400 MB y puede hacer que el navegador cierre la pestaña. Prueba primero Kokoro. Si la pestaña se cierra, vuelve a abrir la app: lo que ya se generó sigue aquí, y en Configuración → Diagnóstico queda dónde falló.
+        </p>
+      )}
       <TextEditor value={text} onChange={setText} limit={300} disabled={!!busy} />
-      <div className="grid gap-3 sm:grid-cols-3">
-        <Select label="Voz de Supertonic" value={stVoice} onChange={setStVoice} options={builtinVoices.supertonic.map((v) => ({ value: v.id, label: v.name }))} />
-        <Select label="Voz de Kokoro" value={kkVoice} onChange={setKkVoice} options={builtinVoices.kokoro.map((v) => ({ value: v.id, label: v.name }))} />
-        {prefs.elevenKey && elevenVoices.length > 0 && (
-          <Select label="Voz de ElevenLabs" value={elVoice} onChange={setElVoice} options={elevenVoices.map((v) => ({ value: v.id, label: v.name }))} />
-        )}
-      </div>
-      {busy ? <ProgressBar label={busy.label} value={busy.fraction !== undefined ? busy.fraction * 100 : undefined} /> : <Button onClick={run} disabled={!text.trim()}>Generar las muestras</Button>}
 
-      {samples.length > 0 && (
-        <div className="flex flex-col gap-2">
-          {samples.map((s, i) => (
-            <div key={i} className={`flex items-center gap-3 rounded-lg border p-3 ${pick === i ? "border-accent" : "border-line"}`}>
-              <Button variant="secondary" size="sm" icon={<Play className="size-4" />} onClick={() => play(s.blob, `Muestra ${letters[i]}`, fileName(`muestra ${letters[i]}`, "mp3"))}>
-                {letters[i]}
-              </Button>
-              <span className="flex-1 text-sm">{revealed ? `${engines[s.engine].name} · ${s.voiceName} · generada en ${s.seconds.toFixed(1)} s` : `Muestra ${letters[i]}`}</span>
-              <Button variant={pick === i ? "primary" : "ghost"} size="sm" onClick={() => setPick(i)} aria-pressed={pick === i}>
-                {pick === i ? "Elegida" : "Elegir"}
+      <div className="flex flex-col gap-3">
+        {available.map((engine) => {
+          const options =
+            engine === "elevenlabs" ? elevenVoices.map((v) => ({ value: v.id, label: v.name })) : builtinVoices[engine].map((v) => ({ value: v.id, label: v.name }));
+          return (
+            <div key={engine} className="flex flex-col gap-2 rounded-lg border border-line p-3 sm:flex-row sm:items-end">
+              <div className="flex-1">
+                <Select label={`Voz de ${engines[engine].name}`} value={voices[engine]} onChange={(v) => setVoices((s) => ({ ...s, [engine]: v }))} options={options} disabled={!!busy} />
+              </div>
+              <Button variant={byEngine(engine) ? "secondary" : "primary"} onClick={() => run(engine)} disabled={!!busy || !text.trim()} loading={busy?.engine === engine}>
+                {byEngine(engine) ? "Generar otra vez" : `Generar con ${engines[engine].name.split(" ")[0]}`}
               </Button>
             </div>
-          ))}
-          <Button variant="secondary" icon={<Eye className="size-4" />} onClick={() => setRevealed(true)} disabled={pick === null} className="self-start">
-            Ver cuál era cuál
-          </Button>
+          );
+        })}
+      </div>
+
+      {busy && <ProgressBar label={`${engines[busy.engine].name}: ${busy.label}`} value={busy.fraction !== undefined ? busy.fraction * 100 : undefined} />}
+
+      {order.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold">Muestras</h2>
+          {order.map((engine, i) => {
+            const s = byEngine(engine);
+            if (!s) return null;
+            return (
+              <div key={engine} className={`flex items-center gap-3 rounded-lg border p-3 ${pick === engine ? "border-accent" : "border-line"}`}>
+                <Button variant="secondary" size="sm" icon={<Play className="size-4" />} onClick={() => play(s.blob, `Muestra ${letters[i]}`, fileName(`muestra ${letters[i]}`, "mp3"))}>
+                  {letters[i]}
+                </Button>
+                <span className="flex-1 text-sm">{revealed ? `${engines[engine].name} · ${s.voiceName} · generada en ${s.seconds.toFixed(1)} s` : `Muestra ${letters[i]}`}</span>
+                <Button variant={pick === engine ? "primary" : "ghost"} size="sm" onClick={() => setPick(engine)} aria-pressed={pick === engine}>
+                  {pick === engine ? "Elegida" : "Elegir"}
+                </Button>
+              </div>
+            );
+          })}
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" icon={<Eye className="size-4" />} onClick={() => setRevealed(true)} disabled={pick === null}>
+              Ver cuál era cuál
+            </Button>
+            <Button variant="ghost" icon={<RotateCcw className="size-4" />} onClick={reset}>
+              Empezar de nuevo
+            </Button>
+          </div>
         </div>
       )}
     </div>

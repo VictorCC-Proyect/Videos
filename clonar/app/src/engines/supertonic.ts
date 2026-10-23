@@ -51,7 +51,16 @@ export function loadSupertonic(onProgress: (fraction: number, label: string) => 
       );
       onProgress((i + 1) / names.length, "Preparando la voz");
       try {
-        sessions.push(await ort.InferenceSession.create(bytes, { executionProviders: [device] }));
+        sessions.push(
+          await ort.InferenceSession.create(bytes, {
+            executionProviders: [device],
+            // Menos memoria: sin reserva previa de bloques y optimización básica
+            // (la completa duplica pesos de forma temporal).
+            enableCpuMemArena: false,
+            enableMemPattern: false,
+            graphOptimizationLevel: "basic",
+          }),
+        );
       } catch (err) {
         if (device === "wasm") throw err;
         device = "wasm";

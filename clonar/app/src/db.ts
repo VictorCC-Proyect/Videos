@@ -1,4 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
+import { isIOS } from "./engines/fetchCached";
 import { defaultSettings, type EngineId, type SynthSettings, type Voice } from "./engines/types";
 
 export type Generation = {
@@ -26,7 +27,8 @@ export type Prefs = {
 
 export const defaultPrefs: Prefs = {
   id: "prefs",
-  engine: "supertonic",
+  // En iPhone, Kokoro (90 MB) en vez de Supertonic (400 MB), que no cabe en la memoria de la pestaña.
+  engine: isIOS ? "kokoro" : "supertonic",
   voiceByEngine: { supertonic: "M1", kokoro: "ef_dora" },
   settings: defaultSettings,
   elevenKey: "",
@@ -44,6 +46,11 @@ db.version(1).stores({
   voices: "key, engine, savedAt",
   prefs: "id",
 });
+db.version(2).stores({ samples: "engine" });
+
+// Muestras de la prueba a ciegas: se guardan en cuanto salen, por si la pestaña se cierra.
+export type BlindSample = { engine: EngineId; voiceName: string; blob: Blob; seconds: number; createdAt: number };
+export const samples = (db as unknown as { samples: EntityTable<BlindSample, "engine"> }).samples;
 
 export async function getPrefs(): Promise<Prefs> {
   const p = await db.prefs.get("prefs");
