@@ -6,8 +6,8 @@ Empezado: 2026-10-23
 
 | # | etapa | estado | aprobada el | resumen |
 | --- | --- | --- | --- | --- |
-| 1 | Explorar | esperando aprobación | | 7 pantallas, 5 flujos, 29 funciones; uso propio |
-| 2 | Arquitectura | pendiente | | |
+| 1 | Explorar | aprobada | 2026-10-23 | 7 pantallas, 5 flujos, 29 funciones; uso propio |
+| 2 | Arquitectura | en curso | | |
 | 3 | Diseño | pendiente | | |
 | 4 | Construir | pendiente | | |
 | 5 | Backend | pendiente | | |
