@@ -1,26 +1,17 @@
-import { StrictMode, useEffect, useState } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { DesignPage } from "./DesignPage";
-
-function useHash() {
-  const [hash, setHash] = useState(location.hash);
-  useEffect(() => {
-    const on = () => setHash(location.hash);
-    addEventListener("hashchange", on);
-    return () => removeEventListener("hashchange", on);
-  }, []);
-  return hash;
-}
-
-// Por ahora solo existe el muestrario; las pantallas llegan en la etapa 4.
-function App() {
-  useHash();
-  return <DesignPage />;
-}
+import { App } from "./App";
+import { AppProvider } from "./state";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <AppProvider>
+      <App />
+    </AppProvider>
   </StrictMode>,
 );
+
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+}
