@@ -37,6 +37,7 @@ EXTRA = [
     (r"\s\+\s", " más "),
     (r"(\d) aproximadamente", r"\1, da aproximadamente"),
     (r",:", ":"),
+    (r"(cinco|nueve) aproximadamente", r"\1, da aproximadamente"),
 ]
 
 
@@ -47,6 +48,17 @@ ANTES = [
     (r"Hill \((\d+)\)", r"Hill, en \1"),
     (r"\(ACSM\)", ", o A C S M,"),
     (r"\bEPOC\b", "épok"),
+    (r"1\.0278", "uno punto cero dos siete ocho"),
+    (r"0\.0278", "cero punto cero dos siete ocho"),
+    (r"0\.805", "cero punto ochocientos cinco"),
+    (r"0\.889", "cero punto ochocientos ochenta y nueve"),
+    (r"9\.81", "nueve punto ochenta y uno"),
+    (r"\bHIIT\b", "jit"),
+    (r"\bFMS\b", "efe eme ese"),
+    (r"\bFNP\b", "efe ene pe"),
+    (r"\((\d{4})\)", r"de \1"),
+    (r"80/20", "ochenta veinte"),
+    (r"\bFatMax\b", "fat max"),
 ]
 
 

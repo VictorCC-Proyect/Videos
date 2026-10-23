@@ -1,0 +1,30 @@
+feature,area,priority,original,clone,notes
+Escribir o pegar texto con contador de caracteres,texto a voz,must,yes,yes,
+Elegir una voz desde el editor,texto a voz,must,yes,yes,S02 con búsqueda y muestra
+Generar el audio con el motor de voz,texto a voz,must,yes,partial,código listo; la voz real no se pudo probar aquí (Hugging Face bloqueado en el entorno). Se confirma en el celular
+Escuchar el audio generado,texto a voz,must,yes,yes,reproductor fijo abajo
+Descargar el audio en MP3,texto a voz,must,yes,yes,MP3 de 128 kbps hecho en el navegador
+Ajustes de estabilidad similitud y estilo,texto a voz,must,yes,yes,solo ElevenLabs; los motores gratuitos tienen velocidad y calidad
+Ajuste de velocidad,texto a voz,must,yes,yes,
+Historial de generaciones con escuchar y descargar,historial,must,yes,yes,"IndexedDB en el dispositivo, con búsqueda"
+Configurar el motor de voz y su clave,configuración,must,no,yes,clave de ElevenLabs probada contra la API al guardar
+Elegir el modelo con sus límites,texto a voz,should,yes,yes,modelos de ElevenLabs; v3 desactiva los ajustes que no soporta
+Biblioteca de voces con búsqueda y filtros,biblioteca,should,yes,partial,voces de cada motor y de la cuenta de ElevenLabs; falta buscar en la biblioteca pública de ElevenLabs
+Escuchar la muestra de una voz,biblioteca,should,yes,yes,en los motores gratuitos la muestra se genera en el dispositivo
+Guardar voces en Mis voces,mis voces,should,yes,partial,las voces de la cuenta de ElevenLabs se guardan para usarlas sin conexión; faltan favoritas
+Clonación instantánea de la voz propia con consentimiento,mis voces,should,yes,no,solo ElevenLabs; pendiente
+Etiquetas de actuación como [whispers] o [laughs],texto a voz,should,yes,partial,se puede elegir Eleven v3; sin ayuda visual para escribirlas
+Textos largos partidos en trozos y unidos,texto a voz,should,no,yes,"por oraciones, luego comas, luego espacios"
+Reutilizar los ajustes de un audio del historial,historial,should,yes,yes,
+Speaker boost,texto a voz,could,yes,no,
+Otros formatos de salida (WAV y calidades),texto a voz,could,yes,no,"el codificador WAV existe, falta el botón"
+Descarga múltiple del historial en zip,historial,could,yes,no,
+Grabar la muestra desde el navegador,mis voces,could,yes,no,
+Diccionario de pronunciación,texto a voz,could,yes,no,
+Modelos y calidad de voz de ElevenLabs,motor,skip,yes,skip,son su propiedad; se usa otro motor
+Voces prediseñadas y de la comunidad de ElevenLabs,biblioteca,skip,yes,skip,pertenecen a ElevenLabs o a sus creadores
+Clonación profesional de voz,mis voces,skip,yes,skip,fuera del alcance
+Planes créditos y cobros,cuenta,skip,yes,skip,uso propio
+Cuentas de usuario y equipos,cuenta,skip,yes,skip,app de una sola persona
+Doblaje música y efectos de sonido,otros productos,skip,yes,skip,fuera del alcance
+Agentes de voz conversacionales,otros productos,skip,yes,skip,fuera del alcance
