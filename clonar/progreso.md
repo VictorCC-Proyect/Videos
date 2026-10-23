@@ -7,7 +7,7 @@ Empezado: 2026-10-23
 | # | etapa | estado | aprobada el | resumen |
 | --- | --- | --- | --- | --- |
 | 1 | Explorar | aprobada | 2026-10-23 | 7 pantallas, 5 flujos, 29 funciones; uso propio |
-| 2 | Arquitectura | esperando aprobación | | Next.js + Supabase + Netlify con contraseña; ElevenLabs + motor gratuito en Modal; 5 tablas | |
+| 2 | Arquitectura | esperando aprobación | | PWA estática en GitHub Pages; voz generada en el dispositivo (Supertonic/Kokoro); ElevenLabs opcional con clave | |
 | 3 | Diseño | pendiente | | |
 | 4 | Construir | pendiente | | |
 | 5 | Backend | pendiente | | |
@@ -27,3 +27,4 @@ detenida.
 - 2026-10-23: inicio. Alcance aprobado: texto a voz, biblioteca, mis voces, clonación propia e historial. Solo para uso propio: no se publica ni se vende.
 - 2026-10-23: elevenlabs.io no se pudo abrir desde el entorno; la etapa 1 usó resultados de búsqueda y no tiene capturas.
 - 2026-10-23: etapa 2. Países: no aplica. En internet con contraseña. Dos motores: ElevenLabs con la clave del usuario (para Emiliano) y uno gratuito que suene natural, elegido con una prueba a ciegas.
+- 2026-10-23: cambios en la etapa 2: todo gratis, sin cuentas nuevas, usable desde el celular fuera de casa sin la laptop (AMD Athlon 3050U, 8 GB, HDD: no sirve de servidor). Se reemplazó Supabase, Netlify y Modal por una PWA en GitHub Pages con el motor de voz en el navegador. schema.sql eliminado: los datos van en IndexedDB.
