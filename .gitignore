@@ -13,3 +13,6 @@ shorts/*/audio/*.wav
 shorts/*/.hyperframes/
 shorts/__pycache__/
 __pycache__/
+
+# Modelos descargados por scripts/narracion_supertonic.py
+.cache/

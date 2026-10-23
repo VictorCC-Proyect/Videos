@@ -10,7 +10,7 @@ import { FilterChips } from "../ui/FilterChips";
 import { VoiceCard } from "../ui/VoiceCard";
 import { builtinVoices } from "../voices";
 
-const order: EngineId[] = ["supertonic", "kokoro", "elevenlabs"];
+const order: EngineId[] = ["supertonic", "elevenlabs"];
 
 // S03/S04: las voces de cada motor, con muestra y botón para usarlas.
 export function VoicesScreen({ go }: { go: (route: string) => void }) {

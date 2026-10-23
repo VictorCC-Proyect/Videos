@@ -1,6 +1,5 @@
-// Puente con los Web Workers de los motores gratuitos. Cada motor tiene su propio
-// worker y solo uno vive a la vez: al usar uno se cierra el otro y se libera su memoria
-// (los dos juntos no caben en una pestaña de iPhone).
+// Puente con el Web Worker del motor gratuito. Cada motor local tiene su propio
+// worker y solo uno vive a la vez, para no juntar dos modelos en memoria.
 import type { WorkerRequest, WorkerResponse } from "./worker";
 import type { EngineId, Pcm } from "./types";
 import { diag } from "../diag";
@@ -51,9 +50,9 @@ function getSlot(engine: Local): Slot {
 
 type DistributiveOmit<T, K extends keyof never> = T extends unknown ? Omit<T, K> : never;
 
-// Supertonic prueba WebGPU y luego WebAssembly; Kokoro va en WebAssembly (q8, liviano).
+// Supertonic prueba WebGPU y luego WebAssembly.
 function deviceFor(engine: Local): Device {
-  return engine === "supertonic" ? pickDevice(engine, ["webgpu", "wasm"]) : "wasm";
+  return pickDevice(engine, ["webgpu", "wasm"]);
 }
 
 function call(req: DistributiveOmit<WorkerRequest, "id" | "device">, onProgress?: Pending["onProgress"]) {

@@ -1,7 +1,7 @@
 feature,area,priority,original,clone,notes
 Escribir o pegar texto con contador de caracteres,texto a voz,must,yes,yes,
 Elegir una voz desde el editor,texto a voz,must,yes,yes,S02 con búsqueda y muestra
-Generar el audio con el motor de voz,texto a voz,must,yes,partial,código listo; la voz real no se pudo probar aquí (Hugging Face bloqueado en el entorno). Se confirma en el celular
+Generar el audio con el motor de voz,texto a voz,must,yes,yes,Supertonic probado en la laptop del usuario; en iPhone no cabe en memoria
 Escuchar el audio generado,texto a voz,must,yes,yes,reproductor fijo abajo
 Descargar el audio en MP3,texto a voz,must,yes,yes,MP3 de 128 kbps hecho en el navegador
 Ajustes de estabilidad similitud y estilo,texto a voz,must,yes,yes,solo ElevenLabs; los motores gratuitos tienen velocidad y calidad
