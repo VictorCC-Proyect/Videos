@@ -6,7 +6,7 @@ Empezado: 2026-10-23
 
 | # | etapa | estado | aprobada el | resumen |
 | --- | --- | --- | --- | --- |
-| 1 | Explorar | en curso | | |
+| 1 | Explorar | esperando aprobación | | 7 pantallas, 5 flujos, 29 funciones; uso propio |
 | 2 | Arquitectura | pendiente | | |
 | 3 | Diseño | pendiente | | |
 | 4 | Construir | pendiente | | |
@@ -24,4 +24,5 @@ detenida.
 
 ## Vueltas atrás y notas
 
-- 2026-10-23: inicio. Etapa 1 en el paso 1 (alcance), esperando el sí del usuario.
+- 2026-10-23: inicio. Alcance aprobado: texto a voz, biblioteca, mis voces, clonación propia e historial. Solo para uso propio: no se publica ni se vende.
+- 2026-10-23: elevenlabs.io no se pudo abrir desde el entorno; la etapa 1 usó resultados de búsqueda y no tiene capturas.
