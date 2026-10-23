@@ -1,41 +1,57 @@
-// Puente con el Web Worker de los motores gratuitos.
+// Puente con los Web Workers de los motores gratuitos. Cada motor tiene su propio
+// worker y solo uno vive a la vez: al usar uno se cierra el otro y se libera su memoria
+// (los dos juntos no caben en una pestaña de iPhone).
 import type { WorkerRequest, WorkerResponse } from "./worker";
 import type { EngineId, Pcm } from "./types";
 
 type Local = Exclude<EngineId, "elevenlabs">;
 type Pending = { resolve: (v: WorkerResponse) => void; reject: (e: Error) => void; onProgress?: (f: number, label: string) => void };
+type Slot = { worker: Worker; pending: Map<number, Pending> };
 
-let worker: Worker | null = null;
+const slots = new Map<Local, Slot>();
 let nextId = 1;
-const pending = new Map<number, Pending>();
 
-function getWorker() {
-  if (worker) return worker;
-  worker = new Worker(new URL("./worker.ts", import.meta.url), { type: "module" });
+export function unloadLocal(engine: Local) {
+  const slot = slots.get(engine);
+  if (!slot) return;
+  slot.worker.terminate();
+  for (const p of slot.pending.values()) p.reject(new Error("Se cambió de motor"));
+  slots.delete(engine);
+}
+
+function getSlot(engine: Local): Slot {
+  for (const other of slots.keys()) if (other !== engine) unloadLocal(other);
+  const existing = slots.get(engine);
+  if (existing) return existing;
+
+  const worker = new Worker(new URL("./worker.ts", import.meta.url), { type: "module" });
+  const slot: Slot = { worker, pending: new Map() };
   worker.onmessage = (e: MessageEvent<WorkerResponse>) => {
     const msg = e.data;
-    const p = pending.get(msg.id);
+    const p = slot.pending.get(msg.id);
     if (!p) return;
     if (msg.type === "progress") return p.onProgress?.(msg.fraction, msg.label);
-    pending.delete(msg.id);
+    slot.pending.delete(msg.id);
     if (msg.type === "error") p.reject(new Error(msg.message));
     else p.resolve(msg);
   };
   worker.onerror = (e) => {
-    for (const p of pending.values()) p.reject(new Error(e.message || "El motor de voz se detuvo"));
-    pending.clear();
-    worker = null;
+    for (const p of slot.pending.values()) p.reject(new Error(e.message || "El motor de voz se detuvo"));
+    slot.pending.clear();
+    slots.delete(engine);
   };
-  return worker;
+  slots.set(engine, slot);
+  return slot;
 }
 
 type DistributiveOmit<T, K extends keyof never> = T extends unknown ? Omit<T, K> : never;
 
 function call(req: DistributiveOmit<WorkerRequest, "id">, onProgress?: Pending["onProgress"]) {
   const id = nextId++;
+  const slot = getSlot(req.engine);
   return new Promise<WorkerResponse>((resolve, reject) => {
-    pending.set(id, { resolve, reject, onProgress });
-    getWorker().postMessage({ ...req, id });
+    slot.pending.set(id, { resolve, reject, onProgress });
+    slot.worker.postMessage({ ...req, id });
   });
 }
 

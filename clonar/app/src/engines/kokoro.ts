@@ -4,6 +4,7 @@
 // em_alex y em_santa del mismo modelo. Experimental: la calidad se confirma en la prueba a ciegas.
 import { KokoroTTS } from "kokoro-js";
 import { phonemize } from "phonemizer";
+import { isIOS } from "./fetchCached";
 import type { Pcm } from "./types";
 
 const MODEL = "onnx-community/Kokoro-82M-v1.0-ONNX";
@@ -14,7 +15,8 @@ let loading: Promise<KokoroTTS> | null = null;
 export function loadKokoro(onProgress: (fraction: number, label: string) => void): Promise<KokoroTTS> {
   if (tts) return Promise.resolve(tts);
   loading ??= (async () => {
-    const device = "gpu" in navigator ? "webgpu" : "wasm";
+    // q8 pesa unos 90 MB contra 330 MB en fp32; en iPhone siempre q8 y WebAssembly.
+    const device = !isIOS && "gpu" in navigator ? "webgpu" : "wasm";
     const files = new Map<string, number>();
     const progress_callback = (p: { status: string; file?: string; progress?: number }) => {
       if (p.status === "progress" && p.file) {

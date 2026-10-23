@@ -2,7 +2,7 @@
 // Basado en el ejemplo web oficial (código MIT, github.com/supertone-inc/supertonic),
 // reescrito en TypeScript con arreglos tipados. Los pesos del modelo usan la licencia OpenRAIL-M.
 import * as ort from "onnxruntime-web/webgpu";
-import { fetchCached, fetchJsonCached } from "./fetchCached";
+import { fetchCached, fetchJsonCached, isIOS } from "./fetchCached";
 import type { Pcm } from "./types";
 
 const REPO = "https://huggingface.co/supertone-oss-archive/supertonic-3/resolve/aafc6e32416a594460b32413efc49d7fe4ce6d46";
@@ -40,22 +40,25 @@ export function loadSupertonic(onProgress: (fraction: number, label: string) => 
     const cfg = await fetchJsonCached<Cfg>(`${REPO}/onnx/tts.json`);
     const indexer = await fetchJsonCached<number[]>(`${REPO}/onnx/unicode_indexer.json`);
     const names = ["duration_predictor", "text_encoder", "vector_estimator", "vocoder"];
-    const buffers: Uint8Array[] = [];
+    // En iPhone se usa WebAssembly: WebGPU puede duplicar la memoria de los pesos.
+    let device: "webgpu" | "wasm" = !isIOS && "gpu" in navigator ? "webgpu" : "wasm";
+    const sessions: ort.InferenceSession[] = [];
+    // Uno por uno: se descarga un archivo, se crea su sesión y se suelta el archivo
+    // antes de pasar al siguiente, para no tener los 400 MB duplicados en memoria.
     for (let i = 0; i < names.length; i++) {
-      buffers.push(await fetchCached(`${REPO}/onnx/${names[i]}.onnx`, (f) => onProgress((i + f) / names.length, "Descargando la voz")));
-    }
-
-    onProgress(1, "Preparando la voz");
-    const create = (device: "webgpu" | "wasm") =>
-      Promise.all(buffers.map((b) => ort.InferenceSession.create(b, { executionProviders: [device], graphOptimizationLevel: "all" })));
-    let sessions: ort.InferenceSession[];
-    let device: "webgpu" | "wasm" = "wasm";
-    try {
-      if (!("gpu" in navigator)) throw new Error("sin WebGPU");
-      sessions = await create("webgpu");
-      device = "webgpu";
-    } catch {
-      sessions = await create("wasm");
+      let bytes: Uint8Array | null = await fetchCached(`${REPO}/onnx/${names[i]}.onnx`, (f) =>
+        onProgress((i + f) / names.length, "Descargando la voz"),
+      );
+      onProgress((i + 1) / names.length, "Preparando la voz");
+      try {
+        sessions.push(await ort.InferenceSession.create(bytes, { executionProviders: [device] }));
+      } catch (err) {
+        if (device === "wasm") throw err;
+        device = "wasm";
+        for (const s of sessions.splice(0)) await s.release();
+        i = -1; // reintentar todo con WebAssembly (los archivos ya están en la Cache)
+      }
+      bytes = null;
     }
     const [dp, enc, est, voc] = sessions;
     loaded = { cfg, indexer, dp, enc, est, voc, device };
