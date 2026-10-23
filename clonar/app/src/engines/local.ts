@@ -4,6 +4,7 @@
 import type { WorkerRequest, WorkerResponse } from "./worker";
 import type { EngineId, Pcm } from "./types";
 import { diag } from "../diag";
+import { markDone, markRunning, pickDevice, type Device } from "./crashGuard";
 
 type Local = Exclude<EngineId, "elevenlabs">;
 type Pending = { resolve: (v: WorkerResponse) => void; reject: (e: Error) => void; onProgress?: (f: number, label: string) => void };
@@ -50,13 +51,20 @@ function getSlot(engine: Local): Slot {
 
 type DistributiveOmit<T, K extends keyof never> = T extends unknown ? Omit<T, K> : never;
 
-function call(req: DistributiveOmit<WorkerRequest, "id">, onProgress?: Pending["onProgress"]) {
+// Supertonic prueba WebGPU y luego WebAssembly; Kokoro va en WebAssembly (q8, liviano).
+function deviceFor(engine: Local): Device {
+  return engine === "supertonic" ? pickDevice(engine, ["webgpu", "wasm"]) : "wasm";
+}
+
+function call(req: DistributiveOmit<WorkerRequest, "id" | "device">, onProgress?: Pending["onProgress"]) {
   const id = nextId++;
+  const device = deviceFor(req.engine);
+  markRunning(req.engine, device);
   const slot = getSlot(req.engine);
   const started = performance.now();
   let lastLabel = "";
   let lastStep = -1;
-  diag(`${req.engine}: ${req.type === "load" ? "cargar" : `generar ${req.text.length} caracteres`}`);
+  diag(`${req.engine}: ${req.type === "load" ? "cargar" : `generar ${req.text.length} caracteres`} con ${device}`);
   const progress = (f: number, label: string) => {
     // Se registra cada cambio de etapa y cada 25 % de avance, no cada byte.
     const step = Math.floor(f * 4);
@@ -68,16 +76,18 @@ function call(req: DistributiveOmit<WorkerRequest, "id">, onProgress?: Pending["
   return new Promise<WorkerResponse>((resolve, reject) => {
     slot.pending.set(id, {
       resolve: (v) => {
+        markDone();
         diag(`${req.engine}: listo en ${((performance.now() - started) / 1000).toFixed(1)} s${v.type === "loaded" && v.device ? ` (${v.device})` : ""}`);
         resolve(v);
       },
       reject: (e) => {
+        markDone();
         diag(`${req.engine}: error: ${e.message}`);
         reject(e);
       },
       onProgress: progress,
     });
-    slot.worker.postMessage({ ...req, id });
+    slot.worker.postMessage({ ...req, device, id });
   });
 }
 

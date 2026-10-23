@@ -2,7 +2,8 @@
 // Basado en el ejemplo web oficial (código MIT, github.com/supertone-inc/supertonic),
 // reescrito en TypeScript con arreglos tipados. Los pesos del modelo usan la licencia OpenRAIL-M.
 import * as ort from "onnxruntime-web/webgpu";
-import { fetchCached, fetchJsonCached, isIOS } from "./fetchCached";
+import type { Device } from "./crashGuard";
+import { fetchCached, fetchJsonCached } from "./fetchCached";
 import type { Pcm } from "./types";
 
 const REPO = "https://huggingface.co/supertone-oss-archive/supertonic-3/resolve/aafc6e32416a594460b32413efc49d7fe4ce6d46";
@@ -32,7 +33,7 @@ export function supertonicDevice() {
   return loaded?.device;
 }
 
-export function loadSupertonic(onProgress: (fraction: number, label: string) => void): Promise<Loaded> {
+export function loadSupertonic(wanted: Device, onProgress: (fraction: number, label: string) => void): Promise<Loaded> {
   if (loaded) return Promise.resolve(loaded);
   loading ??= (async () => {
     ort.env.wasm.numThreads = self.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1;
@@ -40,8 +41,8 @@ export function loadSupertonic(onProgress: (fraction: number, label: string) => 
     const cfg = await fetchJsonCached<Cfg>(`${REPO}/onnx/tts.json`);
     const indexer = await fetchJsonCached<number[]>(`${REPO}/onnx/unicode_indexer.json`);
     const names = ["duration_predictor", "text_encoder", "vector_estimator", "vocoder"];
-    // En iPhone se usa WebAssembly: WebGPU puede duplicar la memoria de los pesos.
-    let device: "webgpu" | "wasm" = !isIOS && "gpu" in navigator ? "webgpu" : "wasm";
+    // El modo lo decide el hilo principal (crashGuard), que recuerda si alguno cerró la pestaña.
+    let device: Device = wanted === "webgpu" && "gpu" in navigator ? "webgpu" : "wasm";
     const sessions: ort.InferenceSession[] = [];
     // Uno por uno: se descarga un archivo, se crea su sesión y se suelta el archivo
     // antes de pasar al siguiente, para no tener los 400 MB duplicados en memoria.
@@ -69,6 +70,7 @@ export function loadSupertonic(onProgress: (fraction: number, label: string) => 
       }
       bytes = null;
     }
+    onProgress(1, device === "webgpu" ? "Voz lista (WebGPU)" : "Voz lista (WebAssembly)");
     const [dp, enc, est, voc] = sessions;
     loaded = { cfg, indexer, dp, enc, est, voc, device };
     return loaded;

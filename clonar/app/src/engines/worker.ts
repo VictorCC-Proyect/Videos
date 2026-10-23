@@ -1,9 +1,10 @@
 // Web Worker: carga los modelos y genera el audio sin congelar la pantalla.
+import type { Device } from "./crashGuard";
 import type { EngineId } from "./types";
 
 export type WorkerRequest =
-  | { id: number; type: "load"; engine: Exclude<EngineId, "elevenlabs"> }
-  | { id: number; type: "synth"; engine: Exclude<EngineId, "elevenlabs">; text: string; voice: string; speed: number; steps: number };
+  | { id: number; type: "load"; engine: Exclude<EngineId, "elevenlabs">; device: Device }
+  | { id: number; type: "synth"; engine: Exclude<EngineId, "elevenlabs">; device: Device; text: string; voice: string; speed: number; steps: number };
 
 export type WorkerResponse =
   | { id: number; type: "progress"; fraction: number; label: string }
@@ -21,7 +22,7 @@ self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
     // Cada worker importa solo su motor, así no carga el código del otro.
     if (req.engine === "supertonic") {
       const st = await import("./supertonic");
-      await st.loadSupertonic(progress);
+      await st.loadSupertonic(req.device, progress);
       if (req.type === "load") return post({ id: req.id, type: "loaded", device: st.supertonicDevice() });
       pcm = await st.synthSupertonic(req.text, req.voice, { speed: req.speed, steps: req.steps }, (s, t) => progress(s / t, "Generando"));
     } else {
