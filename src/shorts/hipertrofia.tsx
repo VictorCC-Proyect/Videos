@@ -220,7 +220,7 @@ const Tension: React.FC<{ textos: string[] }> = ({ textos }) => {
           items={[
             { p: [0, -L / 2, 0.3], t: "Sarcómero", a: 0.64, z: 1, o: [-90, 0], color: K.cian },
             { p: [0.1, L * 0.5 - 0.15, 0.2], t: "Miosina", a: 0.68, z: 1, o: [100, -40], color: H_MIOSINA },
-            { p: [0.18, L + 0.32, 0.15], t: "Actina", a: 0.7, z: 1, o: [100, -40], color: H_ACTINA },
+            { p: [0.18, -L - 0.32, 0.15], t: "Actina", a: 0.7, z: 1, o: [100, 40], color: H_ACTINA },
           ]}
         />
       ) : null}
@@ -340,7 +340,7 @@ const Ribosomas: React.FC<{ textos: string[] }> = ({ textos }) => {
         cam={cam}
         b={b}
         items={[
-          { p: [RIB_A[0] - 0.25, RIB_A[1], RIB_A[2]], t: "Ribosoma", a: 0.04, z: 0.44, o: [-70, 70], color: H_RIBO },
+          { p: [RIB_A[0] - 0.25, RIB_A[1], RIB_A[2]], t: "Ribosoma", a: 0.04, z: 0.44, o: [60, 110], color: H_RIBO },
           { p: [RIB_A[0], RIB_A[1] + 0.75, RIB_A[2]], t: "Actina", a: 0.16, z: 0.46, o: [-70, -60], color: H_ACTINA },
           { p: [RIB_B[0], RIB_B[1] + 0.75, RIB_B[2]], t: "Miosina", a: 0.2, z: 0.46, o: [70, -60], color: H_MIOSINA },
           { p: [1.05, 1.3, 0.3], t: "Nuevas miofibrillas", a: 0.68, z: 1, o: [-40, 230], color: K.lima },
@@ -378,7 +378,7 @@ const Satelites: React.FC<{ textos: string[] }> = ({ textos }) => {
         b={b}
         items={[
           { p: rot(posSatelite(0, R, fusion[0]), b * 0.5), t: "Célula satélite", a: 0.36, z: 0.62, o: [-80, -90], color: H_SATELITE },
-          { p: rot(posSatelite(1, R, fusion[1]), b * 0.5), t: "Núcleo nuevo", a: 0.74, z: 1, o: [90, 60], color: H_NUCLEO },
+          { p: rot(posSatelite(1, R, fusion[1]), b * 0.5), t: "Núcleo nuevo", a: 0.74, z: 1, o: [-90, 90], color: H_NUCLEO },
         ]}
       />
       <Chip b={b} a={0.04} z={0.36} t="FIBRA MÁS GRANDE" x={540} y={330} color={K.rosa} />
@@ -670,7 +670,7 @@ const Reclutar: React.FC<{ textos: string[] }> = ({ textos }) => {
           cam={cam}
           b={b}
           items={[
-            { p: rotX(celdaHaz(2, [0.4, 0.5], 0.8, 0.2, "rc", gII)), t: "Rápidas (tipo II)", a: 0.08, z: 0.4, o: [60, -110], color: F2_COL.IIx },
+            { p: rotX(celdaHaz(2, [0.4, 0.5], 0.8, 0.2, "rc", gII)), t: "Rápidas (tipo II)", a: 0.08, z: 0.4, o: [-60, -110], color: F2_COL.IIx },
             { p: rotX(celdaHaz(0, [-0.3, -0.5], 0.8, 0.2, "rc", gII)), t: "Lentas (tipo I)", a: 0.14, z: 0.4, o: [60, 120], color: "#ff6b7a" },
           ]}
         />

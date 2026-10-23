@@ -5,7 +5,7 @@ import { mix, V3 } from "../fisio/motor";
 import { C } from "../fisio/tema";
 import { hexPack, rnd, Tubo } from "../fisio/modelos/comun";
 import { CilindroX } from "../fisio/modelos/musculo";
-import { Enlace, Esfera } from "../fisio/modelos/energia";
+import { Esfera } from "../fisio/modelos/energia";
 import { F2_COL } from "./modelos-fibras";
 import { K } from "./marco";
 
