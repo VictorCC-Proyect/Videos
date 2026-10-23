@@ -28,7 +28,6 @@ Por qué así:
 | --- | --- | --- |
 | web | Vite + React + TypeScript + Tailwind, como PWA | estática, sin servidor; el usuario ya usa React y TypeScript |
 | motor gratuito | Supertonic (Supertone; SDK MIT, pesos OpenRAIL-M) con ONNX Runtime Web | corre en el navegador, habla español, es muy rápido incluso sin GPU dedicada |
-| motor gratuito alternativo | Kokoro (Apache 2.0) con voces en español (ef_dora, em_alex, em_santa) | segunda opción para la prueba a ciegas |
 | motor opcional | API oficial de ElevenLabs, llamada desde el navegador con la clave del usuario | solo si algún día pega su clave: Emiliano y las voces de su cuenta |
 | datos | IndexedDB del navegador (con la librería Dexie) | historial, voces guardadas y ajustes, en el propio dispositivo |
 | audio | WAV que sale del modelo, convertido a MP3 en el navegador (lamejs) | descarga en MP3 para los videos |
@@ -117,3 +116,10 @@ Webhooks: ninguno. Tareas programadas: ninguna.
 3. **Deseables:** textos largos en trozos con unión, ElevenLabs con tu clave (Emiliano, créditos, etiquetas de actuación), biblioteca S03 y mis voces S04, reutilizar ajustes del historial.
 4. **Opcionales:** clonación S05 (solo ElevenLabs), WAV, zip del historial, PIN, diccionario de pronunciación.
 5. **Arreglos de clonar-emprendedor:** si se corre la etapa 8.
+
+## Cambios después de construir (2026-10-23)
+
+- **Kokoro se quitó.** kokoro-js solo convierte a fonemas en inglés (su librería eSpeak no trae español), así que no puede hablar español en el navegador.
+- **iPhone:** Supertonic (unos 400 MB) carga pero la pestaña se cierra al generar, tanto con WebGPU como con WebAssembly. La app queda para usarse en la computadora; en el iPhone solo sirve ElevenLabs con clave.
+- **Publicación:** en Netlify (cuenta que el usuario ya tenía), proyecto voz-victor, subiendo el zip de `dist` a mano porque el entorno no puede llegar al servicio de subida.
+- **Voz para los videos sin la app:** `scripts/narracion_supertonic.py` usa el mismo modelo y voces desde Python y escribe en `public/narracion/` y `src/fisio/narracion.json`.

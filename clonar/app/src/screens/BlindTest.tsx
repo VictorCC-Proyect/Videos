@@ -26,7 +26,6 @@ export function BlindTest() {
   const [text, setText] = useState(SCRIPT);
   const [voices, setVoices] = useState<Record<EngineId, string>>({
     supertonic: "M1",
-    kokoro: "em_alex",
     elevenlabs: elevenVoices.find((v) => /emiliano/i.test(v.name))?.id ?? elevenVoices[0]?.id ?? "",
   });
   const [busy, setBusy] = useState<{ engine: EngineId; label: string; fraction?: number } | null>(null);
@@ -37,12 +36,13 @@ export function BlindTest() {
 
   useEffect(() => {
     samplesTable.toArray().then((list) => {
-      setDone(list);
-      setOrder(list.map((s) => s.engine).sort(() => Math.random() - 0.5));
+      const valid = list.filter((s) => s.engine in engines);
+      setDone(valid);
+      setOrder(valid.map((s) => s.engine).sort(() => Math.random() - 0.5));
     });
   }, []);
 
-  const available: EngineId[] = ["supertonic", "kokoro", ...(prefs.elevenKey && elevenVoices.length ? (["elevenlabs"] as const) : [])];
+  const available: EngineId[] = ["supertonic", ...(prefs.elevenKey && elevenVoices.length ? (["elevenlabs"] as const) : [])];
 
   async function run(engine: EngineId) {
     setBusy({ engine, label: "Preparando" });
@@ -87,7 +87,7 @@ export function BlindTest() {
       </p>
       {isIOS && (
         <p className="rounded-md bg-surface p-3 text-xs text-muted">
-          En iPhone, Supertonic pesa unos 400 MB y puede hacer que el navegador cierre la pestaña. Prueba primero Kokoro. Si la pestaña se cierra, vuelve a abrir la app: lo que ya se generó sigue aquí, y en Configuración → Diagnóstico queda dónde falló.
+          En iPhone, Supertonic (unos 400 MB) no cabe en la memoria de la pestaña y el navegador la cierra. Usa la app en la computadora; en el iPhone solo funciona ElevenLabs con tu clave.
         </p>
       )}
       <TextEditor value={text} onChange={setText} limit={300} disabled={!!busy} />

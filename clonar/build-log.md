@@ -3,7 +3,7 @@
 | pantalla | fecha | estado | qué falta | más difícil de lo esperado |
 | --- | --- | --- | --- | --- |
 | base (rutas, layout, tokens, PWA) | 2026-10-23 | terminada | íconos definitivos (etapa 9) | nada |
-| S01 Texto a voz | 2026-10-23 | parcial | confirmar en el celular que la voz se genera (Supertonic y Kokoro) | no se pudo probar la voz real: Hugging Face está bloqueado en el entorno de construcción |
+| S01 Texto a voz | 2026-10-23 | terminada en computadora | no funciona en iPhone (memoria) | no se pudo probar la voz real: Hugging Face está bloqueado en el entorno de construcción |
 | S02 Selector de voz | 2026-10-23 | terminada | | |
 | S03/S04 Voces | 2026-10-23 | parcial | búsqueda en la biblioteca pública de ElevenLabs, favoritas | |
 | S05 Clonación | | pendiente | todo (solo con ElevenLabs) | |
@@ -18,3 +18,4 @@ Notas:
 - Pruebas: división de texto y codificación MP3 (unitarias), y recorrido en Chromium a 390 y 1440 px sin errores en la consola.
 - 2026-10-23: en el iPhone del usuario la pestaña se cerró por falta de memoria al generar. Arreglo: descarga directa a la Cache sin copias, sesiones de ONNX creadas una por una, un worker por motor (solo uno vivo a la vez) y WebAssembly en iPhone. Si vuelve a pasar, siguiente paso: versión INT8 de Supertonic (unos 100 MB en vez de 400).
 - 2026-10-23: diagnóstico del iPhone: Supertonic carga completo en WebAssembly pero la pestaña se cierra en el primer paso de generación; Kokoro carga pero no se vio terminar. Cambio: Supertonic intenta WebGPU primero y un guardián recuerda el modo que cerró la pestaña para usar el otro la próxima vez.
+- 2026-10-23: Supertonic genera voz en la laptop del usuario. Kokoro falló con 'Invalid language identifier: es-419' (phonemizer solo trae inglés) y se quitó. En iPhone sigue cerrándose: el usuario decide usar la laptop. Se agregó scripts/narracion_supertonic.py para generar la voz de los videos sin la app.

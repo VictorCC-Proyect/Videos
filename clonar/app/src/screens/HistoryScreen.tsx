@@ -16,6 +16,8 @@ function relative(ts: number) {
   if (s > -86400) return rtf.format(Math.round(s / 3600), "hour");
   return rtf.format(Math.round(s / 86400), "day");
 }
+// Los audios viejos pueden ser de un motor que ya no existe (Kokoro): se muestran igual.
+const engineName = (g: Generation) => engines[g.engine]?.name ?? String(g.engine);
 const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
 
 // S06: los audios ya generados, guardados en este dispositivo.
@@ -41,6 +43,7 @@ export function HistoryScreen({ go }: { go: (route: string) => void }) {
   }
 
   function reuse(g: Generation) {
+    if (!(g.engine in engines)) return toast("Ese motor ya no está en la app", "error");
     try {
       localStorage.setItem("voz:borrador", g.text);
     } catch {
@@ -69,8 +72,8 @@ export function HistoryScreen({ go }: { go: (route: string) => void }) {
           {list!.map((g) => (
             <HistoryRow
               key={g.id}
-              item={{ text: g.text, voice: g.voiceName, engine: engines[g.engine].name, duration: mmss(g.durationSec), when: relative(g.createdAt) }}
-              onPlay={() => play(g.audio, `${g.voiceName} · ${engines[g.engine].name}`, fileName(g.text, "mp3"))}
+              item={{ text: g.text, voice: g.voiceName, engine: engineName(g), duration: mmss(g.durationSec), when: relative(g.createdAt) }}
+              onPlay={() => play(g.audio, `${g.voiceName} · ${engineName(g)}`, fileName(g.text, "mp3"))}
               onDownload={() => downloadBlob(g.audio, fileName(g.text, "mp3"))}
               onReuse={() => reuse(g)}
               onDelete={() => remove(g)}

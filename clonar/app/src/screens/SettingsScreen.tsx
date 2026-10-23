@@ -143,7 +143,7 @@ export function SettingsScreen() {
       <section className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">Acerca de</h2>
         <p className="text-sm text-muted">
-          App de uso propio. La voz se genera en tu dispositivo con modelos abiertos: Supertonic (Supertone, pesos OpenRAIL-M, código MIT) y Kokoro (Apache 2.0). Íconos de Lucide (ISC). No está afiliada a ElevenLabs.
+          App de uso propio. La voz se genera en tu dispositivo con Supertonic (Supertone, pesos OpenRAIL-M, código MIT). Íconos de Lucide (ISC). No está afiliada a ElevenLabs.
         </p>
       </section>
     </div>

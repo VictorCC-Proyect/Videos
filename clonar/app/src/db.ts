@@ -1,6 +1,5 @@
 import Dexie, { type EntityTable } from "dexie";
-import { isIOS } from "./engines/fetchCached";
-import { defaultSettings, type EngineId, type SynthSettings, type Voice } from "./engines/types";
+import { defaultSettings, engines, type EngineId, type SynthSettings, type Voice } from "./engines/types";
 
 export type Generation = {
   id: string;
@@ -27,9 +26,8 @@ export type Prefs = {
 
 export const defaultPrefs: Prefs = {
   id: "prefs",
-  // En iPhone, Kokoro (90 MB) en vez de Supertonic (400 MB), que no cabe en la memoria de la pestaña.
-  engine: isIOS ? "kokoro" : "supertonic",
-  voiceByEngine: { supertonic: "M1", kokoro: "ef_dora" },
+  engine: "supertonic",
+  voiceByEngine: { supertonic: "M1" },
   settings: defaultSettings,
   elevenKey: "",
 };
@@ -54,7 +52,10 @@ export const samples = (db as unknown as { samples: EntityTable<BlindSample, "en
 
 export async function getPrefs(): Promise<Prefs> {
   const p = await db.prefs.get("prefs");
-  return { ...defaultPrefs, ...p, settings: { ...defaultSettings, ...p?.settings } };
+  const merged = { ...defaultPrefs, ...p, settings: { ...defaultSettings, ...p?.settings } };
+  // Un motor que ya no existe (Kokoro se quitó) vuelve al de por defecto.
+  if (!(merged.engine in engines)) merged.engine = defaultPrefs.engine;
+  return merged;
 }
 
 export async function savePrefs(patch: Partial<Prefs>) {

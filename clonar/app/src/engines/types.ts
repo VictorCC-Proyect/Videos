@@ -1,4 +1,4 @@
-export type EngineId = "supertonic" | "kokoro" | "elevenlabs";
+export type EngineId = "supertonic" | "elevenlabs";
 
 export type Voice = {
   id: string; // id dentro del motor (F1, ef_dora, voice_id de ElevenLabs)
@@ -45,13 +45,6 @@ export const engines: Record<EngineId, EngineInfo> = {
     name: "Supertonic",
     description: "Gratis, en tu dispositivo. Rápido, 31 idiomas.",
     maxChars: 300,
-    free: true,
-  },
-  kokoro: {
-    id: "kokoro",
-    name: "Kokoro (experimental)",
-    description: "Gratis, en tu dispositivo. Voces en español en fase de prueba.",
-    maxChars: 250,
     free: true,
   },
   elevenlabs: {

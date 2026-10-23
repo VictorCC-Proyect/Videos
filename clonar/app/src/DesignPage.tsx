@@ -69,7 +69,7 @@ export function DesignPage() {
           <Slider label="Similitud" value={0.75} onChange={() => {}} min={0} max={1} step={0.05} disabled disabledHint="No disponible con este modelo" />
           <div className="flex flex-col gap-2">
             <Toggle label="Realce del hablante" checked={boost} onChange={setBoost} />
-            <Select label="Motor" value={engine} onChange={setEngine} options={[{ value: "supertonic", label: "Supertonic (gratis, en tu dispositivo)" }, { value: "kokoro", label: "Kokoro (gratis, en tu dispositivo)" }, { value: "elevenlabs", label: "ElevenLabs (con tu clave)" }]} />
+            <Select label="Motor" value={engine} onChange={setEngine} options={[{ value: "supertonic", label: "Supertonic (gratis, en tu dispositivo)" }, { value: "elevenlabs", label: "ElevenLabs (con tu clave)" }]} />
           </div>
         </div>
       </Section>
