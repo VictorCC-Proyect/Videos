@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Los roles de tokens.css como colores de Tailwind: bg-surface, text-muted, border-line... */
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-line: var(--c-border);
+  --color-input: var(--c-border-input);
+  --color-fg: var(--c-text);
+  --color-muted: var(--c-text-muted);
+  --color-accent: var(--c-accent);
+  --color-on-accent: var(--c-on-accent);
+  --color-focus: var(--c-focus);
+  --color-danger: var(--c-danger);
+  --color-on-danger: var(--c-on-danger);
+  --color-success: var(--c-success);
+  --color-warning: var(--c-warning);
+  --font-sans: var(--font-sans);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+}
+
+html, body { background: var(--c-bg); color: var(--c-text); font-family: var(--font-sans); }
+body { margin: 0; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
