@@ -218,7 +218,6 @@ const Neurona: React.FC<{ textos: string[] }> = ({ textos }) => {
     b,
   );
   const act = Math.max(llegada(b, EM2, DUR, 0.07), entre(b, 0.7, 0.82));
-  const hz = Math.round(mix(8, 60, entre(b, 0.6, 0.88)) + (b > 0.62 ? Math.sin(b * 90) * 2 : 0));
   return (
     <AbsoluteFill>
       <Escena3D cam={cam} niebla={[9, 28]}>
@@ -238,8 +237,8 @@ const Neurona: React.FC<{ textos: string[] }> = ({ textos }) => {
         b={b}
         a={0.4}
         z={1.1}
-        t={<>{hz} <span style={{ fontSize: 60 }}>disparos/s</span></>}
-        sub={b < 0.62 ? "señal normal" : "calambre: ráfaga continua"}
+        t={b < 0.62 ? "Señal normal" : "Ráfaga continua"}
+        sub={b < 0.62 ? "pulsos sueltos: contrae y relaja" : "la neurona no deja de disparar"}
         color={b < 0.62 ? K.amarillo : K.rojo}
         y={250}
         tam={110}
