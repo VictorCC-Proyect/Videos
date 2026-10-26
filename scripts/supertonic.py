@@ -5,7 +5,7 @@ con las escenas por construcción. Guarda public/narracion/<hash>.mp3 y actualiz
 src/fisio/narracion.json (el mismo sistema que scripts/narracion.py).
 
 Uso: python3 scripts/supertonic.py src/shorts/hipertrofia.tsx [--voz M1] [--modelo DIR]
-     [--velocidad 1.05] [--pasos 10]
+     [--velocidad 1.05] [--pasos 10] [--solo 3 --toma 1]
 El modelo se descarga una vez de huggingface.co/supertone-oss-archive/supertonic-3
 (pesos con licencia OpenRAIL-M) y se guarda en --modelo.
 """
@@ -33,6 +33,7 @@ EXTRA = [
     ("A T P", "a te pe"),
     ("A D P", "a de pe"),
     ("mTOR", "eme tor"),
+    ("REM", "rem"),
 ]
 
 
@@ -100,18 +101,23 @@ def main():
     ap.add_argument("--modelo", default=str(Path.home() / ".cache/supertonic3"))
     ap.add_argument("--velocidad", type=float, default=1.05)
     ap.add_argument("--pasos", type=int, default=10)
+    ap.add_argument("--solo", default="", help="índices (desde 0) de los textos a regenerar, ej. 3 o 3,7")
+    ap.add_argument("--toma", type=int, default=0, help="otra semilla para la misma frase (si sale con un tropiezo)")
     a = ap.parse_args()
 
     ts = textos([Path(a.short)], r"const T = \[([\s\S]*?)\n\];")
     tts = Supertonic(Path(a.modelo), a.voz)
     indice = json.loads(INDICE.read_text())
     SALIDA.mkdir(parents=True, exist_ok=True)
-    for t in ts:
+    solo = {int(i) for i in a.solo.split(",") if i}
+    for i, t in enumerate(ts):
+        if solo and i not in solo:
+            continue
         dicho = para_voz(t)
         for x, y in EXTRA:
             dicho = dicho.replace(x, y)
         h = fnv1a(t)
-        wav, sr = tts.sintetizar(dicho, a.velocidad, a.pasos, semilla=int(h, 16))
+        wav, sr = tts.sintetizar(dicho, a.velocidad, a.pasos, semilla=int(h, 16) + a.toma)
         tmp = SALIDA / f"{h}.wav"
         with wave.open(str(tmp), "wb") as w:
             w.setnchannels(1)
