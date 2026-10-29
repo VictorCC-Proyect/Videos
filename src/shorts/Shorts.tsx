@@ -12,6 +12,7 @@ import { AYUNAS } from "./ayunas";
 import { CALAMBRES } from "./calambres";
 import { SUENO } from "./sueno";
 import { VENTANA } from "./ventana";
+import { MTOR } from "./mtor";
 import { FATIGA } from "./fatiga";
 import { HIPERTROFIA } from "./hipertrofia";
 import { CONTRACCION1 } from "./contraccion1";
@@ -28,7 +29,7 @@ import { CAFEINA } from "./cafeina";
 import { PROTEINA } from "./proteina";
 import { durShort, ShortDef, ShortVista } from "./marco";
 
-export const SHORTS: ShortDef[] = [CREATINA, ARDOR, AGUJETAS, PROTEINA, CONTINUUM, CONTRACCION1, CONTRACCION2, ENERGIA1, ENERGIA2, FIBRAS1, FIBRAS2, SOMATOTIPOS, HIPERTROFIA, FATIGA, AYUNAS, CALAMBRES, SUENO, VENTANA, AYUNO, GLUCOSA, DEFICIT, MICROBIOTA, MAGNESIO, COLAGENO, CORTISOL, CAFEINA];
+export const SHORTS: ShortDef[] = [CREATINA, ARDOR, AGUJETAS, PROTEINA, CONTINUUM, CONTRACCION1, CONTRACCION2, ENERGIA1, ENERGIA2, FIBRAS1, FIBRAS2, SOMATOTIPOS, HIPERTROFIA, FATIGA, AYUNAS, CALAMBRES, SUENO, VENTANA, MTOR, AYUNO, GLUCOSA, DEFICIT, MICROBIOTA, MAGNESIO, COLAGENO, CORTISOL, CAFEINA];
 
 export { durShort };
 

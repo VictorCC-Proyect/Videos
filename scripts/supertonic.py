@@ -34,6 +34,7 @@ EXTRA = [
     ("A D P", "a de pe"),
     ("mTOR", "eme tor"),
     ("REM", "rem"),
+    ("AMPK", "a, eme, pe, ka"),
 ]
 
 
