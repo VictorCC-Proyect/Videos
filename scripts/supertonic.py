@@ -34,6 +34,9 @@ EXTRA = [
     ("A D P", "a de pe"),
     ("mTOR", "eme tor"),
     ("REM", "rem"),
+    ("PGC-1", "pe ge ce uno"),
+    ("Holway", "Jólguey"),
+    ("Carl Lewis", "Carl Luis"),
     ("AMPK", "a, eme, pe, ka"),
 ]
 
