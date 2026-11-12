@@ -35,6 +35,7 @@ EXTRA = [
     ("mTOR", "eme tor"),
     ("REM", "rem"),
     ("L-carnitina", "ele carnitina"),
+    ("NEAT", "nit"),
     ("dos X", "dos equis"),
     ("BCAA", "be ce a a"),
     ("PGC-1", "pe ge ce uno"),
